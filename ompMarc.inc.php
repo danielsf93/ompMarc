@@ -77,7 +77,7 @@ class ompMarc extends ImportExportPlugin2
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
                     //'monographs' aparece no nome do arquivo .xml
-                    $exportFileName = $this->getExportFileName($this->getExportPath(), 'monographs', $context, '.txt');
+                    $exportFileName = $this->getExportPath() . '/record.txt';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
@@ -209,7 +209,7 @@ class ompMarc extends ImportExportPlugin2
 
             /*
              *
-             * ESTRUTURA XML
+             * ESTRUTURA XML/txt
              *
              * */
 
@@ -246,7 +246,7 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '500 $a '.htmlspecialchars($doi) . ' 
             ';
             //link do livro
-            $xmlContent .= '500 $a http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147' . ' 
+            $xmlContent .= '500 $a '.htmlspecialchars($publicationUrl). ' 
             ';
             
             $xmlContent .= '506 0 $a Free-to-read $f Unrestricted online access $2 star' . ' 
@@ -268,10 +268,10 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '786 0 $n USP Open Books Portal;' . ' 
             ';
             //portal
-            $xmlContent .= '793 0 $a Portal de Livros Abertos da USP.' . ' 
+            $xmlContent .= '793 0 $a Portal de Livros Abertos da USP.' .'teste'.'teste'.'teste'. ' 
             ';
             //link do livro
-            $xmlContent .= '856 40 $z Free-to-read: $u http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147 $7 0' . ' 
+            $xmlContent .= '856 40 $z Free-to-read: $u '.htmlspecialchars($publicationUrl).' $7 0' . ' 
             ';
             
             $xmlContent .= '949 $a Electronic resource $w ASIS $m ONLINE $k ONLINE $l ONLINE $o USP OA harvest 471 records 20210803 $r Y $s Y $t ONLINE' . ' 
