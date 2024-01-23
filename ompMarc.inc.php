@@ -221,28 +221,29 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '001 usp000000468' . ' 
             ';
             //isbn
-            $xmlContent .= '020 $a 9788575062913' . ' 
+            $xmlContent .= '020 $a '.htmlspecialchars($isbn) . ' 
             ';
             //doi
-            $xmlContent .= '024 7 $a 10.11606/9788575062913 $2 doi' . ' 
+            $xmlContent .= '024 7 $a '.htmlspecialchars($doi).' $2 doi' . ' 
             ';
             
             $xmlContent .= '042 $a dc' . ' 
             ';
             //primeira autora
-            $xmlContent .= '100 10 $a Carlos, Ana Fani Alessandri, $e author' . ' 
+            $firstAuthor = reset($authorsInfo);
+            $xmlContent .= '100 10 $a '.htmlspecialchars($firstAuthor['surname']).', '.htmlspecialchars($firstAuthor['givenName']).', $e author' . ' 
             ';
             //titulo
             $xmlContent .= '245 10 $a ' .htmlspecialchars($submissionTitle).' 
             ';
-            //portal
-            $xmlContent .= '260 $b USP Open Books Portal, $c 2021.' . ' 
+            //portal e ano
+            $xmlContent .= '260 $b USP Open Books Portal, $c '.htmlspecialchars($publicationYear).'.' . ' 
             ';
             
             $xmlContent .= '300 $a 1 online resource' . ' 
             ';
             //doi
-            $xmlContent .= '500 $a 10.11606/9788575062913' . ' 
+            $xmlContent .= '500 $a '.htmlspecialchars($doi) . ' 
             ';
             //link do livro
             $xmlContent .= '500 $a http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147' . ' 
