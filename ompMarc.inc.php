@@ -236,7 +236,7 @@ class ompMarc extends ImportExportPlugin2
             //titulo
             $xmlContent .= '245 10 $a ' .htmlspecialchars($submissionTitle).' 
             ';
-            //portal e ano
+            //portal EM INGLES e ano
             $xmlContent .= '260 $b USP Open Books Portal, $c '.htmlspecialchars($publicationYear).'.' . ' 
             ';
             
@@ -262,14 +262,17 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '700 10 $a Molsing, Karina Veronica, $e author' . ' 
             ';
             //portal
-            $xmlContent .= '786 0 $n Portal de Livros Abertos da USP;' . ' 
+            $pressName = $press->getLocalizedName();
+            $xmlContent .= '786 0 $n ' . $pressName . ';' . ' 
             ';
             //portal em ingles
             $xmlContent .= '786 0 $n USP Open Books Portal;' . ' 
             ';
             //portal
-            $xmlContent .= '793 0 $a Portal de Livros Abertos da USP.' .'teste'.'teste'.'teste'. ' 
+            $pressName = $press->getLocalizedName();
+            $xmlContent .= '793 0 $a ' . $pressName . ' 
             ';
+            
             //link do livro
             $xmlContent .= '856 40 $z Free-to-read: $u '.htmlspecialchars($publicationUrl).' $7 0' . ' 
             ';
