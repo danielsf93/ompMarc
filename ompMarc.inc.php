@@ -214,36 +214,37 @@ class ompMarc extends ImportExportPlugin2
              * */
 
             //---início estrutura xml codigos obrigatórios
+            //numero de caracteres
             $xmlContent = '01904 am a22002893u 4500' . ' 
              ';
          
             $xmlContent .= '001 usp000000468' . ' 
             ';
-
+            //isbn
             $xmlContent .= '020 $a 9788575062913' . ' 
             ';
-            
+            //doi
             $xmlContent .= '024 7 $a 10.11606/9788575062913 $2 doi' . ' 
             ';
             
             $xmlContent .= '042 $a dc' . ' 
             ';
-            
+            //primeira autora
             $xmlContent .= '100 10 $a Carlos, Ana Fani Alessandri, $e author' . ' 
             ';
-            
+            //titulo
             $xmlContent .= '245 10 $a The urban crisis' . ' 
             ';
-            
+            //portal
             $xmlContent .= '260 $b USP Open Books Portal, $c 2021.' . ' 
             ';
             
             $xmlContent .= '300 $a 1 online resource' . ' 
             ';
-            
+            //doi
             $xmlContent .= '500 $a 10.11606/9788575062913' . ' 
             ';
-            
+            //link do livro
             $xmlContent .= '500 $a http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147' . ' 
             ';
             
@@ -256,19 +257,19 @@ class ompMarc extends ImportExportPlugin2
             
             $xmlContent .= '655 7 $a Livro $2 local' . ' 
             ';
-            
+            //segunda autora
             $xmlContent .= '700 10 $a Molsing, Karina Veronica, $e author' . ' 
             ';
-            
+            //portal
             $xmlContent .= '786 0 $n Portal de Livros Abertos da USP;' . ' 
             ';
-            
+            //portal em ingles
             $xmlContent .= '786 0 $n USP Open Books Portal;' . ' 
             ';
-            
+            //portal
             $xmlContent .= '793 0 $a Portal de Livros Abertos da USP.' . ' 
             ';
-            
+            //link do livro
             $xmlContent .= '856 40 $z Free-to-read: $u http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147 $7 0' . ' 
             ';
             
