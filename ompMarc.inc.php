@@ -233,7 +233,7 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '100 10 $a Carlos, Ana Fani Alessandri, $e author' . ' 
             ';
             //titulo
-            $xmlContent .= '245 10 $a The urban crisis' . ' 
+            $xmlContent .= '245 10 $a ' .htmlspecialchars($submissionTitle).' 
             ';
             //portal
             $xmlContent .= '260 $b USP Open Books Portal, $c 2021.' . ' 
