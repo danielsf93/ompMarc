@@ -252,7 +252,7 @@ class ompMarc extends ImportExportPlugin2
             ';
             
             //sinopse
-            $xmlContent .= '520 $a Space is one of the main objects of study in Geography. In its complexity, it is more than just what we can see - for example, the place where we live - or simply a natural environment deformed by the presence of man. Since space is also the product of a social and historical representation. And, ultimately, one of the works of the civilization process. This book addresses space production and the role of Geography - in the necessary dialogue with other disciplines - in understanding the modern world in the face of a series of problems of a time in crisis, in which space has been taking on an unprecedented and prominent role. Resulting from a research project and some reflection (always open to debate and questions), this book is essential for professors and students who aim to deeply comprehend urban space today. ' . ' 
+            $xmlContent .= '520 $a '.htmlspecialchars($abstract). ' 
             ';
             
             $xmlContent .= '655 7 $a Livro $2 local' . ' 
