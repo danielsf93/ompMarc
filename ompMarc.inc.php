@@ -214,31 +214,75 @@ class ompMarc extends ImportExportPlugin2
              * */
 
             //---início estrutura xml codigos obrigatórios
-            $xmlContent = '01904 am a22002893u 4500';
+            $xmlContent = '01904 am a22002893u 4500' . ' 
+             ';
+         
+            $xmlContent .= '001 usp000000468' . ' 
+            ';
 
-           
-            $xmlContent .= '001 usp000000468
-            020 $a 9788575062913
-            024 7 $a 10.11606/9788575062913 $2 doi
-            042 $a dc
-            100 10 $a Carlos, Ana Fani Alessandri, $e author
-            245 10 $a The urban crisis
-            260 $b USP Open Books Portal, $c 2021.
-            300 $a 1 online resource
-            500 $a 10.11606/9788575062913
-            500 $a http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147
-            506 0 $a Free-to-read $f Unrestricted online access $2 star
-            520 $a Space is one of the main objects of study in Geography. In its complexity, it is more than just what we can see - for example, the place where we live - or simply a natural environment deformed by the presence of man. Since space is also the product of a social and historical representation. And, ultimately, one of the works of the civilization process. This book addresses space production and the role of Geography - in the necessary dialogue with other disciplines - in understanding the modern world in the face of a series of problems of a time in crisis, in which space has been taking on an unprecedented and prominent role. Resulting from a research project and some reflection (always open to debate and questions), this book is essential for professors and students who aim to deeply comprehend urban space today. 
-            655 7 $a Livro $2 local
-            700 10 $a Molsing, Karina Veronica, $e author
-            786 0 $n Portal de Livros Abertos da USP;
-            786 0 $n USP Open Books Portal;
-            793 0 $a Portal de Livros Abertos da USP.
-            856 40 $z Free-to-read: $u http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147 $7 0
-            949 $a Electronic resource $w ASIS $m ONLINE $k ONLINE $l ONLINE $o USP OA harvest 471 records 20210803 $r Y $s Y $t ONLINE
-            997 $a BSLW: DO NOT PROCESS.
-            596 $a 42
-            926 $a ONLINE $b ONLINE $c Electronic resource $d ONLINE $f 1';
+            $xmlContent .= '020 $a 9788575062913' . ' 
+            ';
+            
+            $xmlContent .= '024 7 $a 10.11606/9788575062913 $2 doi' . ' 
+            ';
+            
+            $xmlContent .= '042 $a dc' . ' 
+            ';
+            
+            $xmlContent .= '100 10 $a Carlos, Ana Fani Alessandri, $e author' . ' 
+            ';
+            
+            $xmlContent .= '245 10 $a The urban crisis' . ' 
+            ';
+            
+            $xmlContent .= '260 $b USP Open Books Portal, $c 2021.' . ' 
+            ';
+            
+            $xmlContent .= '300 $a 1 online resource' . ' 
+            ';
+            
+            $xmlContent .= '500 $a 10.11606/9788575062913' . ' 
+            ';
+            
+            $xmlContent .= '500 $a http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147' . ' 
+            ';
+            
+            $xmlContent .= '506 0 $a Free-to-read $f Unrestricted online access $2 star' . ' 
+            ';
+            
+            //sinopse
+            $xmlContent .= '520 $a Space is one of the main objects of study in Geography. In its complexity, it is more than just what we can see - for example, the place where we live - or simply a natural environment deformed by the presence of man. Since space is also the product of a social and historical representation. And, ultimately, one of the works of the civilization process. This book addresses space production and the role of Geography - in the necessary dialogue with other disciplines - in understanding the modern world in the face of a series of problems of a time in crisis, in which space has been taking on an unprecedented and prominent role. Resulting from a research project and some reflection (always open to debate and questions), this book is essential for professors and students who aim to deeply comprehend urban space today. ' . ' 
+            ';
+            
+            $xmlContent .= '655 7 $a Livro $2 local' . ' 
+            ';
+            
+            $xmlContent .= '700 10 $a Molsing, Karina Veronica, $e author' . ' 
+            ';
+            
+            $xmlContent .= '786 0 $n Portal de Livros Abertos da USP;' . ' 
+            ';
+            
+            $xmlContent .= '786 0 $n USP Open Books Portal;' . ' 
+            ';
+            
+            $xmlContent .= '793 0 $a Portal de Livros Abertos da USP.' . ' 
+            ';
+            
+            $xmlContent .= '856 40 $z Free-to-read: $u http://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/book/147 $7 0' . ' 
+            ';
+            
+            $xmlContent .= '949 $a Electronic resource $w ASIS $m ONLINE $k ONLINE $l ONLINE $o USP OA harvest 471 records 20210803 $r Y $s Y $t ONLINE' . ' 
+            ';
+            
+            $xmlContent .= '997 $a BSLW: DO NOT PROCESS.' . ' 
+            ';
+            
+            $xmlContent .= '596 $a 42' . ' 
+            ';
+            
+            $xmlContent .= '926 $a ONLINE $b ONLINE $c Electronic resource $d ONLINE $f 1' . ' 
+            ';
         }
 
         return $xmlContent;
