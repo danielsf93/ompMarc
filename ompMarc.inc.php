@@ -120,7 +120,7 @@ class ompMarc extends ImportExportPlugin2
     //forma o prefixo do arquivo .xml
     public function getPluginSettingsPrefix()
     {
-        return 'ompMarc';
+        return 'ompMarc222';
     }
 
     
@@ -214,8 +214,10 @@ class ompMarc extends ImportExportPlugin2
              * */
 
             //---início estrutura xml codigos obrigatórios
-            $xmlContent = '01904 am a22002893u 4500
-            001 usp000000468
+            $xmlContent = '01904 am a22002893u 4500';
+
+           
+            $xmlContent .= '001 usp000000468
             020 $a 9788575062913
             024 7 $a 10.11606/9788575062913 $2 doi
             042 $a dc
