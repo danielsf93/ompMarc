@@ -253,14 +253,35 @@ class ompMarc extends ImportExportPlugin2
             ';
             
             //sinopse
-            $xmlContent .= '520 $a '.htmlspecialchars($abstract). ' 
-            ';
+$xmlContent .= '520 $a '.htmlspecialchars_decode(htmlspecialchars($abstract)). ' 
+';
             
             $xmlContent .= '655 7 $a Livro $2 local' . ' 
             ';
+
             //segunda autora
-            $xmlContent .= '700 10 $a Molsing, Karina Veronica, $e author' . ' 
-            ';
+                $secondAuthor = null;
+                foreach ($authors as $author) {
+                    if (!is_null($secondAuthor)) {
+                        break; // Já encontrou o segundo autor, podemos sair do loop
+                    }
+                    
+                    // Pular o primeiro autor
+                    if ($author !== reset($authors)) {
+                        $secondAuthor = [
+                            'givenName' => $author->getLocalizedGivenName(),
+                            'surname' => $author->getLocalizedFamilyName(),
+                            
+                        ];
+                    }
+                }
+
+                // Verificar se há um segundo autor
+                if (!is_null($secondAuthor)) {
+            $xmlContent .= '700 10 $a '.htmlspecialchars($secondAuthor['surname']).', '.htmlspecialchars($secondAuthor['givenName']).', $e author' . ' 
+                    ';
+                }
+
             //portal
             $pressName = $press->getLocalizedName();
             $xmlContent .= '786 0 $n ' . $pressName . ';' . ' 
