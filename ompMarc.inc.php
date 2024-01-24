@@ -207,7 +207,8 @@ class ompMarc extends ImportExportPlugin2
                 }
             }
 
-            /*
+            
+  /*
              *
              * ESTRUTURA XML/txt
              *
@@ -215,7 +216,7 @@ class ompMarc extends ImportExportPlugin2
 
             //---início estrutura xml codigos obrigatórios
             //numero de caracteres
-            $xmlContent = '01904 am a22002893u 4500' . ' 
+            $xmlContent = ' am a22002893u 4500' . ' 
              ';
          
             $xmlContent .= '001 usp000000468' . ' 
@@ -302,15 +303,25 @@ class ompMarc extends ImportExportPlugin2
             
             $xmlContent .= '926 $a ONLINE $b ONLINE $c Electronic resource $d ONLINE $f 1' . ' 
             ';
+
+
         }
 
-        return $xmlContent;
+       // Calcular o número de caracteres
+$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8');
+
+// Formatar o número de caracteres como uma string de 5 dígitos
+$numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
+
+// Inserir o número de caracteres no início do XML
+$xmlContent = $numeroDeCaracteresFormatado . $xmlContent;
+
+return $xmlContent;
     }
 
     /**
      * Final estrutura txt.
      */
-
 
 
 
