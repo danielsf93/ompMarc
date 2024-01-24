@@ -76,7 +76,7 @@ class ompMarc extends ImportExportPlugin2
                     );
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
-                    //'monographs' aparece no nome do arquivo .xml
+                    //nome do arquivo e formato txt - trocar por rec
                     $exportFileName = $this->getExportPath() . '/record.txt';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
@@ -117,7 +117,7 @@ class ompMarc extends ImportExportPlugin2
         return __('plugins.importexport.ompMarc.description');
     }
 
-    //forma o prefixo do arquivo .xml
+    //forma o prefixo do arquivo .xml -desnecessário
     public function getPluginSettingsPrefix()
     {
         return 'ompMarc222';
@@ -128,7 +128,7 @@ class ompMarc extends ImportExportPlugin2
   
 
     /**
-     * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO XML.
+     * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO txt.
      */
     public function exportSubmissions($submissionIds, $context, $user, $request)
     {
@@ -221,8 +221,10 @@ class ompMarc extends ImportExportPlugin2
             $xmlContent .= '001 usp000000468' . ' 
             ';
             //isbn
-            $xmlContent .= '020 $a '.htmlspecialchars($isbn) . ' 
+            $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
+            $xmlContent .= '020 $a ' . htmlspecialchars($cleanIsbn) . ' 
             ';
+
             //doi
             $xmlContent .= '024 7 $a '.htmlspecialchars($doi).' $2 doi' . ' 
             ';
@@ -253,34 +255,25 @@ class ompMarc extends ImportExportPlugin2
             ';
             
             //sinopse
-$xmlContent .= '520 $a '.htmlspecialchars_decode(htmlspecialchars($abstract)). ' 
-';
+            $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
+            $xmlContent .= '520 $a ' . htmlspecialchars_decode($cleanAbstract) . ' 
+            ';
+
             
             $xmlContent .= '655 7 $a Livro $2 local' . ' 
             ';
 
-            //segunda autora
-                $secondAuthor = null;
-                foreach ($authors as $author) {
-                    if (!is_null($secondAuthor)) {
-                        break; // Já encontrou o segundo autor, podemos sair do loop
-                    }
-                    
-                    // Pular o primeiro autor
-                    if ($author !== reset($authors)) {
-                        $secondAuthor = [
-                            'givenName' => $author->getLocalizedGivenName(),
-                            'surname' => $author->getLocalizedFamilyName(),
-                            
-                        ];
-                    }
-                }
+            //demais autoras
+            $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
+            foreach ($additionalAuthors as $additionalAuthor) {
+                $additionalAuthorInfo = [
+                    'givenName' => $additionalAuthor->getLocalizedGivenName(),
+                    'surname' => $additionalAuthor->getLocalizedFamilyName(),
+                ];
+                $xmlContent .= '700 10 $a ' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . ', $e author' . ' 
+                ';
+            }
 
-                // Verificar se há um segundo autor
-                if (!is_null($secondAuthor)) {
-            $xmlContent .= '700 10 $a '.htmlspecialchars($secondAuthor['surname']).', '.htmlspecialchars($secondAuthor['givenName']).', $e author' . ' 
-                    ';
-                }
 
             //portal
             $pressName = $press->getLocalizedName();
@@ -315,9 +308,14 @@ $xmlContent .= '520 $a '.htmlspecialchars_decode(htmlspecialchars($abstract)). '
     }
 
     /**
-     * Final estrutura XML.
+     * Final estrutura txt.
      */
 
+
+
+
+
+     
     /**
      * @copydoc ImportExportPlugin::executeCLI
      */
