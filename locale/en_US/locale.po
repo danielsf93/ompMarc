@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2023-08-10T07:09:53-07:00\n"
 "Language: \n"
 
-msgid "plugins.importexport.exml.displayName"
-msgstr "eXML Plugin"
+msgid "plugins.importexport.ompMarc.displayName"
+msgstr "ompMarc"
 
-msgid "plugins.importexport.exml.description"
-msgstr "Export books in XML format to crossref."
+msgid "plugins.importexport.ompMarc.description"
+msgstr "Export books in mrc format."
 
-msgid "plugins.importexport.exml.exportSubmissions"
+msgid "plugins.importexport.ompMarc.exportSubmissions"
 msgstr "Export submissions"
 

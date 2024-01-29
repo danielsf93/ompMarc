@@ -16,7 +16,7 @@
 	<ul>
 	
 
-	<li><a href="#export-tab">{translate key="plugins.importexport.exml.exportSubmissions"}</a></li>
+	<li><a href="#export-tab">{translate key="plugins.importexport.ompMarc.exportSubmissions"}</a></li>
 	</ul>
 
 
@@ -61,7 +61,7 @@
 				{fbvFormSection}
 					
 					<pkp-button @click="submit('#exportXmlForm')">
-						{translate key="plugins.importexport.exml.exportSubmissions"}
+						{translate key="plugins.importexport.ompMarc.exportSubmissions"}
 					</pkp-button>
 				{/fbvFormSection}
 			{/fbvFormArea}
