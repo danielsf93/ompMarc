@@ -295,6 +295,42 @@ $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
 // Inserir o número de caracteres no início do XML
 $xmlContent = $numeroDeCaracteresFormatado . $xmlContent;
 
+
+
+
+///FINAL DADOS COMPLETOS
+
+
+
+
+///INICIO DADOS CORRIDOS
+$xmlContent .= '
+*******************************************
+
+';
+
+$xmlContent .= 'Total de caracteres' . ' am a22002893u' . '
+' . '4500 UM BILHÃO DE NÚMEROS' . ''. 'usp000000468'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
+'2doi  adc10a'.htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ',eauthor10a'
+. htmlspecialchars($submissionTitle).'  bUSP Open Books Portal, c'.htmlspecialchars($publicationYear) . '.  a1 online resource  a'
+. htmlspecialchars($doi) . '  a'. htmlspecialchars($publicationUrl). '0 aFree-to-readfUnrestricted online access2star  a'
+.htmlspecialchars_decode($cleanAbstract). ' 7 aLivro2local10a'. htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName'])
+.'0 n'.$pressName . ';0 nUSP Open Books Portal;0 a' . $pressName . '.40zFree-to-read:u' . htmlspecialchars($publicationUrl) 
+.'70  aElectronic resourcewASISmONLINEkONLINElONLINEoUSP OA harvest 471 records' . date('Ymd', strtotime($publicationDate))
+. 'rYsYtONLINE  aBSLW: DO NOT PROCESS.  a42  aONLINEbONLINEcElectronic resourcedONLINEf1' ;
+
+
+
+
+
+
+
+
+
+
+
+
+
 return $xmlContent;
     }
 
