@@ -309,8 +309,24 @@ $xmlContent .= '
 
 ';
 
-$xmlContent .= 'Total de caracteres' . ' am a22002893u' . '
-' . '4500 UM BILHÃO DE NÚMEROS' . ''. 'usp000000468'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
+$xmlContent .= 'TOTAL DE CARACTERES' . ' am a22'.'A6'.'u' . '
+' . '4500001001300000020001800013024003200031042000700063100004100070245'
+.'***B10***'
+.'60003500'
+.'***C3***'
+.'300002200'
+.'***D3***'
+.'500002700'
+.'***E3***'
+.'500007600'
+.'***F3***'
+.'506005100'
+.'***G3***'
+.'5201'
+.'***H8***'
+.'65500170'
+.'***I-n***'
+.  ''. 'usp000000468'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
 '2doi  adc10a'.htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ',eauthor10a'
 . htmlspecialchars($submissionTitle).'  bUSP Open Books Portal, c'.htmlspecialchars($publicationYear) . '.  a1 online resource  a'
 . htmlspecialchars($doi) . '  a'. htmlspecialchars($publicationUrl). '0 aFree-to-readfUnrestricted online access2star  a'
