@@ -331,7 +331,7 @@ $xmlContent .= '***TOTAL DE CARACTERES***'
 .'***H8***'
 .'65500170'
 .'***I-n***'
-.  ''. 'usp000000468'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
+.  ''. 'usp000000'.'***J3***'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
 '2doi  adc10a'.htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ',eauthor10a'
 . htmlspecialchars($submissionTitle).'  bUSP Open Books Portal, c'.htmlspecialchars($publicationYear) . '.  a1 online resource  a'
 . htmlspecialchars($doi) . '  a'. htmlspecialchars($publicationUrl). '0 aFree-to-readfUnrestricted online access2star  a'
