@@ -77,7 +77,7 @@ class ompMarc extends ImportExportPlugin2
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
                     //nome do arquivo e formato txt - trocar por rec
-                    $exportFileName = $this->getExportPath() . '/record.txt';
+                    $exportFileName = $this->getExportPath() . '/omp.mrk';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
@@ -120,15 +120,11 @@ class ompMarc extends ImportExportPlugin2
     //forma o prefixo do arquivo .xml -desnecessário
     public function getPluginSettingsPrefix()
     {
-        return 'ompMarc222';
+        return 'ompMarc';
     }
 
-    
-
-  
-
     /**
-     * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO txt.
+     * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO mrk.
      */
     public function exportSubmissions($submissionIds, $context, $user, $request)
     {
@@ -152,8 +148,8 @@ class ompMarc extends ImportExportPlugin2
             $authorInfo = [
         'givenName' => $author->getLocalizedGivenName(),
         'surname' => $author->getLocalizedFamilyName(),
-        'afiliation' => $author->getLocalizedAffiliation(),
-        'orcid' => $author->getOrcid(),
+        //'afiliation' => $author->getLocalizedAffiliation(),
+        
     ];
             $authorsInfo[] = $authorInfo;
         }
@@ -168,17 +164,14 @@ class ompMarc extends ImportExportPlugin2
             $abstract = $submission->getLocalizedAbstract();
             $doi = $submission->getStoredPubId('doi');
             $publicationUrl = $request->url($context->getPath(), 'catalog', 'book', [$submission->getId()]);
-            $copyright = $submission->getLocalizedcopyrightHolder();
+           // $copyright = $submission->getLocalizedcopyrightHolder();
             // aqui retorna ano mes dia $publicationYear = $submission->getDatePublished();
             $publicationDate = $submission->getDatePublished();
             $publicationYear = date('Y', strtotime($publicationDate));
             $publicationMonth = date('m', strtotime($publicationDate));
             $publicationDay = date('d', strtotime($publicationDate));
             //timestamp
-            $timestamp = date('YmdHis').substr((string) microtime(), 2, 3);
 
-            // aqui retorna xx_XX (pt-BR ou en_US etc) sendo o idioma em que a publicação foi submetida
-            $submissionLanguage = substr($submission->getLocale(), 0, 2); //aqui retorna xx
             $publisherName = $press->getData('publisher');
             $registrant = $press->getLocalizedName();
 
@@ -188,11 +181,10 @@ class ompMarc extends ImportExportPlugin2
             foreach ($authors as $author) {
                 $givenName = $author->getLocalizedGivenName();
                 $surname = $author->getLocalizedFamilyName();
-                $afiliation = $author->getLocalizedAffiliation();
+               // $afiliation = $author->getLocalizedAffiliation();
                 $authorNames[] = $givenName.' '.$surname;
             }
             $authorName = implode(', ', $authorNames);
-            $orcid = $author->getOrcid();
 
             $isbn = '';
             $publicationFormats = $submission->getCurrentPublication()->getData('publicationFormats');
@@ -207,15 +199,10 @@ class ompMarc extends ImportExportPlugin2
                 }
             }
 
-            
-  /*
-             *
-             * ESTRUTURA mrk
-             *
-             * */
-
-            // Início da estrutura MRK
-   
+  /**
+     * ESTRUTURA mrk
+                       *
+                        * */
 
     $xmlContent .= '=001  usp000000468' . PHP_EOL;
     // ISBN
@@ -245,7 +232,7 @@ class ompMarc extends ImportExportPlugin2
     // Link do livro
     $xmlContent .= '=500  \\\$a' . htmlspecialchars($publicationUrl) . PHP_EOL;
 
-    $xmlContent .= '=506  0\$aFree-to-read $f Unrestricted online access$2star' . PHP_EOL;
+    $xmlContent .= '=506  0\$aFree-to-read$fUnrestricted online access$2star' . PHP_EOL;
 
     // Sinopse
     $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
@@ -277,48 +264,30 @@ foreach ($additionalAuthors as $additionalAuthor) {
     // Link do livro
     $xmlContent .= '=856  40$zFree-to-read:$u' . htmlspecialchars($publicationUrl) . '$70' . PHP_EOL;
 
+    // hardcoding
     $xmlContent .= '=949  \\\$aElectronic resource$wASIS$mONLINE$kONLINE$lONLINE$oUSP OA harvest 471 records 20210803$rY$sY$tONLINE' . PHP_EOL;
-
     $xmlContent .= '=997  \\$aBSLW: DO NOT PROCESS.' . PHP_EOL;
-
     $xmlContent .= '=596  \\\$a42' . PHP_EOL;
-
     $xmlContent .= '=926  \\$aONLINE$bONLINE$cElectronic resource$dONLINE$f1' . PHP_EOL;
 }
 
        // Calcular o número de caracteres
-$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); // Adicionando 1 para contar o caractere de quebra de linha
+$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); 
 
 // Formatar o número de caracteres como uma string de 5 dígitos
 $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
 
-// Inserir o número de caracteres no início do XML
+// Inserir o número de caracteres no início do mrk
 $xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . ' am a22002893u 4500' . PHP_EOL . $xmlContent;
-
-
-
-
-///FINAL DADOS COMPLETOS
-
-
-
-
-
-
-
-
 
 return $xmlContent;
     }
 
-    /**
-     * Final estrutura txt.
-     */
-
-
-
-
-     
+   /**
+     * fim ESTRUTURA mrk
+                        *
+                            * */
+        
     /**
      * @copydoc ImportExportPlugin::executeCLI
      */
