@@ -9,7 +9,8 @@ Este plugin exporta informações de livros OMP em formato .mrk.
 
 <h3>Tutorial:</h3>
 -Acesse o plugin em 'ferramentas > Importar/Exportar > ompMarc'.<br>
-![image](https://github.com/danielsf93/ompMarc/assets/114300053/09bb6eea-7d9a-4ffd-bc3e-ed363b031367)
+![image](https://github.com/danielsf93/ompMarc/assets/114300053/05be6c49-08b7-4b1c-88ef-4b4fdfcb44cb)
+
 
 
 
