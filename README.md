@@ -20,7 +20,9 @@ Este plugin exporta informações de livros OMP em formato .mrk.
 -Em 'Source Directory' selecione a pasta 'C:\AL500_23\Catalog\ConvertIn\omp'. Em 'Function' selecione 'From Mnemonic to MARC' e clique em 'Process'.<br>
 ![image](https://github.com/danielsf93/ompMarc/assets/114300053/68c0468b-c37d-406c-b443-2ce043b857ad) <br>
 -Aparecerá a mensagem 'X files have been generated'. Os arquivos da pasta 'C:\AL500_23\Catalog\ConvertIn\omp' foram convertidos para o formato .mrc dentro da pasta 'C:\AL500_23\Catalog\ConvertIn\omp\processed_files'.<br>
--Agora a rotina de Importação de Títulos do Aleph pode ser seguida normalmente. Lembre-se de que os 'Arquivos de Entrada' estarão na pasta 'C:\AL500_23\Catalog\ConvertIn\omp\processed_files' e a 'Rotina de Conversão' deve ser 'MARC'.<br>
+-Agora a rotina de Importação de Títulos do Aleph pode ser seguida normalmente. Lembre-se de que os 'Arquivos de Entrada' estarão na pasta 'C:\AL500_23\Catalog\ConvertIn\omp\processed_files' e a 'Rotina de Conversão' deve ser 'MARC'.<br><br>
+
+Neste repositório, na pasta exemplos existem arquivos .mrk para teste.
 
 
 
