@@ -210,48 +210,48 @@ class ompMarc extends ImportExportPlugin2
             
   /*
              *
-             * ESTRUTURA mrk
+             * ESTRUTURA XML/txt
              *
              * */
 
-            // Início da estrutura MRK
-   
+            // Início da estrutura XML
+    $xmlContent .= ' am a22002893u 4500' . PHP_EOL;
 
-    $xmlContent .= '=001  usp000000468' . PHP_EOL;
+    $xmlContent .= '001 usp000000468' . PHP_EOL;
     // ISBN
     $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
-    $xmlContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
+    $xmlContent .= '020 $a ' . htmlspecialchars($cleanIsbn) . PHP_EOL;
 
     // DOI
-    $xmlContent .= '=024  7\$' . htmlspecialchars($doi) . '$2doi' . PHP_EOL;
+    $xmlContent .= '024 7 $a ' . htmlspecialchars($doi) . ' $2 doi' . PHP_EOL;
 
-    $xmlContent .= '=042  \\\$adc' . PHP_EOL;
+    $xmlContent .= '042 $a dc' . PHP_EOL;
 
     // Primeira autora
     $firstAuthor = reset($authorsInfo);
-    $xmlContent .= '=100  10$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ',$eauthor' . PHP_EOL;
+    $xmlContent .= '100 10 $a ' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ', $e author' . PHP_EOL;
 
     // Título
-    $xmlContent .= '=245  10$a' . htmlspecialchars($submissionTitle) . PHP_EOL;
+    $xmlContent .= '245 10 $a ' . htmlspecialchars($submissionTitle) . PHP_EOL;
 
     // Portal em inglês e ano
-    $xmlContent .= '=260  \\\$bUSP Open Books Portal, $c' . htmlspecialchars($publicationYear) . '.' . PHP_EOL;
+    $xmlContent .= '260 $b USP Open Books Portal, $c ' . htmlspecialchars($publicationYear) . '.' . PHP_EOL;
 
-    $xmlContent .= '=300  \\\$a1 online resource' . PHP_EOL;
+    $xmlContent .= '300 $a 1 online resource' . PHP_EOL;
 
     // DOI
-    $xmlContent .= '=500  \\\$a' . htmlspecialchars($doi) . PHP_EOL;
+    $xmlContent .= '500 $a ' . htmlspecialchars($doi) . PHP_EOL;
 
     // Link do livro
-    $xmlContent .= '=500  \\\$a' . htmlspecialchars($publicationUrl) . PHP_EOL;
+    $xmlContent .= '500 $a ' . htmlspecialchars($publicationUrl) . PHP_EOL;
 
-    $xmlContent .= '=506  0\$aFree-to-read $f Unrestricted online access$2star' . PHP_EOL;
+    $xmlContent .= '506 0 $a Free-to-read $f Unrestricted online access $2 star' . PHP_EOL;
 
     // Sinopse
     $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
-    $xmlContent .= '=520  \\\$a' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
+    $xmlContent .= '520 $a ' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
 
-    $xmlContent .= '=655  7\$aLivro$2local' . PHP_EOL;
+    $xmlContent .= '655 7 $a Livro $2 local' . PHP_EOL;
 
     // Demais autoras
 $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
@@ -260,45 +260,89 @@ foreach ($additionalAuthors as $additionalAuthor) {
         'givenName' => $additionalAuthor->getLocalizedGivenName(),
         'surname' => $additionalAuthor->getLocalizedFamilyName(),
     ];
-    $xmlContent .= '=700  10$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . ',$eauthor' . PHP_EOL;
+    $xmlContent .= '700 10 $a ' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . ', $e author' . PHP_EOL;
 }
 
     // Portal
     $pressName = $press->getLocalizedName();
-    $xmlContent .= '=786  0\$n' . $pressName . ';' . PHP_EOL;
+    $xmlContent .= '786 0 $n ' . $pressName . ';' . PHP_EOL;
 
     // Portal em inglês
-    $xmlContent .= '=786  0\$nUSP Open Books Portal;' . PHP_EOL;
+    $xmlContent .= '786 0 $n USP Open Books Portal;' . PHP_EOL;
 
     // Portal
     $pressName = $press->getLocalizedName();
-    $xmlContent .= '=793  0\$a' . $pressName .'.'. PHP_EOL;
+    $xmlContent .= '793 0 $a ' . $pressName . PHP_EOL;
 
     // Link do livro
-    $xmlContent .= '=856  40$zFree-to-read:$u' . htmlspecialchars($publicationUrl) . '$70' . PHP_EOL;
+    $xmlContent .= '856 40 $z Free-to-read: $u ' . htmlspecialchars($publicationUrl) . ' $7 0' . PHP_EOL;
 
-    $xmlContent .= '=949  \\\$aElectronic resource$wASIS$mONLINE$kONLINE$lONLINE$oUSP OA harvest 471 records 20210803$rY$sY$tONLINE' . PHP_EOL;
+    $xmlContent .= '949 $a Electronic resource $w ASIS $m ONLINE $k ONLINE $l ONLINE $o USP OA harvest 471 records 20210803 $r Y $s Y $t ONLINE' . PHP_EOL;
 
-    $xmlContent .= '=997  \\$aBSLW: DO NOT PROCESS.' . PHP_EOL;
+    $xmlContent .= '997 $a BSLW: DO NOT PROCESS.' . PHP_EOL;
 
-    $xmlContent .= '=596  \\\$a42' . PHP_EOL;
+    $xmlContent .= '596 $a 42' . PHP_EOL;
 
-    $xmlContent .= '=926  \\$aONLINE$bONLINE$cElectronic resource$dONLINE$f1' . PHP_EOL;
+    $xmlContent .= '926 $a ONLINE $b ONLINE $c Electronic resource $d ONLINE $f 1' . PHP_EOL;
 }
 
        // Calcular o número de caracteres
-$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); // Adicionando 1 para contar o caractere de quebra de linha
+$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8');
 
 // Formatar o número de caracteres como uma string de 5 dígitos
 $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
 
 // Inserir o número de caracteres no início do XML
-$xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . ' am a22002893u 4500' . PHP_EOL . $xmlContent;
+$xmlContent = $numeroDeCaracteresFormatado . $xmlContent;
 
 
 
 
 ///FINAL DADOS COMPLETOS
+
+/*
+
+
+///INICIO DADOS CORRIDOS
+$xmlContent .= '
+*******************************************
+
+';
+
+$xmlContent .= '***TOTAL DE CARACTERES***' 
+. ' am a22'
+.'***A6***'
+.'u' 
+. '
+' 
+. '4500001001300000020001800013024003200031042000700063100004100070245'
+.'***B10***'
+.'60003500'
+.'***C3***'
+.'300002200'
+.'***D3***'
+.'500002700'
+.'***E3***'
+.'500007600'
+.'***F3***'
+.'506005100'
+.'***G3***'
+.'5201'
+.'***H8***'
+.'65500170'
+.'***I-n***'
+.  ''. 'usp000000'.'***J3***'. ' '. 'a'.htmlspecialchars($cleanIsbn).'7 '.'a'.htmlspecialchars($doi).
+'2doi  adc10a'.htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . ',eauthor10a'
+. htmlspecialchars($submissionTitle).'  bUSP Open Books Portal, c'.htmlspecialchars($publicationYear) . '.  a1 online resource  a'
+. htmlspecialchars($doi) . '  a'. htmlspecialchars($publicationUrl). '0 aFree-to-readfUnrestricted online access2star  a'
+.htmlspecialchars_decode($cleanAbstract). ' 7 aLivro2local10a'. htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName'])
+.',eauthor0 n'.$pressName . ';0 nUSP Open Books Portal;0 a' . $pressName . '.40zFree-to-read:u' . htmlspecialchars($publicationUrl) 
+.'70  aElectronic resourcewASISmONLINEkONLINElONLINEoUSP OA harvest 471 records' . date('Ymd', strtotime($publicationDate))
+. 'rYsYtONLINE  aBSLW: DO NOT PROCESS.  a42  aONLINEbONLINEcElectronic resourcedONLINEf1' ;
+
+
+
+*/
 
 
 
