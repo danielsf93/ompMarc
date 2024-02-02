@@ -18,10 +18,12 @@ msgid "plugins.importexport.ompMarc.displayName"
 msgstr "ompMarc"
 
 msgid "plugins.importexport.ompMarc.description"
-msgstr "Exportação de livros em formato mrc."
+msgstr "Exportação de livros em formato .mrk."
 
 msgid "plugins.importexport.ompMarc.exportSubmissions"
 msgstr "Exportar submissão"
 
+msgid "plugins.importexport.ompMarc.notifyWarning"
+msgstr "Este plugin exporta livros no formato .mrk. Após exportar o arquivo, é necessário converter em lote através do software MarcEdit. Verifique a <a href='https://github.com/danielsf93/ompMarc' target='_blank'>documentação online</a>."
 
 

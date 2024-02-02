@@ -19,17 +19,13 @@
 	<li><a href="#export-tab">{translate key="plugins.importexport.ompMarc.exportSubmissions"}</a></li>
 	</ul>
 
-
-
-
-
-	
-
-
-
-
-
 	<div id="export-tab">
+
+		<div class="pkp_notification">
+            <div class="notifyWarning">
+			{translate key="plugins.importexport.ompMarc.notifyWarning"}
+            </div>
+        </div>
 		
 		<form id="exportXmlForm" class="pkp_form" action="{plugin_url path="export"}" method="post">
 			{csrf}
