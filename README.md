@@ -27,7 +27,7 @@ Neste repositório, na pasta exemplos existem arquivos .mrk para teste.
 
 <br><br>
 A fazer:
-Verificar com equipe técnica se a formatação obtida em .mrc está correta. Verificar se o esquema de pastas é o melhor.
+Verificar com equipe técnica se a formatação obtida em .mrc está correta. Verificar se o esquema de pastas é o melhor, vizando que haverá uma adaptação do mesmo plugin para OJS, e criar mais pastas demtro de "Convertin" pode não ser uma boa ideia.
 
 
 
