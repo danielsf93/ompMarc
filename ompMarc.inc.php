@@ -266,9 +266,9 @@ foreach ($additionalAuthors as $additionalAuthor) {
 
     // hardcoding
     $xmlContent .= '=949  \\\$aElectronic resource$wASIS$mONLINE$kONLINE$lONLINE$oUSP OA harvest 471 records 20210803$rY$sY$tONLINE' . PHP_EOL;
-    $xmlContent .= '=997  \\$aBSLW: DO NOT PROCESS.' . PHP_EOL;
+    $xmlContent .= '=997  $aBSLW: DO NOT PROCESS.' . PHP_EOL;
     $xmlContent .= '=596  \\\$a42' . PHP_EOL;
-    $xmlContent .= '=926  \\$aONLINE$bONLINE$cElectronic resource$dONLINE$f1' . PHP_EOL;
+    $xmlContent .= '=926  $aONLINE$bONLINE$cElectronic resource$dONLINE$f1' . PHP_EOL;
 }
 
        // Calcular o número de caracteres
