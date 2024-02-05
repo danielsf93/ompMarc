@@ -27,7 +27,7 @@ Neste repositório, na pasta exemplos existem arquivos .mrk para teste.
 
 <br><br>
 A fazer:
-Verificar com equipe técnica se a formatação obtida em .mrc está correta. Corrigir bugs '997 \\\' e '926 \\\'. Verificar se o esquema de pastas é o melhor.
+Verificar com equipe técnica se a formatação obtida em .mrc está correta. Verificar se o esquema de pastas é o melhor.
 
 
 
