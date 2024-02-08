@@ -1,0 +1,80 @@
+=======================
+Nomes MARC
+=======================
+
+Formato 	BK
+Líder 	00000nam  22     Ia 4500
+Base 	 04
+Dados fixos. 	230919s2023    bl            000 0 por d
+ISBN 	 9786589722465
+Outro no.controle 	 10.11606/9786589722465 DOI
+Fonte catalogadora 	 USP/ABCD
+Idioma 	 por
+Cód.país publica 	 bl
+Autor pessoal 	 Vázquez González, María Magdalena https://orcid.org/0000-0003-3378-2558 (*) INT México
+Título 	As árvores e seus amigos [recurso eletrônico].
+Imprenta 	 Piracicaba : FEALQ, 2023.
+Descrição física 	86 p.; il
+Nota geral 	  Disponível em: https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755. Acesso em: 19.09.2023
+Nota geral 	  Sequência da obra "A incrível vida no solo"
+Assunto 	 ANIMAIS SILVESTRES
+Assunto 	 ÁRVORES
+Assunto 	 BACTÉRIAS
+Assunto 	 ECOLOGIA DE INTERAÇÕES
+Assunto 	 FUNGOS
+Assunto 	 LIVRO DIDÁTICO
+Assunto 	 PLANTAS
+Secund - aut pess 	 Moraes, Gilberto José de https://orcid.org/0000-0002-5587-1781
+Secund - aut pess 	 Castaño Meneses, Rosa Gabriela (*) INT Universidad Nacional Autónoma de México - UNAM México
+Secund - aut pess 	 Pulido, Raúl Ortiz (*) INT Centro de Investigaciones Biológicas. Instituto de Ciencias Básicas e Ingeniaría. Universidad Autónoma del Estado de Hidalgo. Hidalgo México
+Secund - aut pess 	 Milano, Patrícia (*)
+Acesso eletrônico 	"Clicar" sobre o botão para acesso ao texto completo -- https://doi.org/10.11606/9786589722465
+Acesso eletrônico 	"Clicar" sobre o botão para acesso ao texto completo -- https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755
+Tipo de material 	MONOGRAFIA/LIVRO - NACIONAL
+Informações locai 	ESALQ -- ESCOLA SUPERIOR DE AGRICULTURA "LUIZ DE QUEIROZ"
+Idioma 	 Português
+Cód.país publica 	 BRASIL
+TYP 	 Monografia
+TYP 	 ON
+Idioma 	 Português
+No.sistema 	003155042
+
+=============
+Campos MARC
+=============
+
+FMT 	BK
+LDR 	00000nam  22     Ia 4500
+BAS 	|a 04
+008 	230919s2023    bl            000 0 por d
+020 	|a 9786589722465
+0247 	|a 10.11606/9786589722465 |2 DOI
+040 	|a USP/ABCD
+0410 	|a por
+044 	|a bl
+1001 	|a Vázquez González, María Magdalena |0 https://orcid.org/0000-0003-3378-2558 |5 (*) |7 INT |8 Universidad de Quintana Roo |9 México
+24512 	|a As árvores e seus amigos |h [recurso eletrônico]
+260 	|a Piracicaba |b FEALQ |c 2023
+300 	|a 86 p |b il
+500 	|a Disponível em: https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755. Acesso em: 19.09.2023
+500 	|a Sequência da obra "A incrível vida no solo"
+650 7 	|a ANIMAIS SILVESTRES |2 larpcal
+650 7 	|a ÁRVORES |2 larpcal
+650 7 	|a BACTÉRIAS |2 larpcal
+650 7 	|a ECOLOGIA DE INTERAÇÕES |2 larpcal
+650 7 	|a FUNGOS |2 larpcal
+650 7 	|a LIVRO DIDÁTICO |2 larpcal
+650 7 	|a PLANTAS |2 larpcal
+7001 	|a Moraes, Gilberto José de |0 https://orcid.org/0000-0002-5587-1781
+7001 	|a Castaño Meneses, Rosa Gabriela |4 colab |5 (*) |7 INT |8 Universidad Nacional Autónoma de México - UNAM |9 México
+7001 	|a Pulido, Raúl Ortiz |4 colab |5 (*) |7 INT |8 Centro de Investigaciones Biológicas. Instituto de Ciencias Básicas e Ingeniaría. Universidad Autónoma del Estado de Hidalgo. Hidalgo |9 México
+7001 	|a Milano, Patrícia |4 il |5 (*)
+8564 	|z "Clicar" sobre o botão para acesso ao texto completo |u https://doi.org/10.11606/9786589722465 |3 DOI
+85641 	|z "Clicar" sobre o botão para acesso ao texto completo |u https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755 |3 E-Livro
+945 	|a P |b MONOGRAFIA/LIVRO |c 06 |j 2023 |l NACIONAL
+946 	|a MORAES, GILBERTO JOSÉ DE |b 2091754 |e ESALQ |f ESCOLA SUPERIOR DE AGRICULTURA "LUIZ DE QUEIROZ" |i RDIDP |j DOC APOS |k PROFESSOR ASSOCIADO |l 80 |m 20180302 |n 20501231
+CAT 	|a MIDIAM |b 10 |c 20230919 |l USP01 |h 1043
+CAT 	|a ANGELATL |b 10 |c 20230922 |l USP01 |h 0911
+CAT 	|a ANGELATL |b 10 |c 20230922 |l USP01 |h 0922
+CAT 	|a RICARDO |b 10 |c 20231002 |l USP01 |h 0203
+SYS 	003155042
