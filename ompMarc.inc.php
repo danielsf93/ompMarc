@@ -179,10 +179,13 @@ class ompMarc extends ImportExportPlugin2
             $authorNames = [];
             $authors = $submission->getAuthors();
             foreach ($authors as $author) {
-                $givenName = $author->getLocalizedGivenName();
-                $surname = $author->getLocalizedFamilyName();
-               // $afiliation = $author->getLocalizedAffiliation();
-                $authorNames[] = $givenName.' '.$surname;
+                $authorInfo = [
+                    'givenName' => $author->getLocalizedGivenName(),
+                    'surname' => $author->getLocalizedFamilyName(),
+                    'afiliation' => $author->getLocalizedAffiliation(),
+                    'orcid' => $author->getOrcid(), 
+                ];
+                $authorsInfo[] = $authorInfo;
             }
             $authorName = implode(', ', $authorNames);
 
@@ -281,25 +284,54 @@ $xmlContent .= '
 $xmlContent .= '************************** NOVO TESTE ***************************' . PHP_EOL;
 
 $xmlContent .= '=LDR  NUMERO DE CARACTERES am a22002893u 4500' . PHP_EOL;
-
-$currentDateTime = date('Y/m/d-H:i:s.0');
+//fomanda a data atual
+$currentDateTime = date('YmdHis.0');
 $xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
-
-
-
-
-$xmlContent .= '=005  20231002020300.0' . PHP_EOL;
+//que data é essa?
 $xmlContent .= '=008  230919s2023\\\\bl\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
-$xmlContent .= '=020  \\$a9786589722465' . PHP_EOL;
-$xmlContent .= '=024  7\$a10.11606/9786589722465$2DOI' . PHP_EOL;
+//isbn
+
+$xmlContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
+//doi
+$xmlContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
+//fonte catalogadora
 $xmlContent .= '=040  \\$aUSP/ABCD' . PHP_EOL;
+//idioma
 $xmlContent .= '=041  0\$apor' . PHP_EOL;
+//país
 $xmlContent .= '=044  \\$abl' . PHP_EOL;
-$xmlContent .= '=100  1\$aVázquez González, María Magdalena$0https://orcid.org/0000-0003-3378-2558$5(*)$7INT$8Universidad de Quintana Roo$9México' . PHP_EOL;
-$xmlContent .= '=245  12$aAs árvores e seus amigos$h[recurso eletrônico]' . PHP_EOL;
+
+//primeiro autor, orcid, instituição, país - '=100 1\sobrenome, nome$0orcid$5(*)$7INT$8instituição$9país)
+//$xmlContent .= '=100  1\$aVázquez González, María Magdalena$0https://orcid.org/0000-0003-3378-2558$5(*)$7INT$8Universidad de Quintana Roo$9México' . PHP_EOL;
+// Adiciona o ORCID e a afiliação se ambos estiverem presentes
+if (!empty($authorInfo['orcid']) && !empty($authorInfo['afiliation'])) {
+    $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$0' . $authorInfo['orcid'] . '$5(*)$7INT$8' . $authorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+} elseif (!empty($authorInfo['orcid'])) {
+    // Adiciona apenas o ORCID se presente
+    $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$0' . $authorInfo['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
+} elseif (!empty($authorInfo['afiliation'])) {
+    // Adiciona apenas a afiliação se presente
+    $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$7INT$8' . $authorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+} else {
+    // Adiciona sem ORCID e afiliação se nenhum estiver presente
+    $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
+}
+
+//titulo
+$xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
+
+//copyright
 $xmlContent .= '=260  \\$aPiracicaba$bFEALQ$c2023' . PHP_EOL;
+//?
 $xmlContent .= '=300  \\$a86 p$bil' . PHP_EOL;
-$xmlContent .= '=500  \\$aDisponível em: https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755. Acesso em: 19.09.2023' . PHP_EOL;
+
+//link e acesso - deve ser o pdf
+// Obter a data e hora atuais
+$currentDateTime = date('d.m.Y');
+$xmlContent .= '=500  \\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
+
+
+//?
 $xmlContent .= '=500  \\$aSequência da obra A incrível vida no solo' . PHP_EOL;
 $xmlContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
 $xmlContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
@@ -308,12 +340,18 @@ $xmlContent .= '=650  \7$aECOLOGIA DE INTERAÇÕES$2larpcal' . PHP_EOL;
 $xmlContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
 $xmlContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
 $xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
+
+//demais autores
 $xmlContent .= '=700  1\$aMoraes, Gilberto José de$0https://orcid.org/0000-0002-5587-1781' . PHP_EOL;
 $xmlContent .= '=700  1\$aCastaño Meneses, Rosa Gabriela$4colab$5(*)$7INT$8Universidad Nacional Autónoma de México - UNAM$9México' . PHP_EOL;
 $xmlContent .= '=700  1\$aPulido, Raúl Ortiz$4colab$5(*)$7INT$8Centro de Investigaciones Biológicas. Instituto de Ciencias Básicas e Ingeniaría. Universidad Autónoma del Estado de Hidalgo. Hidalgo$9México' . PHP_EOL;
 $xmlContent .= '=700  1\$aMilano, Patrícia$4il$5(*)' . PHP_EOL;
-$xmlContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/10.11606/9786589722465$3DOI' . PHP_EOL;
-$xmlContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$uhttps://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755$3E-Livro' . PHP_EOL;
+
+//doi
+$xmlContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
+//link -deve ser o pdf
+$xmlContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
+//...
 $xmlContent .= '=945  \\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
 
 
