@@ -271,68 +271,11 @@ foreach ($additionalAuthors as $additionalAuthor) {
     $xmlContent .= '=926  \\\$aONLINE$bONLINE$cElectronic resource$dONLINE$f1' . PHP_EOL;
 }
 
-
-///NOVO TESTE DE FORMATAÇÃO
-$xmlContent .= '
-
-
-';
-
-$xmlContent .= '************************** NOVO TESTE ***************************' . PHP_EOL;
-
-$xmlContent .= '=LDR  NUMERO DE CARACTERES am a22002893u 4500' . PHP_EOL;
-
-$currentDateTime = date('Y/m/d-H:i:s.0');
-$xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
-
-
-
-
-$xmlContent .= '=005  20231002020300.0' . PHP_EOL;
-$xmlContent .= '=008  230919s2023\\\\bl\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
-$xmlContent .= '=020  \\$a9786589722465' . PHP_EOL;
-$xmlContent .= '=024  7\$a10.11606/9786589722465$2DOI' . PHP_EOL;
-$xmlContent .= '=040  \\$aUSP/ABCD' . PHP_EOL;
-$xmlContent .= '=041  0\$apor' . PHP_EOL;
-$xmlContent .= '=044  \\$abl' . PHP_EOL;
-$xmlContent .= '=100  1\$aVázquez González, María Magdalena$0https://orcid.org/0000-0003-3378-2558$5(*)$7INT$8Universidad de Quintana Roo$9México' . PHP_EOL;
-$xmlContent .= '=245  12$aAs árvores e seus amigos$h[recurso eletrônico]' . PHP_EOL;
-$xmlContent .= '=260  \\$aPiracicaba$bFEALQ$c2023' . PHP_EOL;
-$xmlContent .= '=300  \\$a86 p$bil' . PHP_EOL;
-$xmlContent .= '=500  \\$aDisponível em: https://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755. Acesso em: 19.09.2023' . PHP_EOL;
-$xmlContent .= '=500  \\$aSequência da obra A incrível vida no solo' . PHP_EOL;
-$xmlContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aBACTÉRIAS$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aECOLOGIA DE INTERAÇÕES$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
-$xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
-$xmlContent .= '=700  1\$aMoraes, Gilberto José de$0https://orcid.org/0000-0002-5587-1781' . PHP_EOL;
-$xmlContent .= '=700  1\$aCastaño Meneses, Rosa Gabriela$4colab$5(*)$7INT$8Universidad Nacional Autónoma de México - UNAM$9México' . PHP_EOL;
-$xmlContent .= '=700  1\$aPulido, Raúl Ortiz$4colab$5(*)$7INT$8Centro de Investigaciones Biológicas. Instituto de Ciencias Básicas e Ingeniaría. Universidad Autónoma del Estado de Hidalgo. Hidalgo$9México' . PHP_EOL;
-$xmlContent .= '=700  1\$aMilano, Patrícia$4il$5(*)' . PHP_EOL;
-$xmlContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/10.11606/9786589722465$3DOI' . PHP_EOL;
-$xmlContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$uhttps://www.livrosabertos.sibi.usp.br/portaldelivrosUSP/catalog/view/1110/1015/3755$3E-Livro' . PHP_EOL;
-$xmlContent .= '=945  \\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
-
-
-
-
-
-
-
-
-
-///FIM TESTE DE FORMATAÇÃO
-
        // Calcular o número de caracteres
 $numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); 
 
 // Formatar o número de caracteres como uma string de 5 dígitos
 $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
-
-
 
 // Inserir o número de caracteres no início do mrk
 $xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . ' am a22002893u 4500' . PHP_EOL . $xmlContent;
