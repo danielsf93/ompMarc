@@ -82,9 +82,6 @@ class ompMarc extends ImportExportPlugin2
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
                     break;
-//Parte responsávle pelo form
-
-                        // no break
             default:
                 $dispatcher = $request->getDispatcher();
                 $dispatcher->handle404();
@@ -141,23 +138,23 @@ class ompMarc extends ImportExportPlugin2
                 $submissions[] = $submission;
             }
         }
-       // Obtendo dados dos autores
-$authorNames = [];
-$authors = $submission->getAuthors();
+        // Obtendo dados dos autores
+            $authorNames = [];
+            $authors = $submission->getAuthors();
 
-// Obtendo informações do primeiro autor
-$firstAuthor = reset($authors);
+        // Obtendo informações do primeiro autor
+        $firstAuthor = reset($authors);
 
-foreach ($authors as $author) {
-    $authorInfo = [
-        'givenName' => $author->getLocalizedGivenName(),
-        'surname' => $author->getLocalizedFamilyName(),
-        'orcid' => $author->getOrcid(),
-        'afiliation' => $author->getLocalizedAffiliation(),
-        'locale' => $author->getCountryLocalized(),
-    ];
-    $authorsInfo[] = $authorInfo;
-}
+        foreach ($authors as $author) {
+            $authorInfo = [
+                'givenName' => $author->getLocalizedGivenName(),
+                'surname' => $author->getLocalizedFamilyName(),
+                'orcid' => $author->getOrcid(),
+                'afiliation' => $author->getLocalizedAffiliation(),
+                'locale' => $author->getCountryLocalized(),
+            ];
+            $authorsInfo[] = $authorInfo;
+        }
 
         foreach ($submissions as $submission) {
             // Obtendo o título da submissão
@@ -183,17 +180,17 @@ foreach ($authors as $author) {
             // Obtendo dados dos autores
             $authorNames = [];
             $authors = $submission->getAuthors();
-            foreach ($authors as $author) {
-                $givenName = $author->getLocalizedGivenName();
-                $surname = $author->getLocalizedFamilyName();
-               // $afiliation = $author->getLocalizedAffiliation();
-                $authorNames[] = $givenName.' '.$surname;
+        foreach ($authors as $author) {
+            $givenName = $author->getLocalizedGivenName();
+            $surname = $author->getLocalizedFamilyName();
+            // $afiliation = $author->getLocalizedAffiliation();
+            $authorNames[] = $givenName.' '.$surname;
             }
             $authorName = implode(', ', $authorNames);
 
             $isbn = '';
             $publicationFormats = $submission->getCurrentPublication()->getData('publicationFormats');
-            foreach ($publicationFormats as $publicationFormat) {
+        foreach ($publicationFormats as $publicationFormat) {
                 $identificationCodes = $publicationFormat->getIdentificationCodes();
                 while ($identificationCode = $identificationCodes->next()) {
                     if ($identificationCode->getCode() == '02' || $identificationCode->getCode() == '15') {
@@ -213,10 +210,10 @@ foreach ($authors as $author) {
     // ISBN
     $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
 
-    //fomanda a data atual
+    //formando a data atual
     $currentDateTime = date('YmdHis.0');
     $xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
-    //que data é essa? 'por = idioma'
+    //que data é essa? bl = país?, 'por = idioma'
     $xmlContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
     //isbn
     $xmlContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
@@ -252,8 +249,8 @@ foreach ($authors as $author) {
     
     //copyright
     $xmlContent .= '=260  \\\$aLOCAL$bCOPYRIGHT$c2023' . PHP_EOL;
-    //?
-    $xmlContent .= '=300  \\\$a86 p$bil' . PHP_EOL;
+    //XX = numero de páginas, p$ = página? bil = ?
+    $xmlContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
     //link e acesso - deve ser o pdf
     // Obter a data e hora atuais
@@ -272,7 +269,7 @@ foreach ($authors as $author) {
     $xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
     */
     
-    // Demais autoras autora - Sobrenome, Nome - Orcid - Afiliação - País
+    // Demais autoras- Sobrenome, Nome - Orcid - Afiliação - País
     $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
     foreach ($additionalAuthors as $additionalAuthor) {
     $additionalAuthorInfo = [
