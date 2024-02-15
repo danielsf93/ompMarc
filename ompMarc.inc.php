@@ -179,13 +179,10 @@ class ompMarc extends ImportExportPlugin2
             $authorNames = [];
             $authors = $submission->getAuthors();
             foreach ($authors as $author) {
-                $authorInfo = [
-                    'givenName' => $author->getLocalizedGivenName(),
-                    'surname' => $author->getLocalizedFamilyName(),
-                    'afiliation' => $author->getLocalizedAffiliation(),
-                    'orcid' => $author->getOrcid(), 
-                ];
-                $authorsInfo[] = $authorInfo;
+                $givenName = $author->getLocalizedGivenName();
+                $surname = $author->getLocalizedFamilyName();
+               // $afiliation = $author->getLocalizedAffiliation();
+                $authorNames[] = $givenName.' '.$surname;
             }
             $authorName = implode(', ', $authorNames);
 
@@ -227,20 +224,21 @@ class ompMarc extends ImportExportPlugin2
     //país
     $xmlContent .= '=044  \\\$abl' . PHP_EOL;
     
-    //primeiro autor, orcid, instituição, país - '=100 1\sobrenome, nome$0orcid$5(*)$7INT$8instituição$9país)
-    //$xmlContent .= '=100  1\$aVázquez González, María Magdalena$0https://orcid.org/0000-0003-3378-2558$5(*)$7INT$8Universidad de Quintana Roo$9México' . PHP_EOL;
-    // Adiciona o ORCID e a afiliação se ambos estiverem presentes
-    if (!empty($authorInfo['orcid']) && !empty($authorInfo['afiliation'])) {
-        $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$0' . $authorInfo['orcid'] . '$5(*)$7INT$8' . $authorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
-    } elseif (!empty($authorInfo['orcid'])) {
+    //primeira autora
+    $firstAuthor = reset($authorsInfo);
+
+
+    if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9PAIS' . PHP_EOL;
+    } elseif (!empty($firstAuthor['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$0' . $authorInfo['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
-    } elseif (!empty($authorInfo['afiliation'])) {
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
+    } elseif (!empty($firstAuthor['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$7INT$8' . $authorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9PAIS' . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($authorInfo['surname']) . ', ' . htmlspecialchars($authorInfo['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
     }
     
     //titulo
@@ -267,11 +265,30 @@ class ompMarc extends ImportExportPlugin2
     $xmlContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
     
-    //demais autores
-    $xmlContent .= '=700  1\$aMoraes, Gilberto José de$0https://orcid.org/0000-0002-5587-1781' . PHP_EOL;
-    $xmlContent .= '=700  1\$aCastaño Meneses, Rosa Gabriela$4colab$5(*)$7INT$8Universidad Nacional Autónoma de México - UNAM$9México' . PHP_EOL;
-    $xmlContent .= '=700  1\$aPulido, Raúl Ortiz$4colab$5(*)$7INT$8Centro de Investigaciones Biológicas. Instituto de Ciencias Básicas e Ingeniaría. Universidad Autónoma del Estado de Hidalgo. Hidalgo$9México' . PHP_EOL;
-    $xmlContent .= '=700  1\$aMilano, Patrícia$4il$5(*)' . PHP_EOL;
+    
+    // Demais autoras
+$additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
+foreach ($additionalAuthors as $additionalAuthor) {
+    $additionalAuthorInfo = [
+        'givenName' => $additionalAuthor->getLocalizedGivenName(),
+        'surname' => $additionalAuthor->getLocalizedFamilyName(),
+        'orcid' => $additionalAuthor->getOrcid(),
+        'afiliation' => $additionalAuthor->getLocalizedAffiliation(),
+    ];
+
+    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
+    }
+}
     
     //doi
     $xmlContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
