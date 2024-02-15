@@ -154,7 +154,6 @@ foreach ($authors as $author) {
         'surname' => $author->getLocalizedFamilyName(),
         'orcid' => $author->getOrcid(),
         'afiliation' => $author->getLocalizedAffiliation(),
-        'country' => $author->getCountry(),
         'locale' => $author->getCountryLocalized(),
     ];
     $authorsInfo[] = $authorInfo;
@@ -262,7 +261,7 @@ foreach ($authors as $author) {
     $xmlContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
     
     
-    //?
+    /**desnecessário 
     $xmlContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
     $xmlContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
@@ -271,29 +270,30 @@ foreach ($authors as $author) {
     $xmlContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
+    */
     
-    
-    // Demais autoras
-$additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
-foreach ($additionalAuthors as $additionalAuthor) {
+    // Demais autoras autora - Sobrenome, Nome - Orcid - Afiliação - País
+    $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
+    foreach ($additionalAuthors as $additionalAuthor) {
     $additionalAuthorInfo = [
         'givenName' => $additionalAuthor->getLocalizedGivenName(),
         'surname' => $additionalAuthor->getLocalizedFamilyName(),
         'orcid' => $additionalAuthor->getOrcid(),
         'afiliation' => $additionalAuthor->getLocalizedAffiliation(),
+        'locale' => $additionalAuthor->getCountryLocalized(),
     ];
 
     if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9PAIS' . PHP_EOL;
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
+        $xmlContent .= '=700  1$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     }
 }
     
