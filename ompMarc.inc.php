@@ -229,9 +229,9 @@ class ompMarc extends ImportExportPlugin2
     $xmlContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
     //fonte catalogadora
     $xmlContent .= '=040  \\\$aUSP/ABCD' . PHP_EOL;
-    //idioma
+    //idioma 'por'
     $xmlContent .= '=041  0\$apor' . PHP_EOL;
-    //país
+    //país bl = brasil?
     $xmlContent .= '=044  \\\$abl' . PHP_EOL;
     
     //primeira autora - Sobrenome, Nome - Orcid - Afiliação - País
@@ -254,14 +254,14 @@ class ompMarc extends ImportExportPlugin2
     //titulo
     $xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
-    //Lpcal - copyright - c/ano
+    //Local - copyright - c/ano
     $xmlContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     //XX = numero de páginas, p$ = página? bil = ?
     $xmlContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
-    //link e acesso - deve ser o pdf
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
+    //link e acesso - (deve ser o pdf) com data de acesso
     $xmlContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
     
     
@@ -311,15 +311,15 @@ class ompMarc extends ImportExportPlugin2
     
 }
 
-       // Calcular o número de caracteres
-$numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); 
-// Formatar o número de caracteres como uma string de 5 dígitos
-$numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
-// Inserir o número de caracteres no início do mrk
-$xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $xmlContent;
+        // Calcular o número de caracteres
+        $numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); 
+        // Formatar o número de caracteres como uma string de 5 dígitos
+        $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
+        // Inserir o número de caracteres no início do mrk
+        $xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $xmlContent;
 
-return $xmlContent;
-    }
+        return $xmlContent;
+            }
 
    /**
      * fim ESTRUTURA mrk
