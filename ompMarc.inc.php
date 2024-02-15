@@ -207,27 +207,25 @@ class ompMarc extends ImportExportPlugin2
                        *
                         * */
 
-    $xmlContent .= '=001  usp000000468' . PHP_EOL;
+    
     // ISBN
     $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
 
-    $xmlContent .= '=LDR  NUMERO DE CARACTERES am a22002893u 4500' . PHP_EOL;
     //fomanda a data atual
     $currentDateTime = date('YmdHis.0');
     $xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
-    //que data é essa?
-    $xmlContent .= '=008  230919s2023\\\\bl\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
+    //que data é essa? 'por = idioma'
+    $xmlContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
     //isbn
-    
     $xmlContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
     //doi
     $xmlContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
     //fonte catalogadora
-    $xmlContent .= '=040  \\$aUSP/ABCD' . PHP_EOL;
+    $xmlContent .= '=040  \\\$aUSP/ABCD' . PHP_EOL;
     //idioma
     $xmlContent .= '=041  0\$apor' . PHP_EOL;
     //país
-    $xmlContent .= '=044  \\$abl' . PHP_EOL;
+    $xmlContent .= '=044  \\\$abl' . PHP_EOL;
     
     //primeiro autor, orcid, instituição, país - '=100 1\sobrenome, nome$0orcid$5(*)$7INT$8instituição$9país)
     //$xmlContent .= '=100  1\$aVázquez González, María Magdalena$0https://orcid.org/0000-0003-3378-2558$5(*)$7INT$8Universidad de Quintana Roo$9México' . PHP_EOL;
@@ -249,18 +247,18 @@ class ompMarc extends ImportExportPlugin2
     $xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
     //copyright
-    $xmlContent .= '=260  \\$aPiracicaba$bFEALQ$c2023' . PHP_EOL;
+    $xmlContent .= '=260  \\\$aLOCAL$bCOPYRIGHT$c2023' . PHP_EOL;
     //?
-    $xmlContent .= '=300  \\$a86 p$bil' . PHP_EOL;
+    $xmlContent .= '=300  \\\$a86 p$bil' . PHP_EOL;
     
     //link e acesso - deve ser o pdf
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
-    $xmlContent .= '=500  \\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
+    $xmlContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
     
     
     //?
-    $xmlContent .= '=500  \\$aSequência da obra A incrível vida no solo' . PHP_EOL;
+    $xmlContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
     $xmlContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
     $xmlContent .= '=650  \7$aBACTÉRIAS$2larpcal' . PHP_EOL;
@@ -280,7 +278,7 @@ class ompMarc extends ImportExportPlugin2
     //link -deve ser o pdf
     $xmlContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
     //...
-    $xmlContent .= '=945  \\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
+    $xmlContent .= '=945  \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
     
     
 }
