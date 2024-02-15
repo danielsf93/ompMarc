@@ -154,6 +154,8 @@ foreach ($authors as $author) {
         'surname' => $author->getLocalizedFamilyName(),
         'orcid' => $author->getOrcid(),
         'afiliation' => $author->getLocalizedAffiliation(),
+        'country' => $author->getCountry(),
+        'locale' => $author->getCountryLocalized(),
     ];
     $authorsInfo[] = $authorInfo;
 }
@@ -228,23 +230,24 @@ foreach ($authors as $author) {
     //país
     $xmlContent .= '=044  \\\$abl' . PHP_EOL;
     
-    //primeira autora
+    //primeira autora - Sobrenome, Nome - Orcid - Afiliação - País
     $firstAuthor = reset($authorsInfo);
 
-
     if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
-        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } elseif (!empty($firstAuthor['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } elseif (!empty($firstAuthor['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9PAIS' . PHP_EOL;
+        $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     }
     
+ //   $xmlContent .= 'TESTEEEEEEEEEEEE' . htmlspecialchars($firstAuthor['surname']) . htmlspecialchars($firstAuthor['country']) . htmlspecialchars($firstAuthor['locale']) .PHP_EOL;
+
     //titulo
     $xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
@@ -316,7 +319,7 @@ return $xmlContent;
 
    /**
      * fim ESTRUTURA mrk
-                        *
+    *
                             * */
         
     /**
