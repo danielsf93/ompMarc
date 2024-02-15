@@ -141,18 +141,22 @@ class ompMarc extends ImportExportPlugin2
                 $submissions[] = $submission;
             }
         }
-        $authorsInfo = [];
-        $authors = $submission->getAuthors();
+       // Obtendo dados dos autores
+$authorNames = [];
+$authors = $submission->getAuthors();
 
-        foreach ($authors as $author) {
-            $authorInfo = [
+// Obtendo informações do primeiro autor
+$firstAuthor = reset($authors);
+
+foreach ($authors as $author) {
+    $authorInfo = [
         'givenName' => $author->getLocalizedGivenName(),
         'surname' => $author->getLocalizedFamilyName(),
-        //'afiliation' => $author->getLocalizedAffiliation(),
-        
+        'orcid' => $author->getOrcid(),
+        'afiliation' => $author->getLocalizedAffiliation(),
     ];
-            $authorsInfo[] = $authorInfo;
-        }
+    $authorsInfo[] = $authorInfo;
+}
 
         foreach ($submissions as $submission) {
             // Obtendo o título da submissão
