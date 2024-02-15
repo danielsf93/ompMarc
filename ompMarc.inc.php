@@ -166,7 +166,8 @@ class ompMarc extends ImportExportPlugin2
             $abstract = $submission->getLocalizedAbstract();
             $doi = $submission->getStoredPubId('doi');
             $publicationUrl = $request->url($context->getPath(), 'catalog', 'book', [$submission->getId()]);
-           // $copyright = $submission->getLocalizedcopyrightHolder();
+            $copyright = $submission->getLocalizedcopyrightHolder();
+            $copyrightyear = $submission->getCopyrightYear();
             // aqui retorna ano mes dia $publicationYear = $submission->getDatePublished();
             $publicationDate = $submission->getDatePublished();
             $publicationYear = date('Y', strtotime($publicationDate));
@@ -210,6 +211,13 @@ class ompMarc extends ImportExportPlugin2
     // ISBN
     $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
 
+
+
+
+    //TESTE
+ $xmlContent .= 'TESTEEEEEEEEEEEE' .htmlspecialchars($copyrightyear). PHP_EOL;
+
+
     //formando a data atual
     $currentDateTime = date('YmdHis.0');
     $xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
@@ -242,13 +250,12 @@ class ompMarc extends ImportExportPlugin2
         $xmlContent .= '=100  1$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     }
     
- //   $xmlContent .= 'TESTEEEEEEEEEEEE' . htmlspecialchars($firstAuthor['surname']) . htmlspecialchars($firstAuthor['country']) . htmlspecialchars($firstAuthor['locale']) .PHP_EOL;
 
     //titulo
     $xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
-    //copyright
-    $xmlContent .= '=260  \\\$aLOCAL$bCOPYRIGHT$c2023' . PHP_EOL;
+    //Lpcal - copyright - c/ano
+    $xmlContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     //XX = numero de páginas, p$ = página? bil = ?
     $xmlContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
