@@ -263,6 +263,9 @@ class ompMarc extends ImportExportPlugin2
     //link e acesso - (deve ser o pdf) com data de acesso
     $xmlContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
     
+    // Sinopse
+    $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
+    $xmlContent .= '=520  \\\$a' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
     
     /**desnecessário 
     $xmlContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
@@ -287,16 +290,16 @@ class ompMarc extends ImportExportPlugin2
     ];
 
     if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $xmlContent .= '=700  1/$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=700  1/$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=700  1/$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=700  1/$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     }
 }
     
