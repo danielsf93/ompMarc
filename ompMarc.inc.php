@@ -203,9 +203,6 @@ class ompMarc extends ImportExportPlugin2
                        *
                         * */
 
-    
-    // ISBN
-    
     //formando a data atual
     $currentDateTime = date('YmdHis.0');
     $marcContent .= "=005  {$currentDateTime}" . PHP_EOL;
@@ -299,6 +296,7 @@ class ompMarc extends ImportExportPlugin2
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
         $marcContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $marcContent;
+
 
         return $marcContent;
             }
