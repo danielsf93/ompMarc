@@ -175,9 +175,22 @@ class ompMarc extends ImportExportPlugin2
             $publicationDay = date('d', strtotime($publicationDate));
             //timestamp
 
+
+
+
+
+            $seriePosition = $submission->getSeriesPosition();
+            $serie = $submission->getSeriesPosition();
+            
+
+
+
+
             $publisherName = $press->getData('publisher');
             $registrant = $press->getLocalizedName();
 
+
+            
             // Obtendo dados dos autores
             $authorNames = [];
             $authors = $submission->getAuthors();
@@ -219,63 +232,65 @@ class ompMarc extends ImportExportPlugin2
 
     //formando a data atual
     $currentDateTime = date('YmdHis.0');
-    $xmlContent .= "=005  {$currentDateTime}" . PHP_EOL;
+    $marcContent .= "=005  {$currentDateTime}" . PHP_EOL;
     //que data é essa? bl = país?, 'por = idioma'
-    $xmlContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
+    $marcContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
     //isbn
-    $xmlContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
+    $marcContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
     //doi
-    $xmlContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
+    $marcContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
     //fonte catalogadora
-    $xmlContent .= '=040  \\\$aUSP/ABCD' . PHP_EOL;
+    $marcContent .= '=040  \\\$aUSP/ABCD' . PHP_EOL;
     //idioma 'por'
-    $xmlContent .= '=041  0\$apor' . PHP_EOL;
+    $marcContent .= '=041  0\$apor' . PHP_EOL;
     //país bl = brasil?
-    $xmlContent .= '=044  \\\$abl' . PHP_EOL;
+    $marcContent .= '=044  \\\$abl' . PHP_EOL;
     
     //primeira autora - Sobrenome, Nome - Orcid - Afiliação - País
     $firstAuthor = reset($authorsInfo);
 
     if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
-        $xmlContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } elseif (!empty($firstAuthor['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } elseif (!empty($firstAuthor['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
     }
     
 
     //titulo
-    $xmlContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
+    $marcContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
     //Local - copyright - c/ano
-    $xmlContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
+    $marcContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     //XX = numero de páginas, p$ = página? bil = ?
-    $xmlContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
+    //omp não demonstra numero de páginas
+    $marcContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
     //link e acesso - (deve ser o pdf) com data de acesso
-    $xmlContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
+    $marcContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
     
     // Sinopse
+    //verificar se é necessário
     $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
-    $xmlContent .= '=520  \\\$a' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
-    
+    $marcContent .= '=520  \\\$a' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
+
     /**desnecessário 
-    $xmlContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
-    $xmlContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aBACTÉRIAS$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aECOLOGIA DE INTERAÇÕES$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
-    $xmlContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
+    $marcContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
+    $marcContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aBACTÉRIAS$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aECOLOGIA DE INTERAÇÕES$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
+    $marcContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
     */
     
     // Demais autoras- Sobrenome, Nome - Orcid - Afiliação - País
@@ -290,35 +305,35 @@ class ompMarc extends ImportExportPlugin2
     ];
 
     if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } elseif (!empty($additionalAuthorInfo['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $xmlContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
     }
 }
     
     //doi
-    $xmlContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
+    $marcContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
     //link -deve ser o pdf
-    $xmlContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
+    $marcContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
     //...
-    $xmlContent .= '=945  \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
+    $marcContent .= '=945  \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
     
     
 }
 
         // Calcular o número de caracteres
-        $numeroDeCaracteres = mb_strlen($xmlContent, 'UTF-8'); 
+        $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
-        $xmlContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $xmlContent;
+        $marcContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $marcContent;
 
 
 
@@ -327,16 +342,18 @@ class ompMarc extends ImportExportPlugin2
 
 
 //TESTE
-$xmlContent .= '
+$marcContent .= '
 
 '. PHP_EOL;
 
 
-$xmlContent .= 'TESTES:'. PHP_EOL;
-$xmlContent .= 'Sinopse:'. PHP_EOL;
-$xmlContent .= 'Série:'. PHP_EOL;
-$xmlContent .= 'Capitulo:'. PHP_EOL;
-$xmlContent .= 'Palavras-chave:'. PHP_EOL;
+$marcContent .= 'TESTES:'. PHP_EOL;
+
+$marcContent .= 'Série: ' . htmlspecialchars($serie) . PHP_EOL;
+$marcContent .= 'Posição na série: ' . htmlspecialchars($seriePosition) . PHP_EOL;
+$marcContent .= 'Categoria:'. PHP_EOL;
+$marcContent .= 'Capitulo:'. PHP_EOL;
+$marcContent .= 'Palavras-chave:'. PHP_EOL;
 
 
 
@@ -344,7 +361,7 @@ $xmlContent .= 'Palavras-chave:'. PHP_EOL;
 
 
 
-        return $xmlContent;
+        return $marcContent;
             }
 
    /**
@@ -359,7 +376,7 @@ $xmlContent .= 'Palavras-chave:'. PHP_EOL;
     {
         $opts = $this->parseOpts($args, ['no-embed', 'use-file-urls']);
         $command = array_shift($args);
-        $xmlFile = array_shift($args);
+        $marcFile = array_shift($args);
         $pressPath = array_shift($args);
 
         AppLocale::requireComponents(LOCALE_COMPONENT_APP_MANAGER, LOCALE_COMPONENT_PKP_MANAGER, LOCALE_COMPONENT_PKP_SUBMISSION);
@@ -377,28 +394,28 @@ $xmlContent .= 'Palavras-chave:'. PHP_EOL;
             return;
         }
 
-        if ($xmlFile && $this->isRelativePath($xmlFile)) {
-            $xmlFile = PWD.'/'.$xmlFile;
+        if ($marcFile && $this->isRelativePath($marcFile)) {
+            $marcFile = PWD.'/'.$marcFile;
         }
 
         switch ($command) {
             case 'export':
-                $outputDir = dirname($xmlFile);
-                if (!is_writable($outputDir) || (file_exists($xmlFile) && !is_writable($xmlFile))) {
+                $outputDir = dirname($marcFile);
+                if (!is_writable($outputDir) || (file_exists($marcFile) && !is_writable($marcFile))) {
                     echo __('plugins.importexport.common.cliError')."\n";
-                    echo __('plugins.importexport.common.export.error.outputFileNotWritable', ['param' => $xmlFile])."\n\n";
+                    echo __('plugins.importexport.common.export.error.outputFileNotWritable', ['param' => $marcFile])."\n\n";
                     $this->usage($scriptName);
 
                     return;
                 }
 
-                if ($xmlFile != '') {
+                if ($marcFile != '') {
                     switch (array_shift($args)) {
                         case 'monograph':
                         case 'monographs':
                             $selectedSubmissions = array_slice($args, 1);
-                            $xmlContent = $this->exportSubmissions($selectedSubmissions);
-                            file_put_contents($xmlFile, $xmlContent);
+                            $marcContent = $this->exportSubmissions($selectedSubmissions);
+                            file_put_contents($marcFile, $marcContent);
 
                             return;
                     }
