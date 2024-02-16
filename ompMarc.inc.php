@@ -173,24 +173,7 @@ class ompMarc extends ImportExportPlugin2
             $publicationYear = date('Y', strtotime($publicationDate));
             $publicationMonth = date('m', strtotime($publicationDate));
             $publicationDay = date('d', strtotime($publicationDate));
-            //timestamp
-
-
-
-
-
-            $seriePosition = $submission->getSeriesPosition();
-            $serie = $submission->getSeriesPosition();
-            
-
-
-
-
-            $publisherName = $press->getData('publisher');
-            $registrant = $press->getLocalizedName();
-
-
-            
+                          
             // Obtendo dados dos autores
             $authorNames = [];
             $authors = $submission->getAuthors();
@@ -222,20 +205,14 @@ class ompMarc extends ImportExportPlugin2
 
     
     // ISBN
-    $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
-
-
-
-
     
-
-
     //formando a data atual
     $currentDateTime = date('YmdHis.0');
     $marcContent .= "=005  {$currentDateTime}" . PHP_EOL;
     //que data é essa? bl = país?, 'por = idioma'
     $marcContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
     //isbn
+    $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
     $marcContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
     //doi
     $marcContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
@@ -281,17 +258,6 @@ class ompMarc extends ImportExportPlugin2
     //verificar se é necessário
     $cleanAbstract = str_replace(['<p>', '</p>'], '', $abstract);
     $marcContent .= '=520  \\\$a' . htmlspecialchars_decode($cleanAbstract) . PHP_EOL;
-
-    /**desnecessário 
-    $marcContent .= '=500  \\\$aSequência da obra A incrível vida no solo' . PHP_EOL;
-    $marcContent .= '=650  \7$aANIMAIS SILVESTRES$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aÁRVORES$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aBACTÉRIAS$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aECOLOGIA DE INTERAÇÕES$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aFUNGOS$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aLIVRO DIDÁTICO$2larpcal' . PHP_EOL;
-    $marcContent .= '=650  \7$aPLANTAS$2larpcal' . PHP_EOL;
-    */
     
     // Demais autoras- Sobrenome, Nome - Orcid - Afiliação - País
     $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
@@ -327,39 +293,12 @@ class ompMarc extends ImportExportPlugin2
     
     
 }
-
         // Calcular o número de caracteres
         $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
         $marcContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $marcContent;
-
-
-
-
-
-
-
-//TESTE
-$marcContent .= '
-
-'. PHP_EOL;
-
-
-$marcContent .= 'TESTES:'. PHP_EOL;
-
-$marcContent .= 'Série: ' . htmlspecialchars($serie) . PHP_EOL;
-$marcContent .= 'Posição na série: ' . htmlspecialchars($seriePosition) . PHP_EOL;
-$marcContent .= 'Categoria:'. PHP_EOL;
-$marcContent .= 'Capitulo:'. PHP_EOL;
-$marcContent .= 'Palavras-chave:'. PHP_EOL;
-
-
-
-
-
-
 
         return $marcContent;
             }
