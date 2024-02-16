@@ -49,21 +49,27 @@ class ompMarc extends ImportExportPlugin2
                     [
                         'apiUrl' => $apiUrl,
                         'count' => 100,
-                        'getParams' => new stdClass(),
+                        'getParams' => [
+                            'status' => [STATUS_PUBLISHED], // Filtro para livros publicados
+                        ],
                         'lazyLoad' => true,
                     ]
                 );
+        
                 $submissionsConfig = $submissionsListPanel->getConfig();
                 $submissionsConfig['addUrl'] = '';
                 $submissionsConfig['filters'] = array_slice($submissionsConfig['filters'], 1);
+        
                 $templateMgr->setState([
                     'components' => [
                         'submissions' => $submissionsConfig,
                     ],
                 ]);
+        
                 $templateMgr->assign([
                     'pageComponent' => 'ImportExportPage',
                 ]);
+        
                 $templateMgr->display($this->getTemplateResource('index.tpl'));
                 break;
                 //aqui exporta o livro
