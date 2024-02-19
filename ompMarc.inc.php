@@ -211,6 +211,7 @@ class ompMarc extends ImportExportPlugin2
 
     //formando a data atual
     $currentDateTime = date('YmdHis.0');
+    $marcContent = '';
     $marcContent .= "=005  {$currentDateTime}" . PHP_EOL;
     //que data é essa? bl = país?, 'por = idioma'
     $marcContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
@@ -250,7 +251,7 @@ class ompMarc extends ImportExportPlugin2
     $marcContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     //XX = numero de páginas, p$ = página? bil = ?
     //omp não demonstra numero de páginas
-    $marcContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
+   // $marcContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
@@ -294,7 +295,10 @@ class ompMarc extends ImportExportPlugin2
     //...
     $marcContent .= '=945  \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
     
-    
+
+
+
+
 }
         // Calcular o número de caracteres
         $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
