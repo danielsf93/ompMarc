@@ -83,7 +83,7 @@ class ompMarc extends ImportExportPlugin2
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
                     //nome do arquivo e formato txt - trocar por rec
-                    $exportFileName = $this->getExportPath() . '/omp.mrc';
+                    $exportFileName = $this->getExportPath() . '/omp.mrk';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
@@ -287,6 +287,8 @@ class ompMarc extends ImportExportPlugin2
     $marcContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
     //link -deve ser o pdf
     $marcContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
+
+    $marcContent .= '=945 \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
     //...
     
     
@@ -305,12 +307,25 @@ class ompMarc extends ImportExportPlugin2
     /////
 
     $marcContent .= '01603'.'nam 22000205a 4500 ';
-    $marcContent .= '005001700000008004100017020001800058024002500076040001300101041000800114044000700122100013800129245010800267260007900375500010700454520056800561856009401129856013001223945004401353';
+    $marcContent .= 
+    '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
+    '38'.'00129245'.'0108'.'002'.'672'.'600'.'079'.'003'.
+    '755'.'000107004'.'548560094'.'005'.'61856013000655';
+
+/**
+ * '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
+ *   X .'00129245'. X .'002'. X .'600'. X .'003'. X .'000107004'. X .'005'. X ;
+  
+ */
+
+
+
+
     $currentDateTime = date('YmdHis.0');
     $marcContent .=''."{$currentDateTime}".
     ''.'230919s2023    bl            000 0 por d'.
     '  a'.htmlspecialchars($cleanIsbn).'7 '.
-    'a'.htmlspecialchars($doi).'2DOI.'.
+    'a'.htmlspecialchars($doi).'2DOI'.
     '  aUSP/ABCD0 apor  abl1 ';
 
     //primeiro autor - arrumar ifs
