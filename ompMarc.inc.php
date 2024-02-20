@@ -83,7 +83,7 @@ class ompMarc extends ImportExportPlugin2
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
                     //nome do arquivo e formato txt - trocar por rec
-                    $exportFileName = $this->getExportPath() . '/omp.mrk';
+                    $exportFileName = $this->getExportPath() . '/omp.mrc';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
                     $fileManager->deleteByPath($exportFileName);
@@ -288,7 +288,7 @@ class ompMarc extends ImportExportPlugin2
     //link -deve ser o pdf
     $marcContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
     //...
-    $marcContent .= '=945  \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
+    
     
 
 
@@ -300,19 +300,12 @@ class ompMarc extends ImportExportPlugin2
 
 
     ////NOVOS TESTES
-    $marcContent .= '
-    
-    *********************************************************************************
-    ' . PHP_EOL;
-
-
-
-
-    
+  
 
     /////
 
-    $marcContent .= '01603nam 22000205a 4500 005001700000008004100017020001800058024002500076040001300101041000800114044000700122100013800129245010800267260007900375500010700454520056800561856009401129856013001223945004401353';
+    $marcContent .= '01603'.'nam 22000205a 4500 ';
+    $marcContent .= '005001700000008004100017020001800058024002500076040001300101041000800114044000700122100013800129245010800267260007900375500010700454520056800561856009401129856013001223945004401353';
     $currentDateTime = date('YmdHis.0');
     $marcContent .=''."{$currentDateTime}".
     ''.'230919s2023    bl            000 0 por d'.
@@ -336,7 +329,7 @@ class ompMarc extends ImportExportPlugin2
     $marcContent .='4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI41z'.
     'Clicar sobre o botão para acesso ao texto completou'.
-    htmlspecialchars($publicationUrl).'3E-Livro  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
+    htmlspecialchars($publicationUrl).'3E-Livro';
 
 
 
