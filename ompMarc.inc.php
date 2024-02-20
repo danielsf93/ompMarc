@@ -299,6 +299,41 @@ class ompMarc extends ImportExportPlugin2
 
 
 
+
+
+
+
+
+    ////NOVOS TESTES
+
+
+    $marcContent .= '
+    ' . PHP_EOL;
+
+    $marcContent .= '*******************************TESTES***********************************' . PHP_EOL;
+
+
+    $marcContent .= '
+    ' . PHP_EOL;
+
+
+    
+
+    $marcContent .= '01048nam 22000205a 4500 00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001380012924501080026726000790037530000130045450001070046785600940057485601300066894500440079820240216114659.0230919s2023    bl            000 0 por d  a97885720526897 a10.1234/pusp.182DOI  aUSP/ABCD0 apor  abl1 aViana, Fausto0https://orcid.org/0000-0002-4823-36265(*)7INT8Universidade de São Paulo. Escola de Comunicações e Artes 9Brasil12aOs trajes de cena da Igreja Católica: um breve manual de conservação têxtil h[recurso eletrônico]  aLOCALbUniversidade de São Paulo. Escola de Comunicações e Artes c2024  aXX pbil  aDisponível em: http://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/24. Acesso em: 16.02.20244 zClicar sobre o botão para acesso ao texto completouhttps://doi.org/10.1234/pusp.183DOI41zClicar sobre o botão para acesso ao texto completouhttp://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/243E-Livro  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL' . PHP_EOL;
+
+
+
+
+
+
+
+
+
+
+
+
+    //FIM DE TESTES
+
 }
         // Calcular o número de caracteres
         $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
