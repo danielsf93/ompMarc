@@ -126,6 +126,41 @@ class ompMarc extends ImportExportPlugin2
         return 'ompMarc';
     }
 
+
+
+
+// Função para obter a cidade com base no copyright
+function obterCidade($copyright) {
+    $cidades = array(
+        'Escola de Artes, Ciências e Humanidades' => 'São Paulo',
+        'Escola de Comunicações e Artes' => 'São Paulo',
+        'Escola de Educação Física e Esporte' => 'São Paulo',
+        'Faculdade de Odontologia de Bauru' => 'Bauru',
+        'Hospital de Reabilitação de Anomalias Craniofaciais' => 'Bauru',
+        'Escola de Engenharia de Lorena' => 'Lorena',
+        'Centro de Energia Nuclear na Agricultura' => 'Piracicaba',
+        'Escola Superior de Agricultura “Luiz de Queiroz”' => 'Piracicaba',
+        'Escola Superior de Agricultura Luiz de Queiroz' => 'Piracicaba',
+        'Faculdade de Zootecnia e Engenharia de Alimentos' => 'Pirassununga',
+        'Faculdade de Medicina de Ribeirão Preto' => 'Ribeirão Preto',
+        'Faculdade de Odontologia de Ribeirão Preto' => 'Ribeirão Preto'
+    );
+
+    // Verifica se há uma correspondência no array de cidades
+    foreach ($cidades as $key => $cidade) {
+        if (strpos($copyright, $key) !== false) {
+            return $cidade;
+        }
+    }
+
+    // Se não houver correspondência, retorna 'LOCAL'
+    return 'LOCAL';
+}
+
+
+
+
+
     /**
      * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO mrk.
      */
@@ -247,20 +282,14 @@ class ompMarc extends ImportExportPlugin2
     //titulo
     $marcContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
-    //Local - copyright - c/ano
-$copyrightText = htmlspecialchars($copyright);
+    //Local do copyright
+    $marcContent .= '=260  \\\$aLOCAL';
 
-// Verifica se a string começa com "Universidade de São Paulo."
-if (strpos($copyrightText, 'Universidade de São Paulo.') === 0) {
-    // Remove "Universidade de São Paulo." do início da string
-    $copyrightText = substr($copyrightText, strlen('Universidade de São Paulo. '));
-}
+    //copyright e ano
+    $marcContent .='$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
+    
 
-$marcContent .= '=260  \\\$aLOCAL'.'$b'.$copyrightText.'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
 
-    //XX = numero de páginas, p$ = página? bil = ?
-    //omp não demonstra numero de páginas
-   // $marcContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
     
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
