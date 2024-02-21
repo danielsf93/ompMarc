@@ -248,7 +248,16 @@ class ompMarc extends ImportExportPlugin2
     $marcContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
     //Local - copyright - c/ano
-    $marcContent .= '=260  \\\$aLOCAL'.'$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
+$copyrightText = htmlspecialchars($copyright);
+
+// Verifica se a string começa com "Universidade de São Paulo."
+if (strpos($copyrightText, 'Universidade de São Paulo.') === 0) {
+    // Remove "Universidade de São Paulo." do início da string
+    $copyrightText = substr($copyrightText, strlen('Universidade de São Paulo. '));
+}
+
+$marcContent .= '=260  \\\$aLOCAL'.'$b'.$copyrightText.'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
+
     //XX = numero de páginas, p$ = página? bil = ?
     //omp não demonstra numero de páginas
    // $marcContent .= '=300  \\\$aXX p$bil' . PHP_EOL;
