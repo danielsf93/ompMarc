@@ -288,7 +288,7 @@ class ompMarc extends ImportExportPlugin2
     //link -deve ser o pdf
     $marcContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
 
-    $marcContent .= '=945 \\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
+    $marcContent .= '=945  \\\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
     //...
     
     
@@ -329,10 +329,44 @@ class ompMarc extends ImportExportPlugin2
     '  aUSP/ABCD0 apor  abl1 ';
 
     //primeiro autor - arrumar ifs
-    $marcContent .='a'.'Viana, Fausto'.
-    '0'.'https://orcid.org/0000-0002-4823-3626'.
-    '5(*)7INT8'.'Universidade de São Paulo. Escola de Comunicações e Artes '.
-    '9'.'Brasil';
+   // $marcContent .='a'.'Viana, Fausto'.
+    //'0'.'https://orcid.org/0000-0002-4823-3626'.
+    //'5(*)7INT8'.'Universidade de São Paulo. Escola de Comunicações e Artes '.
+    //'9'.'Brasil';
+
+    $marcContent .= PHP_EOL;
+    $marcContent .= PHP_EOL;
+
+//primeiro autor - Sobrenome, Nome - Orcid - Afiliação - País
+$firstAuthor = reset($authorsInfo);
+
+if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
+    $marcContent .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                    '0' . $firstAuthor['orcid'] . 
+                    '5(*)7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
+} elseif (!empty($firstAuthor['orcid'])) {
+    // Adiciona apenas o ORCID se presente
+    $marcContent .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                    '0' . $firstAuthor['orcid'] . 
+                    '5(*)7INT9' . htmlspecialchars($firstAuthor['locale']);
+} elseif (!empty($firstAuthor['afiliation'])) {
+    // Adiciona apenas a afiliação se presente
+    $marcContent .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                    '7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
+} else {
+    // Adiciona sem ORCID e afiliação se nenhum estiver presente
+    $marcContent .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                    '5(*)9' . htmlspecialchars($firstAuthor['locale']);
+}
+
+// Adiciona uma quebra de linha no final
+$marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
+
+
+
+
+
 
     //titulo
     $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  '.
