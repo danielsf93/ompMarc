@@ -375,6 +375,40 @@ $marcContent .= PHP_EOL;
     $currentDateTime = date('d.m.Y');
     $marcContent .= '. Acesso em: '.$currentDateTime;
 
+    
+    $marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
+    
+    // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
+$additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
+
+foreach ($additionalAuthors as $additionalAuthor) {
+    $additionalAuthorInfo = [
+        'givenName' => $additionalAuthor['givenName'],
+        'surname' => $additionalAuthor['surname'],
+        'orcid' => $additionalAuthor['orcid'],
+        'afiliation' => $additionalAuthor['afiliation'],
+        'locale' => $additionalAuthor['locale'],
+    ];
+
+    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
+        $marcContent .= 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '$5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $marcContent .= 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $marcContent .= 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $marcContent .= 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    }
+}
+
+$marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
+
+
     $marcContent .='4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI41z'.
     'Clicar sobre o botão para acesso ao texto completou'.
