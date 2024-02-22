@@ -351,12 +351,17 @@ class ompMarc extends ImportExportPlugin2
     $marcContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
     
     //Local do copyright
-    $marcContent .= '=260  \\\$aLOCAL';
+
+    // Obtém a cidade correspondente ou 'LOCAL'
+    $cidade = $this->obterCidade($copyright);
+
+    // Adiciona a informação no marcContent
+    $marcContent .= '=260  \\\$a'. $cidade;
 
     //copyright e ano
     $marcContent .='$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     
-    $marcContent .='TESTEEEEE'.htmlspecialchars($copyright). PHP_EOL;
+    
 
     
     // Obter a data e hora atuais
