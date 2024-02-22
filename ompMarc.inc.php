@@ -130,19 +130,83 @@ class ompMarc extends ImportExportPlugin2
     function obterCidade($copyright) {
         $mapeamentoCidades = [
             'São Paulo' => [
-                'Escola de Artes, Ciências e Humanidades', 'Escola de Artes, Ciências e Humanidades ',
-                'Escola de Comunicações e Artes', 'Escola de Comunicações e Artes ',
-                'Escola de Educação Física e Esporte', 'Escola de Educação Física e Esporte ',
-                'Escola de Enfermagem', 'Escola de Enfermagem ',
-                'Escola Politécnica', 'Escola Politécnica ',
-                'Faculdade de Arquitetura e Urbanismo', 'Faculdade de Arquitetura e Urbanismo ',
-                // ... adicione outras variações
+                'Escola de Artes, Ciências e Humanidades', 'Escola de Artes, Ciências e Humanidades ', 
+                'Escola de Comunicações e Artes', 'Escola de Comunicações e Artes ', 
+                'Escola de Educação Física e Esporte', 'Escola de Educação Física e Esporte ', 
+                'Escola de Enfermagem', 'Escola de Enfermagem ', 
+                'Escola Politécnica', 'Escola Politécnica ', 
+                'Faculdade de Arquitetura e Urbanismo', 'Faculdade de Arquitetura e Urbanismo ', 
+                'Faculdade de Ciências Farmacêuticas', 'Faculdade de Ciências Farmacêuticas ', 
+                'Faculdade de Direito', 'Faculdade de Direito ', 
+                'Faculdade de Economia, Administração e Contabilidade', 'Faculdade de Economia, Administração e Contabilidade ', 
+                'Faculdade de Educação', 'Faculdade de Educação ', 
+                'Faculdade de Filosofia, Letras e Ciências Humanas', 'Faculdade de Filosofia, Letras e Ciências Humanas ', 
+                'Faculdade de Medicina', 'Faculdade de Medicina ', 
+                'Faculdade de Medicina Veterinária e Zootecnia', 'Faculdade de Medicina Veterinária e Zootecnia ', 
+                'Faculdade de Odontologia', 'Faculdade de Odontologia ', 
+                'Faculdade de Saúde Pública', 'Faculdade de Saúde Pública ', 
+                'Instituto de Astronomia, Geofísica e Ciências Atmosféricas','Instituto de Astronomia, Geofísica e Ciências Atmosféricas ', 
+                'Instituto de Biociências', 'Instituto de Biociências ', 
+                'Instituto de Ciências Biomédicas', 'Instituto de Ciências Biomédicas ', 
+                'Instituto de Energia e Ambiente', 'Instituto de Energia e Ambiente ', 
+                'Instituto de Estudos Avançados', 'Instituto de Estudos Avançados ', 
+                'Instituto de Estudos Brasileiros', 'Instituto de Estudos Brasileiros ', 
+                'Instituto de Física', 'Instituto de Física ', 
+                'Instituto de Geociências', 'Instituto de Geociências ', 
+                'Instituto de Matemática e Estatística', 'Instituto de Matemática e Estatística ', 
+                'Instituto de Medicina Tropical de São Paulo', 'Instituto de Medicina Tropical de São Paulo ', 
+                'Instituto de Psicologia', 'Instituto de Psicologia ', 
+                'Instituto de Química', 'Instituto de Química ', 
+                'Instituto de Relações Internacionais', 'Instituto de Relações Internacionais ', 
+                'Instituto Oceanográfico', 'Instituto Oceanográfico ', 
+                'Museu de Arqueologia e Etnografia', 'Museu de Arqueologia e Etnografia ', 
+                'Museu de Arte Contemporânea', 'Museu de Arte Contemporânea ', 
+                'Museu Paulista', 'Museu Paulista ', 
+                'Museu de Zoologia', 'Museu de Zoologia ', 
             ],
+
+            'Bauru' => [
+                'Faculdade de Odontologia de Bauru', 'Faculdade de Odontologia de Bauru ', 
+                'Hospital de Reabilitação de Anomalias Craniofaciais', 'Hospital de Reabilitação de Anomalias Craniofaciais ',
+            ],
+
+            'Lorena' => [
+                'Escola de Engenharia de Lorena', 'Escola de Engenharia de Lorena ', 
+            ],
+
+            'Piracicaba' => [
+                'Centro de Energia Nuclear na Agricultura', 'Centro de Energia Nuclear na Agricultura ', 
+                'Escola Superior de Agricultura “Luiz de Queiroz”', 'Escola Superior de Agricultura “Luiz de Queiroz” ', 
+                'Escola Superior de Agricultura Luiz de Queiroz', 'Escola Superior de Agricultura Luiz de Queiroz ', 
+            ],
+            
+            'Pirassununga' => [
+                'Faculdade de Zootecnia e Engenharia de Alimentos', 'Faculdade de Zootecnia e Engenharia de Alimentos ',
+            ],
+            
             'Ribeirão Preto' => [
-                'Faculdade de Medicina de Ribeirão Preto', 'Faculdade de Medicina de Ribeirão Preto ',
-                // ... adicione outras variações
+                'Escola de Educação Física e Esporte de Ribeirão Preto', 'Escola de Educação Física e Esporte de Ribeirão Preto ', 
+                'Escola de Enfermagem de Ribeirão Preto', 'Escola de Enfermagem de Ribeirão Preto ', 
+                'Faculdade de Ciências Farmacêuticas de Ribeirão Preto', 'Faculdade de Ciências Farmacêuticas de Ribeirão Preto ', 
+                'Faculdade de Direito de Ribeirão Preto', 'Faculdade de Direito de Ribeirão Preto ', 
+                'Faculdade de Economia, Administração e Contabilidade de Ribeirão Preto', 'Faculdade de Economia, Administração e Contabilidade de Ribeirão Preto ', 
+                'Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto', 'Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto ', 
+                'Faculdade de Medicina de Ribeirão Preto', 'Faculdade de Medicina de Ribeirão Preto ', 
+                'Faculdade de Odontologia de Ribeirão Preto', 'Faculdade de Odontologia de Ribeirão Preto ', 
             ],
-            // ... adicione outras cidades
+
+            'Santos' => [
+                'Departamento de Engenharia de Minas e Petróleo', 'Departamento de Engenharia de Minas e Petróleo ',
+            ],
+
+            'São Carlos' => [
+                'Escola de Engenharia de São Carlos', 'Escola de Engenharia de São Carlos ', 
+                'Instituto de Arquitetura e Urbanismo', 'Instituto de Arquitetura e Urbanismo ', 
+                'Instituto de Ciências Matemáticas e de Computação', 'Instituto de Ciências Matemáticas e de Computação ', 
+                'Instituto de Física de São Carlos', 'Instituto de Física de São Carlos ', 
+                'Instituto de Química de São Carlos', 'Instituto de Química de São Carlos ', 
+            ],
+
         ];
     
         // Remove a parte fixa da string de copyright
