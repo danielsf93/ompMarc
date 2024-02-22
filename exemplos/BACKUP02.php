@@ -271,7 +271,97 @@ class ompMarc extends ImportExportPlugin2
                 }
             }
 
- 
+  /**
+     * ESTRUTURA mrk
+                       *
+                        * */
+
+    //formando a data atual
+    $currentDateTime = date('YmdHis.0');
+    $marcContent = '';
+    $marcContent .= "=005  {$currentDateTime}" . PHP_EOL;
+    //que data é essa? bl = país?, 'por = idioma'
+    $marcContent .= '=008  230919s2023\\\\\\\\bl\\\\\\\\\\\\\\\\\\\\\\\\000\0\por\d' . PHP_EOL;
+    //isbn
+    $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
+    $marcContent .= '=020  \\\$a' . htmlspecialchars($cleanIsbn) . PHP_EOL;
+    //doi
+    $marcContent .= '=024  7\$a' . htmlspecialchars($doi). '$2DOI' . PHP_EOL;
+    //fonte catalogadora
+    $marcContent .= '=040  \\\$aUSP/ABCD' . PHP_EOL;
+    //idioma 'por'
+    $marcContent .= '=041  0\$apor' . PHP_EOL;
+    //país bl = brasil?
+    $marcContent .= '=044  \\\$abl' . PHP_EOL;
+    
+    //primeira autora - Sobrenome, Nome - Orcid - Afiliação - País
+    $firstAuthor = reset($authorsInfo);
+
+    if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+    } elseif (!empty($firstAuthor['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$0' . $firstAuthor['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+    } elseif (!empty($firstAuthor['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$7INT$8' . $firstAuthor['afiliation'] . '$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $marcContent .= '=100  1\$a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . '$5(*)$9' . htmlspecialchars($firstAuthor['locale']) . PHP_EOL;
+    }
+    
+
+    //titulo
+    $marcContent .= '=245  12$a'.htmlspecialchars($submissionTitle).'$h[recurso eletrônico]' . PHP_EOL;
+    
+    //Local do copyright
+
+    // Obtém a cidade correspondente ou 'LOCAL'
+    $cidade = $this->obterCidade($copyright);
+    $marcContent .= '=260  \\\$a'. $cidade;
+
+    // Copyright e ano
+    if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
+        $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
+    }
+    $marcContent .= '$b' . htmlspecialchars($copyright) . '$c' . htmlspecialchars($copyrightyear) . PHP_EOL;
+     
+    // Obter a data e hora atuais
+    $currentDateTime = date('d.m.Y');
+    //link e acesso - (deve ser o pdf) com data de acesso
+    $marcContent .= '=500  \\\$aDisponível em: ' . htmlspecialchars($publicationUrl) . '. Acesso em: ' . $currentDateTime . PHP_EOL;
+    
+    // Demais autoras- Sobrenome, Nome - Orcid - Afiliação - País
+    $additionalAuthors = array_slice($authors, 1); // Pular o primeiro autor
+    foreach ($additionalAuthors as $additionalAuthor) {
+    $additionalAuthorInfo = [
+        'givenName' => $additionalAuthor->getLocalizedGivenName(),
+        'surname' => $additionalAuthor->getLocalizedFamilyName(),
+        'orcid' => $additionalAuthor->getOrcid(),
+        'afiliation' => $additionalAuthor->getLocalizedAffiliation(),
+        'locale' => $additionalAuthor->getCountryLocalized(),
+    ];
+
+    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$7INT$8' . $additionalAuthorInfo['afiliation'] . '$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $marcContent .= '=700  1\$a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)$9' . htmlspecialchars($additionalAuthorInfo['locale']) . PHP_EOL;
+    }
+}
+    
+    //doi
+    $marcContent .= '=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/'.htmlspecialchars($doi).'$3DOI' . PHP_EOL;
+    //link -deve ser o pdf
+    $marcContent .= '=856  41$zClicar sobre o botão para acesso ao texto completo$u'.htmlspecialchars($publicationUrl).'$3E-Livro' . PHP_EOL;
+
+    $marcContent .= '=945  \\\\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL' . PHP_EOL;
   
     
     
@@ -291,8 +381,7 @@ class ompMarc extends ImportExportPlugin2
  */
 
 
-//isbn
-$cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
+
 
     $currentDateTime = date('YmdHis.0');
     $marcContent .=''."{$currentDateTime}".
@@ -301,7 +390,14 @@ $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
     'a'.htmlspecialchars($doi).'2DOI'.
     '  aUSP/ABCD0 apor  abl1 ';
 
-    
+    //primeiro autor - arrumar ifs
+   // $marcContent .='a'.'Viana, Fausto'.
+    //'0'.'https://orcid.org/0000-0002-4823-3626'.
+    //'5(*)7INT8'.'Universidade de São Paulo. Escola de Comunicações e Artes '.
+    //'9'.'Brasil';
+
+    $marcContent .= PHP_EOL;
+    $marcContent .= PHP_EOL;
 
 //primeiro autor - Sobrenome, Nome - Orcid - Afiliação - País
 $firstAuthor = reset($authorsInfo);
@@ -326,7 +422,8 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
 }
 
 // Adiciona uma quebra de linha no final
-//$marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
 
     //titulo
     $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  ';
@@ -336,20 +433,16 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
     $cidade = $this->obterCidade($copyright);
 
     // Adiciona a informação no marcContent
-    $marcContent .= 'a' . $cidade;
-
-    // Remove a parte fixa da string de copyright, se ela começar com "Universidade de São Paulo. "
-if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
-    $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
-}
-
-// Gera o conteúdo para $marcContent
-$marcContent .= 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($copyrightyear) .'  '. 
-
+    $marcContent .= 'a' . $cidade . '';
     
+    $marcContent .= 'b'.htmlspecialchars($copyright).'c'.htmlspecialchars($copyrightyear).'  '.
     'aDisponível em: '.htmlspecialchars($publicationUrl);
     $currentDateTime = date('d.m.Y');
     $marcContent .= '. Acesso em: '.$currentDateTime;
+
+    
+    $marcContent .= PHP_EOL;
+    $marcContent .= PHP_EOL;
     
     // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
     $additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
@@ -377,13 +470,14 @@ $marcContent .= 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($c
     }
 }
 
+$marcContent .= PHP_EOL;
+$marcContent .= PHP_EOL;
+
 
     $marcContent .='4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI41z'.
     'Clicar sobre o botão para acesso ao texto completou'.
     htmlspecialchars($publicationUrl).'3E-Livro';
-
-    $marcContent .='  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 
 
 
@@ -397,7 +491,7 @@ $marcContent .= 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($c
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
-        $marcContent = $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . $marcContent;
+        $marcContent = '=LDR  ' . $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . PHP_EOL . $marcContent;
 
 
         return $marcContent;
