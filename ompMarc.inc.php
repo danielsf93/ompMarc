@@ -354,16 +354,14 @@ class ompMarc extends ImportExportPlugin2
 
     // Obtém a cidade correspondente ou 'LOCAL'
     $cidade = $this->obterCidade($copyright);
-
-    // Adiciona a informação no marcContent
     $marcContent .= '=260  \\\$a'. $cidade;
 
-    //copyright e ano
-    $marcContent .='$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
-    
-    
-
-    
+    // Copyright e ano
+    if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
+        $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
+    }
+    $marcContent .= '$b' . htmlspecialchars($copyright) . '$c' . htmlspecialchars($copyrightyear) . PHP_EOL;
+     
     // Obter a data e hora atuais
     $currentDateTime = date('d.m.Y');
     //link e acesso - (deve ser o pdf) com data de acesso
@@ -474,11 +472,6 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
 $marcContent .= PHP_EOL;
 $marcContent .= PHP_EOL;
 
-
-
-
-
-
     //titulo
     $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  ';
     
@@ -486,8 +479,8 @@ $marcContent .= PHP_EOL;
     // Obtém a cidade correspondente ou 'LOCAL'
     $cidade = $this->obterCidade($copyright);
 
-// Adiciona a informação no marcContent
-$marcContent .= 'a' . $cidade . '';
+    // Adiciona a informação no marcContent
+    $marcContent .= 'a' . $cidade . '';
     
     $marcContent .= 'b'.htmlspecialchars($copyright).'c'.htmlspecialchars($copyrightyear).'  '.
     'aDisponível em: '.htmlspecialchars($publicationUrl);
@@ -496,12 +489,12 @@ $marcContent .= 'a' . $cidade . '';
 
     
     $marcContent .= PHP_EOL;
-$marcContent .= PHP_EOL;
+    $marcContent .= PHP_EOL;
     
     // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
-$additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
+    $additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
 
-foreach ($additionalAuthors as $additionalAuthor) {
+    foreach ($additionalAuthors as $additionalAuthor) {
     $additionalAuthorInfo = [
         'givenName' => $additionalAuthor['givenName'],
         'surname' => $additionalAuthor['surname'],
