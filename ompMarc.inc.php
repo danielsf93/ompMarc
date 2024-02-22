@@ -125,38 +125,30 @@ class ompMarc extends ImportExportPlugin2
     {
         return 'ompMarc';
     }
+    
 
-
-
-
-// Função para obter a cidade com base no copyright
-function obterCidade($copyright) {
-    $cidades = array(
-        'Escola de Artes, Ciências e Humanidades' => 'São Paulo',
-        'Escola de Comunicações e Artes' => 'São Paulo',
-        'Escola de Educação Física e Esporte' => 'São Paulo',
-        'Faculdade de Odontologia de Bauru' => 'Bauru',
-        'Hospital de Reabilitação de Anomalias Craniofaciais' => 'Bauru',
-        'Escola de Engenharia de Lorena' => 'Lorena',
-        'Centro de Energia Nuclear na Agricultura' => 'Piracicaba',
-        'Escola Superior de Agricultura “Luiz de Queiroz”' => 'Piracicaba',
-        'Escola Superior de Agricultura Luiz de Queiroz' => 'Piracicaba',
-        'Faculdade de Zootecnia e Engenharia de Alimentos' => 'Pirassununga',
-        'Faculdade de Medicina de Ribeirão Preto' => 'Ribeirão Preto',
-        'Faculdade de Odontologia de Ribeirão Preto' => 'Ribeirão Preto'
-    );
-
-    // Verifica se há uma correspondência no array de cidades
-    foreach ($cidades as $key => $cidade) {
-        if (strpos($copyright, $key) !== false) {
-            return $cidade;
+    function obterCidade($copyright) {
+        $mapeamentoCidades = [
+            'São Paulo' => 'São Paulo',
+            'Universidade de São Paulo. Escola de Comunicações e Artes ' => 'São Paulo',
+           // 'Universidade de São Paulo. Escola de Comunicações e Artes' => 'São Paulo',
+            'Bauru' => 'Bauru',
+            'Lorena' => 'Lorena',
+            'Piracicaba' => 'Piracicaba',
+            'Pirassununga' => 'Pirassununga',
+            'Ribeirão Preto' => 'Ribeirão Preto',
+            'Santos' => 'Santos',
+            'São Carlos' => 'São Carlos',
+        ];
+    
+        // Verifica se há uma correspondência exata na lista
+        if (array_key_exists($copyright, $mapeamentoCidades)) {
+            return $mapeamentoCidades[$copyright];
         }
+    
+        // Se não houver correspondência, retorna 'LOCAL'
+        return 'LOCAL';
     }
-
-    // Se não houver correspondência, retorna 'LOCAL'
-    return 'LOCAL';
-}
-
 
 
 
@@ -288,7 +280,7 @@ function obterCidade($copyright) {
     //copyright e ano
     $marcContent .='$b'.htmlspecialchars($copyright).'$c'.htmlspecialchars($copyrightyear). PHP_EOL;
     
-
+    $marcContent .='TESTEEEEE'.htmlspecialchars($copyright). PHP_EOL;
 
     
     // Obter a data e hora atuais
@@ -407,8 +399,16 @@ $marcContent .= PHP_EOL;
 
 
     //titulo
-    $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  '.
-    'aLOCAL'.'b'.htmlspecialchars($copyright).'c'.htmlspecialchars($copyrightyear).'  '.
+    $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  ';
+    
+    
+    // Obtém a cidade correspondente ou 'LOCAL'
+    $cidade = $this->obterCidade($copyright);
+
+// Adiciona a informação no marcContent
+$marcContent .= 'a' . $cidade . '';
+    
+    $marcContent .= 'b'.htmlspecialchars($copyright).'c'.htmlspecialchars($copyrightyear).'  '.
     'aDisponível em: '.htmlspecialchars($publicationUrl);
     $currentDateTime = date('d.m.Y');
     $marcContent .= '. Acesso em: '.$currentDateTime;
