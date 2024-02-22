@@ -129,26 +129,38 @@ class ompMarc extends ImportExportPlugin2
 
     function obterCidade($copyright) {
         $mapeamentoCidades = [
-            'São Paulo' => 'São Paulo',
-            'Universidade de São Paulo. Escola de Comunicações e Artes ' => 'São Paulo',
-           // 'Universidade de São Paulo. Escola de Comunicações e Artes' => 'São Paulo',
-            'Bauru' => 'Bauru',
-            'Lorena' => 'Lorena',
-            'Piracicaba' => 'Piracicaba',
-            'Pirassununga' => 'Pirassununga',
-            'Ribeirão Preto' => 'Ribeirão Preto',
-            'Santos' => 'Santos',
-            'São Carlos' => 'São Carlos',
+            'São Paulo' => [
+                'Escola de Artes, Ciências e Humanidades', 'Escola de Artes, Ciências e Humanidades ',
+                'Escola de Comunicações e Artes', 'Escola de Comunicações e Artes ',
+                'Escola de Educação Física e Esporte', 'Escola de Educação Física e Esporte ',
+                'Escola de Enfermagem', 'Escola de Enfermagem ',
+                'Escola Politécnica', 'Escola Politécnica ',
+                'Faculdade de Arquitetura e Urbanismo', 'Faculdade de Arquitetura e Urbanismo ',
+                // ... adicione outras variações
+            ],
+            'Ribeirão Preto' => [
+                'Faculdade de Medicina de Ribeirão Preto', 'Faculdade de Medicina de Ribeirão Preto ',
+                // ... adicione outras variações
+            ],
+            // ... adicione outras cidades
         ];
     
-        // Verifica se há uma correspondência exata na lista
-        if (array_key_exists($copyright, $mapeamentoCidades)) {
-            return $mapeamentoCidades[$copyright];
+        // Remove a parte fixa da string de copyright
+        $copyright = str_replace('Universidade de São Paulo. ', '', $copyright);
+    
+        // Percorre todas as cidades
+        foreach ($mapeamentoCidades as $cidade => $variacoes) {
+            // Verifica se a copyright corresponde a alguma variação da cidade
+            if (in_array($copyright, $variacoes)) {
+                return $cidade;
+            }
         }
     
         // Se não houver correspondência, retorna 'LOCAL'
         return 'LOCAL';
     }
+    
+    
 
 
 
