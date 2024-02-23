@@ -284,10 +284,31 @@ class ompMarc extends ImportExportPlugin2
    // '755'.'000107004'.'548560094'.'005'.'61856013000655';
 
 
- $marcContent .= '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
-   'X' .'00129245'. 'X' .'002'. 'X' .'600'. 'X' .'003'. 'X' .'000107004'. 'X' .'005'. 'X' ;
+ //$marcContent .= '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
+   //'X' .'00129245'. 'X' .'002'. 'X' .'600'. 'X' .'003'. 'X' .'000107004'. 'X' .'005'. 'X' ;
   
+///Finalmente
+///Estrutura numeração MRC
 
+//padrao
+$marcContent .= '005'.'001700000';
+$marcContent .= '008'.'004100017';
+$marcContent .= '020'.'001800058';
+
+//doi . modificar para padrão usp
+$marcContent .= '024'.'002500076';
+$marcContent .= '040'.'001300101';
+$marcContent .= '041'.'000800114';
+$marcContent .= '044'.'000700122';
+$marcContent .= '100'.'010000129';
+$marcContent .= '245'.'010800229';
+$marcContent .= '260'.'005600337';
+$marcContent .= '500'.'010700393';
+
+//$marcContent .= '700'.'123456789'; - demais autores se existirem, fazendo repetição a partir do segundo 
+$marcContent .= '856'.'009400500';
+$marcContent .= '856'.'013000594';
+$marcContent .= '945'.'004400724';
 
 
 //isbn
