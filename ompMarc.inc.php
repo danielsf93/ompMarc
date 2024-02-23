@@ -278,17 +278,16 @@ class ompMarc extends ImportExportPlugin2
 
     ///// ESTRUTURA MRC
 
-    $marcContent .= '01603'.'nam 22000205a 4500 ';
-    $marcContent .= 
-    '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
-    '38'.'00129245'.'0108'.'002'.'672'.'600'.'079'.'003'.
-    '755'.'000107004'.'548560094'.'005'.'61856013000655';
+   // $marcContent .= 
+   // '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
+   // '38'.'00129245'.'0108'.'002'.'672'.'600'.'079'.'003'.
+   // '755'.'000107004'.'548560094'.'005'.'61856013000655';
 
-/**
- * '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
- *   X .'00129245'. X .'002'. X .'600'. X .'003'. X .'000107004'. X .'005'. X ;
+
+ $marcContent .= '00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001'.
+   'X' .'00129245'. 'X' .'002'. 'X' .'600'. 'X' .'003'. 'X' .'000107004'. 'X' .'005'. 'X' ;
   
- */
+
 
 
 //isbn
@@ -329,7 +328,7 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
 //$marcContent .= PHP_EOL;
 
     //titulo
-    $marcContent .= '12a'.htmlspecialchars($submissionTitle).' h[recurso eletrônico]  ';
+    $marcContent .= '12a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
     
     
     // Obtém a cidade correspondente ou 'LOCAL'
@@ -397,7 +396,7 @@ $marcContent .= 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($c
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
-        $marcContent = $numeroDeCaracteresFormatado . 'nam 2200349Ia 4500' . $marcContent;
+        $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 ' . $marcContent;
 
 
         return $marcContent;
