@@ -1,0 +1,61 @@
+Entendendo qual é a lógica que converte informação de um arquivo .mrk para um arquivo .mrc
+
+o conteúdo do arquivo .mrk é:
+
+=LDR  00839nam 2200349Ia 4500
+=005  20240222140643.0
+=008  230919s2023\\\\bl\\\\\\\\\\\\000\0\por\d
+=020  \\$a9788572052689
+=024  7\$a10.1234/pusp.18$2DOI
+=040  \\$aUSP/ABCD
+=041  0\$apor
+=044  \\$abl
+=100  1\$aViana, Fausto$0https://orcid.org/0000-0002-4823-3626$5(*)$7INT$8Faculdade de educação$9Brasil
+=245  12$aOs trajes de cena da Igreja Católica: um breve manual de conservação têxtil $h[recurso eletrônico]
+=260  \\$aSão Paulo$bEscola de Comunicações e Artes $c2024
+=500  \\$aDisponível em: http://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/24. Acesso em: 22.02.2024
+=856  4\$zClicar sobre o botão para acesso ao texto completo$uhttps://doi.org/10.1234/pusp.18$3DOI
+=856  41$zClicar sobre o botão para acesso ao texto completo$uhttp://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/24$3E-Livro
+=945  \\$aP$bMONOGRAFIA/LIVRO$c06$j2023$lNACIONAL
+
+apos converter no marcEdit obtem-se o arquivo .mrc com o seguinte conteúdo:
+
+00962nam 22000193a 4500 00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001000012924501080022926000560033750001070039385600940050085601300059494500440072420240222140643.0230919s2023    bl            000 0 por d  a97885720526897 a10.1234/pusp.182DOI  aUSP/ABCD0 apor  abl1 aViana, Fausto0https://orcid.org/0000-0002-4823-36265(*)7INT8Faculdade de educação9Brasil12aOs trajes de cena da Igreja Católica: um breve manual de conservação têxtil h[recurso eletrônico]  aSão PaulobEscola de Comunicações e Artes c2024  aDisponível em: http://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/24. Acesso em: 22.02.20244 zClicar sobre o botão para acesso ao texto completouhttps://doi.org/10.1234/pusp.183DOI41zClicar sobre o botão para acesso ao texto completouhttp://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/243E-Livro  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL
+
+ao explorar as repetições, para o sistema de livros sempre temos uma constante:
+
+00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001
+00500170000000800410001702000180005802400250007604000130010104100080011404400070012210001
+
+que pode ser divida da seguinte forma:
+
+005,001700000,008,004100017,020,001800058,024,002500076,040,001300101,041,000800114,044,000700122,100,
+
+levando a lógica para toda a linha numérica tem-se:
+
+005,001700000,008,004100017,020,001800058,024,002500076,040,001300101,041,000800114,044,000700122,100,010000129,245,010800229,260,005600337,500,010700393,856,009400500,856,013000594,945,004400724,
+
+que pode ser representado com:
+
+005=001700000,008=004100017,020=001800058,024=002500076,040=001300101,041=000800114,044=000700122,100=010000129,245=010800229,260=005600337,500=010700393,856=009400500,856=013000594,945=004400724,
+
+também representado da mesma forma:
+
+00962nam 22000193a 4500 
+005=001700000
+008=004100017
+020=001800058
+024=002500076
+040=001300101
+041=000800114
+044=000700122
+
+100=010000129
+
+245=010800229
+260=005600337
+500=010700393
+856=009400500
+856=013000594
+945=004400724
+20240222140643.0230919s2023    bl            000 0 por d  a97885720526897 a10.1234/pusp.182DOI  aUSP/ABCD0 apor  abl1 aViana, Fausto0https://orcid.org/0000-0002-4823-36265(*)7INT8Faculdade de educação9Brasil12aOs trajes de cena da Igreja Católica: um breve manual de conservação têxtil h[recurso eletrônico]  aSão PaulobEscola de Comunicações e Artes c2024  aDisponível em: http://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/24. Acesso em: 22.02.20244 zClicar sobre o botão para acesso ao texto completouhttps://doi.org/10.1234/pusp.183DOI41zClicar sobre o botão para acesso ao texto completouhttp://0.0.0.0:8888/index.php/portaldelivrosUSP/catalog/book/243E-Livro  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL
