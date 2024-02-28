@@ -286,46 +286,11 @@ $marcContent .= '008'.'004100017';
 $marcContent .= '020'.'001800058';
 
 //doi . modificar para padrão usp
-$marcContent .= '024'.'003200076';
-$marcContent .= '040'.'001300108';
-$marcContent .= '041'.'000800121';
-$marcContent .= '044'.'000700129';
-
-
-//primeiro autor - Sobrenome, Nome - Orcid - Afiliação - País
-$firstAuthor = reset($authorsInfo);
-
-// Construir a string para contagem de caracteres
-$authorString = '';
-if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
-    $authorString = htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    $firstAuthor['orcid'] . '(*)INT' . htmlspecialchars($firstAuthor['afiliation']) . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['orcid'])) {
-    // Adiciona apenas o ORCID se presente
-    $authorString = htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    $firstAuthor['orcid'] . '(*)INT' . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['afiliation'])) {
-    // Adiciona apenas a afiliação se presente
-    $authorString = htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    'INT' . htmlspecialchars($firstAuthor['afiliation']) . htmlspecialchars($firstAuthor['locale']);
-} else {
-    // Adiciona sem ORCID e afiliação se nenhum estiver presente
-    $authorString = htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '(*)' . htmlspecialchars($firstAuthor['locale']);
-}
-
-// Contar caracteres e adicionar 5
-$characterCount = mb_strlen($authorString, 'UTF-8') + 5;
-
-// Preencher com zeros à esquerda para garantir 6 dígitos
-$characterCountFormatted = sprintf("%04d", $characterCount);
-
-// Adicionar ao marcContent
-$marcContent .= '100' . $characterCountFormatted . '00136';
-
-
-
-
+$marcContent .= '024'.'002500076';
+$marcContent .= '040'.'001300101';
+$marcContent .= '041'.'000800114';
+$marcContent .= '044'.'000700122';
+$marcContent .= '100'.'000000000';
 $marcContent .= '245'.'000000000';
 $marcContent .= '260'.'000000000';
 $marcContent .= '500'.'000000000';
