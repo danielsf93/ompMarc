@@ -315,7 +315,7 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
 }
 
 // Contar caracteres e adicionar 5
-$characterCount = mb_strlen($authorString, 'UTF-8') + 5;
+$characterCount = mb_strlen($authorString, 'UTF-8') + 17;
 
 // Preencher com zeros à esquerda para garantir 6 dígitos
 $characterCountFormatted = sprintf("%04d", $characterCount);
