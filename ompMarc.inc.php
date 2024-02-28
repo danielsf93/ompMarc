@@ -325,8 +325,34 @@ $marcContent .= '100' . $characterCountFormatted . '00136';
 
 
 
+//campo 245
+// Obtendo o título da submissão
+$submissionTitle = $submission->getLocalizedFullTitle();
 
-$marcContent .= '245'.'000000000';
+// Contar caracteres
+$titleCharacterCount = mb_strlen($submissionTitle, 'UTF-8');
+
+// Se necessário, adicionar um valor fixo (por exemplo, 32)
+$titleCharacterCount += 33;
+
+// Preencher com zeros à esquerda para garantir 5 dígitos
+$titleCharacterCountFormatted = sprintf("%04d", $titleCharacterCount);
+
+// Calcular a soma de 136 e $characterCountFormatted
+$totalCount = 136 + intval($characterCountFormatted);
+
+// Preencher com zeros à esquerda para garantir 5 dígitos
+$totalCountFormatted = sprintf("%05d", $totalCount);
+
+// Adicionar ao marcContent
+$marcContent .= '245' . $titleCharacterCountFormatted . $totalCountFormatted;
+
+
+
+
+
+
+
 $marcContent .= '260'.'000000000';
 $marcContent .= '500'.'000000000';
 
@@ -381,7 +407,7 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
 //$marcContent .= PHP_EOL;
 
     //titulo
-    $marcContent .= '12a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
+    $marcContent .= '12a '.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
     
     
     // Obtém a cidade correspondente ou 'LOCAL'
