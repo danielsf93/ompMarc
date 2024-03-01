@@ -283,15 +283,15 @@ $recPadrao =
 '041'.'000800121'.
 '044'.'000700129';
 //demais campos
-$rec100 = '100' . '123456789';
-$rec245 = '245' . '123456789';
-$rec260 = '206' . '123456789';
-$rec500 = '500' . '123456789';
+$rec100 = '100' . '009900136';
+$rec245 = '245' . '000000000';
+$rec260 = '206' . '000000000';
+$rec500 = '500' . '000000000';
 //campo 700 só pode entrar se houver mais de um autor
-$rec700 = '700' . '123456789';
-$rec856A = '856' . '123456789';
-$rec856B = '856' . '123456789';
-$rec945 = '945' . '123456789';
+$rec700 = '700' . '000000000';
+$rec856A = '856' . '000000000';
+$rec856B = '856' . '000000000';
+$rec945 = '945' . '000000000';
 
 
 
@@ -405,14 +405,11 @@ htmlspecialchars($publicationUrl).'3E-Livro';
 //945
 $noveQuatroCinco = '  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 
-
-
-
+//organizando o conteudo final do documento:
+//numeracao
 $marcContent .= $recPadrao . $rec100 . $rec245 . $rec260 . $rec500;
 
-
-
-// Adicione o campo $rec700 apenas se houver mais de um autor
+// Adicione o campo $rec700 apenas se houver mais de um autor e faz repeticao da quantidade de coautores
 if (count($authorsInfo) > 1) {
     foreach ($additionalAuthors as $additionalAuthor) {
         $marcContent .= $rec700;
@@ -422,14 +419,10 @@ if (count($authorsInfo) > 1) {
 $marcContent .= $rec856A . $rec856B . $rec945;
 
 
-
+//caracteres
 $marcContent .= $zeroZeroCinco . $zeroZeroOito . $zeroDoisZero . $zeroDoisQuatro . 
 $zeroQuatroZero . $zeroQuatroUm . $zeroQuatroQuatro . $umZeroZero . $doisQuatroCinco .
-$doisMeiaZero . $cincoZeroZero 
-//demais autores. fazer regra aqui
-. $seteZeroZero 
-
-. $oitoCincoMeiaA . $oitoCincoMeiaB . 
+$doisMeiaZero . $cincoZeroZero . $seteZeroZero . $oitoCincoMeiaA . $oitoCincoMeiaB . 
 $noveQuatroCinco;
 
 
