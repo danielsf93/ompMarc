@@ -284,7 +284,8 @@ $recPadrao =
 '044'.'000700129';
 //demais campos
 
-// Obtendo a informação do primeiro autor campo 100
+// Campo 100
+
 $firstAuthorInfo = $authorsInfo[0];
 // Construindo a string do autor
 $authorString = 'a' . htmlspecialchars($firstAuthorInfo['surname']) . ', ' . htmlspecialchars($firstAuthorInfo['givenName']);
@@ -305,27 +306,35 @@ $authorInfoLength = mb_strlen($authorString, 'UTF-8') + 5;
 // Formatando para manter 4 dígitos
 $rec100 = '100' . sprintf('%04d', $authorInfoLength) . '00136';
 
-//obter campo 245 título
+
+
+//Campo 245 título
 // Somando '00136' com o valor obtido por sprintf('%04d', $authorInfoLength)
 $rec245Value = '00136' + sprintf('%04d', $authorInfoLength);
-
-
-
-
 // Obtendo o comprimento do título da publicação
 $titleLength = mb_strlen($submissionTitle, 'UTF-8') + 33;
-
 // Formatando para manter 4 dígitos
 $rec245Prefix = '245' . sprintf('%04d', $titleLength);
-
 // Construindo $rec245
 $rec245 = $rec245Prefix . sprintf('%05d', $rec245Value);
 
 
+//Campo 260 local e copyright
 
 
-$rec260 = '260' . '00000'.'0000';
-$rec500 = '500' . '000000000';
+
+// Somando $titleLength com $rec245Value
+$rec260Value = $titleLength + $rec245Value;
+
+// Formatando para manter 4 dígitos
+$rec260 = '260' . '00000' . sprintf('%04d', $rec260Value);
+
+
+
+
+
+
+$rec500 = 'AAA500' . '000000000';
 //campo 700 só pode entrar se houver mais de um autor
 $rec700 = '700' . '000000000';
 $rec856A = '856' . '000000000';
