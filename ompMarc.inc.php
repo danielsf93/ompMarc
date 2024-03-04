@@ -299,7 +299,7 @@ if (!empty($firstAuthorInfo['orcid']) && !empty($firstAuthorInfo['afiliation']))
     $authorString .= '5(*)9' . htmlspecialchars($firstAuthorInfo['locale']);
 }
 
-// Obtendo o comprimento da string e adicionando '+3'
+// Obtendo o comprimento da string e adicionando '+5'
 $authorInfoLength = mb_strlen($authorString, 'UTF-8') + 5;
 
 // Formatando para manter 4 dígitos
@@ -309,8 +309,17 @@ $rec100 = '100' . sprintf('%04d', $authorInfoLength) . '00136';
 // Somando '00136' com o valor obtido por sprintf('%04d', $authorInfoLength)
 $rec245Value = '00136' + sprintf('%04d', $authorInfoLength);
 
-// Formatando para manter 5 dígitos
-$rec245 = '245'. '0000' . sprintf('%05d', $rec245Value);
+
+
+
+// Obtendo o comprimento do título da publicação
+$titleLength = mb_strlen($submissionTitle, 'UTF-8') + 33;
+
+// Formatando para manter 4 dígitos
+$rec245Prefix = '245' . sprintf('%04d', $titleLength);
+
+// Construindo $rec245
+$rec245 = $rec245Prefix . sprintf('%05d', $rec245Value);
 
 
 
