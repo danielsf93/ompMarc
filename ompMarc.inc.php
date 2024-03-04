@@ -283,7 +283,33 @@ $recPadrao =
 '041'.'000800121'.
 '044'.'000700129';
 //demais campos
-$rec100 = '100' . '009900136';
+// Obtendo a informação do primeiro autor
+$firstAuthorInfo = $authorsInfo[0];
+
+// Construindo a string do autor
+$authorString = 'a' . htmlspecialchars($firstAuthorInfo['surname']) . ', ' . htmlspecialchars($firstAuthorInfo['givenName']);
+
+if (!empty($firstAuthorInfo['orcid']) && !empty($firstAuthorInfo['afiliation'])) {
+    $authorString .= '0' . $firstAuthorInfo['orcid'] . '5(*)7INT8' . htmlspecialchars($firstAuthorInfo['afiliation']) . '9' . htmlspecialchars($firstAuthorInfo['locale']);
+} elseif (!empty($firstAuthorInfo['orcid'])) {
+    $authorString .= '0' . $firstAuthorInfo['orcid'] . '5(*)7INT9' . htmlspecialchars($firstAuthorInfo['locale']);
+} elseif (!empty($firstAuthorInfo['afiliation'])) {
+    $authorString .= '7INT8' . htmlspecialchars($firstAuthorInfo['afiliation']) . '9' . htmlspecialchars($firstAuthorInfo['locale']);
+} else {
+    $authorString .= '5(*)9' . htmlspecialchars($firstAuthorInfo['locale']);
+}
+
+// Obtendo o comprimento da string e adicionando '+3'
+$authorInfoLength = mb_strlen($authorString, 'UTF-8') + 5;
+
+// Formatando para manter 4 dígitos
+$rec100 = '100' . sprintf('%04d', $authorInfoLength) . '00136';
+
+
+
+
+
+
 $rec245 = '245' . '000000000';
 $rec260 = '206' . '000000000';
 $rec500 = '500' . '000000000';
