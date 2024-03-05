@@ -275,48 +275,59 @@ class ompMarc extends ImportExportPlugin2
     //Numeracao Record
 //padrao usp de 005 a 044
 $recPadrao = 
-'005'.'001700000'.
-'008'.'004100017'.
-'020'.'001800058'.
-'024'.'003200076'.
-'040'.'001300108'.
-'041'.'000800121'.
-'044'.'000700129';
+PHP_EOL .'005'.'001700000'. PHP_EOL .
+'008'.'004100017'. PHP_EOL .
+'020'.'001800058'. PHP_EOL .
+'024'.'003200076'. PHP_EOL .
+'040'.'001300108'. PHP_EOL .
+'041'.'000800121'. PHP_EOL .
+'044'.'000700129' . PHP_EOL ;
 //demais campos
 
 // Campo 100
 
-$firstAuthorInfo = $authorsInfo[0];
-// Construindo a string do autor
-$authorString = 'a' . htmlspecialchars($firstAuthorInfo['surname']) . ', ' . htmlspecialchars($firstAuthorInfo['givenName']);
+$firstAuthor = reset($authorsInfo);
+$umZeroZeroa .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']);
+$umZeroZerob .= '0' . (!empty($firstAuthor['orcid']) ? $firstAuthor['orcid'] : 'https://orcid.org/xxxx-xxxx-xxxx-xxxx');
+$umZeroZeroc .= '5(*)7INT';
+$umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($firstAuthor['afiliation']) : 'AFILIACAO');
+$umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 
-if (!empty($firstAuthorInfo['orcid']) && !empty($firstAuthorInfo['afiliation'])) {
-    $authorString .= '0' . $firstAuthorInfo['orcid'] . '5(*)7INT8' . htmlspecialchars($firstAuthorInfo['afiliation']) . '9' . htmlspecialchars($firstAuthorInfo['locale']);
-} elseif (!empty($firstAuthorInfo['orcid'])) {
-    $authorString .= '0' . $firstAuthorInfo['orcid'] . '5(*)7INT9' . htmlspecialchars($firstAuthorInfo['locale']);
-} elseif (!empty($firstAuthorInfo['afiliation'])) {
-    $authorString .= '7INT8' . htmlspecialchars($firstAuthorInfo['afiliation']) . '9' . htmlspecialchars($firstAuthorInfo['locale']);
-} else {
-    $authorString .= '5(*)9' . htmlspecialchars($firstAuthorInfo['locale']);
-}
+// Quantidade de caracteres de $umZeroZeroa + 2
+$fixa = 136;
+$rec100aPOS = $fixa;
+$rec100aCAR = sprintf('%04d', mb_strlen($umZeroZeroa, 'UTF-8') + 10);
+$rec100a = '100' . $rec100aCAR . sprintf('%05d', $rec100aPOS);
 
-// Obtendo o comprimento da string e adicionando '+5'
-$authorInfoLength = mb_strlen($authorString, 'UTF-8') + 5;
+// Quantidade de caracteres de $umZeroZerob + 6
+$rec100bPOS = sprintf('%05d', $rec100aCAR + $rec100aPOS);
+$rec100bCAR = sprintf('%04d', mb_strlen($umZeroZerob, 'UTF-8') + 10);
+$rec100b = '100' . $rec100bCAR . $rec100bPOS;
 
-// Formatando para manter 4 dígitos
-$rec100 = '100' . sprintf('%04d', $authorInfoLength) . '00136';
+// Quantidade de caracteres de $umZeroZeroc + 23
+$rec100cPOS = sprintf('%05d', $rec100bCAR + $rec100bPOS);
+$rec100cCAR = sprintf('%04d', mb_strlen($umZeroZeroc, 'UTF-8') + 10);
+$rec100c = '100' . $rec100cCAR . $rec100cPOS;
 
+// Quantidade de caracteres de $umZeroZerod + 100
+$rec100dPOS = sprintf('%05d', $rec100cCAR + $rec100cPOS);
+$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 10);
+$rec100d = '100' . $rec100dCAR . $rec100dPOS;
 
+// Quantidade de caracteres de $umZeroZeroe + 4
+$rec100ePOS = sprintf('%05d', $rec100dCAR + $rec100dPOS);
+$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 10);
+$rec100e = '100' . $rec100eCAR . $rec100ePOS;
 
 //Campo 245 título
-// Somando '00136' com o valor obtido por sprintf('%04d', $authorInfoLength)
-$rec245Value = '00136' + sprintf('%04d', $authorInfoLength);
-// Obtendo o comprimento do título da publicação
-$titleLength = mb_strlen($submissionTitle, 'UTF-8') + 33;
-// Formatando para manter 4 dígitos
-$rec245Prefix = '245' . sprintf('%04d', $titleLength);
-// Construindo $rec245
-$rec245 = $rec245Prefix . sprintf('%05d', $rec245Value);
+$doisQuatroCinco = '12a '.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
+$rec245CAR = sprintf('%04d', mb_strlen($submissionTitle, 'UTF-8') + 10);
+$rec245POS = sprintf('%05d', $rec100eCAR + $rec100ePOS);
+$rec245 = '245' . $rec245CAR . $rec245POS;
+
+
+//////PAREI AQUI
+
 
 
 //Campo 260 local e copyright
@@ -334,12 +345,12 @@ $rec260 = '260' . '00000' . sprintf('%04d', $rec260Value);
 
 
 
-$rec500 = 'AAA500' . '000000000';
+$rec500 = '500' . '000000000' . PHP_EOL;
 //campo 700 só pode entrar se houver mais de um autor
-$rec700 = '700' . '000000000';
-$rec856A = '856' . '000000000';
-$rec856B = '856' . '000000000';
-$rec945 = '945' . '000000000';
+//$rec700 = '700' . '000000000';
+$rec856A = '856' . '000000000' . PHP_EOL;
+$rec856B = '856' . '000000000' . PHP_EOL;
+$rec945 = '945' . '000000000' . PHP_EOL;
 
 
 
@@ -367,30 +378,25 @@ $zeroQuatroZero = '  aUSP/ABCD0 ';
 //041
 $zeroQuatroUm = 'apor  ';
 
+
 //044
 $zeroQuatroQuatro = 'abl1 ';
 
 //100 Autor Principal
-$firstAuthor = reset($authorsInfo);
-if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
-    $umZeroZero .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '0' . $firstAuthor['orcid'] . 
-                    '5(*)7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['orcid'])) {
-    // Adiciona apenas o ORCID se presente
-    $umZeroZero .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '0' . $firstAuthor['orcid'] . 
-                    '5(*)7INT9' . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['afiliation'])) {
-    // Adiciona apenas a afiliação se presente
-    $umZeroZero .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
-} else {
-    // Adiciona sem ORCID e afiliação se nenhum estiver presente
-    $umZeroZero .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '5(*)9' . htmlspecialchars($firstAuthor['locale']);
-}
+// Limpeza de variáveis
+$umZeroZeroa = '';
+$umZeroZerob = '';
+$umZeroZeroc = '';
+$umZeroZerod = '';
+$umZeroZeroe = '';
 
+// Construção do autor principal
+$firstAuthor = reset($authorsInfo);
+$umZeroZeroa .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']);
+$umZeroZerob .= '0' . (!empty($firstAuthor['orcid']) ? $firstAuthor['orcid'] : 'https://orcid.org/xxxx-xxxx-xxxx-xxxx');
+$umZeroZeroc .= '5(*)7INT';
+$umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($firstAuthor['afiliation']) : 'AFILIACAO');
+$umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 
 //245 Título
 $doisQuatroCinco = '12a '.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
@@ -455,7 +461,14 @@ $noveQuatroCinco = '  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 
 //organizando o conteudo final do documento:
 //numeracao
-$marcContent .= $recPadrao . $rec100 . $rec245 . $rec260 . $rec500;
+$marcContent .= $recPadrao . 
+$rec100a . PHP_EOL . 
+$rec100b . PHP_EOL . 
+$rec100c . PHP_EOL . 
+$rec100d . PHP_EOL . 
+$rec100e . PHP_EOL . 
+
+$rec245 . PHP_EOL. $rec260 . PHP_EOL . $rec500;
 
 // Adicione o campo $rec700 apenas se houver mais de um autor e faz repeticao da quantidade de coautores
 if (count($authorsInfo) > 1) {
@@ -469,7 +482,13 @@ $marcContent .= $rec856A . $rec856B . $rec945;
 
 //caracteres
 $marcContent .= $zeroZeroCinco . $zeroZeroOito . $zeroDoisZero . $zeroDoisQuatro . 
-$zeroQuatroZero . $zeroQuatroUm . $zeroQuatroQuatro . $umZeroZero . $doisQuatroCinco .
+$zeroQuatroZero . $zeroQuatroUm . $zeroQuatroQuatro . PHP_EOL. PHP_EOL. 
+$umZeroZeroa . PHP_EOL . 
+$umZeroZerob . PHP_EOL . 
+$umZeroZeroc . PHP_EOL . 
+$umZeroZerod . PHP_EOL . 
+$umZeroZeroe . PHP_EOL . 
+PHP_EOL. $doisQuatroCinco .
 $doisMeiaZero . $cincoZeroZero . $seteZeroZero . $oitoCincoMeiaA . $oitoCincoMeiaB . 
 $noveQuatroCinco;
 
