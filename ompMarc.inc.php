@@ -275,13 +275,13 @@ class ompMarc extends ImportExportPlugin2
     //Numeracao Record
 //padrao usp de 005 a 044
 $recPadrao = 
-PHP_EOL .'005'.'001700000'. PHP_EOL .
-'008'.'004100017'. PHP_EOL .
-'020'.'001800058'. PHP_EOL .
-'024'.'003200076'. PHP_EOL .
-'040'.'001300108'. PHP_EOL .
-'041'.'000800121'. PHP_EOL .
-'044'.'000700129' . PHP_EOL ;
+'005'.'001700000' .
+'008'.'004100017' .
+'020'.'001800058' .
+'024'.'003200076'. 
+'040'.'001300108'. 
+'041'.'000800121'. 
+'044'.'000700129';
 //demais campos
 
 // Campo 100
@@ -296,27 +296,27 @@ $umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 // Quantidade de caracteres de $umZeroZeroa + 2
 $fixa = 136;
 $rec100aPOS = $fixa;
-$rec100aCAR = sprintf('%04d', mb_strlen($umZeroZeroa, 'UTF-8') + 10);
+$rec100aCAR = sprintf('%04d', mb_strlen($umZeroZeroa, 'UTF-8') + 3);
 $rec100a = '100' . $rec100aCAR . sprintf('%05d', $rec100aPOS);
 
 // Quantidade de caracteres de $umZeroZerob + 6
 $rec100bPOS = sprintf('%05d', $rec100aCAR + $rec100aPOS);
-$rec100bCAR = sprintf('%04d', mb_strlen($umZeroZerob, 'UTF-8') + 10);
+$rec100bCAR = sprintf('%04d', mb_strlen($umZeroZerob, 'UTF-8') + 3);
 $rec100b = '100' . $rec100bCAR . $rec100bPOS;
 
 // Quantidade de caracteres de $umZeroZeroc + 23
 $rec100cPOS = sprintf('%05d', $rec100bCAR + $rec100bPOS);
-$rec100cCAR = sprintf('%04d', mb_strlen($umZeroZeroc, 'UTF-8') + 10);
+$rec100cCAR = sprintf('%04d', mb_strlen($umZeroZeroc, 'UTF-8') + 3);
 $rec100c = '100' . $rec100cCAR . $rec100cPOS;
 
 // Quantidade de caracteres de $umZeroZerod + 100
 $rec100dPOS = sprintf('%05d', $rec100cCAR + $rec100cPOS);
-$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 10);
+$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 6);
 $rec100d = '100' . $rec100dCAR . $rec100dPOS;
 
 // Quantidade de caracteres de $umZeroZeroe + 4
 $rec100ePOS = sprintf('%05d', $rec100dCAR + $rec100dPOS);
-$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 10);
+$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 3);
 $rec100e = '100' . $rec100eCAR . $rec100ePOS;
 
 //Campo 245 título
@@ -345,12 +345,12 @@ $rec260 = '260' . '00000' . sprintf('%04d', $rec260Value);
 
 
 
-$rec500 = '500' . '000000000' . PHP_EOL;
+$rec500 = '500' . '000000000' ;
 //campo 700 só pode entrar se houver mais de um autor
 //$rec700 = '700' . '000000000';
-$rec856A = '856' . '000000000' . PHP_EOL;
-$rec856B = '856' . '000000000' . PHP_EOL;
-$rec945 = '945' . '000000000' . PHP_EOL;
+$rec856A = '856' . '000000000' ;
+$rec856B = '856' . '000000000' ;
+$rec945 = '945' . '000000000' ;
 
 
 
@@ -392,10 +392,10 @@ $umZeroZeroe = '';
 
 // Construção do autor principal
 $firstAuthor = reset($authorsInfo);
-$umZeroZeroa .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']);
-$umZeroZerob .= '0' . (!empty($firstAuthor['orcid']) ? $firstAuthor['orcid'] : 'https://orcid.org/xxxx-xxxx-xxxx-xxxx');
-$umZeroZeroc .= '5(*)7INT';
-$umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($firstAuthor['afiliation']) : 'AFILIACAO');
+$umZeroZeroa .= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']).'  ';
+$umZeroZerob .= '0' . (!empty($firstAuthor['orcid']) ? $firstAuthor['orcid'] : 'https://orcid.org/xxxx-xxxx-xxxx-xxxx').'  ';
+$umZeroZeroc .= '5(*)7INT  ';
+$umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($firstAuthor['afiliation']) : 'AFILIACAO').'  ';
 $umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 
 //245 Título
@@ -462,13 +462,13 @@ $noveQuatroCinco = '  aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 //organizando o conteudo final do documento:
 //numeracao
 $marcContent .= $recPadrao . 
-$rec100a . PHP_EOL . 
-$rec100b . PHP_EOL . 
-$rec100c . PHP_EOL . 
-$rec100d . PHP_EOL . 
-$rec100e . PHP_EOL . 
+$rec100a .  
+$rec100b .  
+$rec100c . 
+$rec100d .  
+$rec100e .  
 
-$rec245 . PHP_EOL. $rec260 . PHP_EOL . $rec500;
+$rec245 .  $rec260 . $rec500;
 
 // Adicione o campo $rec700 apenas se houver mais de um autor e faz repeticao da quantidade de coautores
 if (count($authorsInfo) > 1) {
@@ -482,13 +482,13 @@ $marcContent .= $rec856A . $rec856B . $rec945;
 
 //caracteres
 $marcContent .= $zeroZeroCinco . $zeroZeroOito . $zeroDoisZero . $zeroDoisQuatro . 
-$zeroQuatroZero . $zeroQuatroUm . $zeroQuatroQuatro . PHP_EOL. PHP_EOL. 
-$umZeroZeroa . PHP_EOL . 
-$umZeroZerob . PHP_EOL . 
-$umZeroZeroc . PHP_EOL . 
-$umZeroZerod . PHP_EOL . 
-$umZeroZeroe . PHP_EOL . 
-PHP_EOL. $doisQuatroCinco .
+$zeroQuatroZero . $zeroQuatroUm . $zeroQuatroQuatro . 
+$umZeroZeroa . 
+$umZeroZerob . 
+$umZeroZeroc . 
+$umZeroZerod . 
+$umZeroZeroe .  
+$doisQuatroCinco .
 $doisMeiaZero . $cincoZeroZero . $seteZeroZero . $oitoCincoMeiaA . $oitoCincoMeiaB . 
 $noveQuatroCinco;
 
@@ -499,7 +499,7 @@ $noveQuatroCinco;
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
         // Inserir o número de caracteres no início do mrk
-        $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 '. $marcContent;
+        $marcContent = $numeroDeCaracteresFormatado . 'nam 22000241a 4500 '. $marcContent;
 
 
         return $marcContent;
