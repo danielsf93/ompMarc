@@ -311,12 +311,12 @@ $rec100c = '100' . $rec100cCAR . $rec100cPOS;
 
 // Quantidade de caracteres de $umZeroZerod + 100
 $rec100dPOS = sprintf('%05d', $rec100cCAR + $rec100cPOS);
-$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 6);
+$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 7);
 $rec100d = '100' . $rec100dCAR . $rec100dPOS;
 
 // Quantidade de caracteres de $umZeroZeroe + 4
 $rec100ePOS = sprintf('%05d', $rec100dCAR + $rec100dPOS);
-$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 3);
+$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 4);
 $rec100e = '100' . $rec100eCAR . $rec100ePOS;
 
 //Campo 245 título
