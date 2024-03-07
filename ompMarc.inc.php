@@ -344,15 +344,18 @@ $rec260POS = sprintf('%05d', $rec245CAR + $rec245POS);
 $rec260 = '260' . $rec260CAR . $rec260POS;
 
 
+//campo 500
+$currentDateTime = date('d.m.Y');
+$cincoZeroZero = 'aDisponível em: '.htmlspecialchars($publicationUrl) . '. Acesso em: '.$currentDateTime;
+$rec500CAR = sprintf('%04d', strlen($cincoZeroZero)+3);
+$rec500POS = sprintf('%05d', $rec260CAR + $rec260POS);
+$rec500 = '500' . $rec500CAR . $rec500POS;
 
 
 
 
 
 
-
-
-$rec500 = '500' . '000000000' ;
 //campo 700 só pode entrar se houver mais de um autor
 //$rec700 = '700' . '000000000';
 $rec856A = '856' . '000000000' ;
