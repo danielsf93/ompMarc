@@ -294,36 +294,42 @@ $umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($f
 $umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 
 // Quantidade de caracteres de $umZeroZeroa + 2
+// Sobrenome, nome
 $fixa = 136;
 $rec100aPOS = $fixa;
-$rec100aCAR = sprintf('%04d', mb_strlen($umZeroZeroa, 'UTF-8') + 3);
+$rec100aCAR = sprintf('%04d', strlen($umZeroZeroa) + 3);
 $rec100a = '100' . $rec100aCAR . sprintf('%05d', $rec100aPOS);
 
 // Quantidade de caracteres de $umZeroZerob + 6
+// Orcid
 $rec100bPOS = sprintf('%05d', $rec100aCAR + $rec100aPOS);
-$rec100bCAR = sprintf('%04d', mb_strlen($umZeroZerob, 'UTF-8') + 3);
+$rec100bCAR = sprintf('%04d', strlen($umZeroZerob) + 3);
 $rec100b = '100' . $rec100bCAR . $rec100bPOS;
 
 // Quantidade de caracteres de $umZeroZeroc + 23
+//5(*)7INT
 $rec100cPOS = sprintf('%05d', $rec100bCAR + $rec100bPOS);
-$rec100cCAR = sprintf('%04d', mb_strlen($umZeroZeroc, 'UTF-8') + 3);
+$rec100cCAR = sprintf('%04d', strlen($umZeroZeroc) + 3);
 $rec100c = '100' . $rec100cCAR . $rec100cPOS;
 
 // Quantidade de caracteres de $umZeroZerod + 100
+// Afiliacao
 $rec100dPOS = sprintf('%05d', $rec100cCAR + $rec100cPOS);
-$rec100dCAR = sprintf('%04d', mb_strlen($umZeroZerod, 'UTF-8') + 6);
+$rec100dCAR = sprintf('%04d', strlen($umZeroZerod) + 3);
 $rec100d = '100' . $rec100dCAR . $rec100dPOS;
 
 // Quantidade de caracteres de $umZeroZeroe + 4
+//país
 $rec100ePOS = sprintf('%05d', $rec100dCAR + $rec100dPOS);
-$rec100eCAR = sprintf('%04d', mb_strlen($umZeroZeroe, 'UTF-8') + 3);
+$rec100eCAR = sprintf('%04d', strlen($umZeroZeroe) + 3);
 $rec100e = '100' . $rec100eCAR . $rec100ePOS;
 
-//Campo 245 título
-$doisQuatroCinco = '12a '.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
-$rec245CAR = sprintf('%04d', mb_strlen($submissionTitle, 'UTF-8') + 10);
+// Campo 245 título
+$doisQuatroCinco = '12a ' . htmlspecialchars($submissionTitle) . 'h[recurso eletrônico]  ';
+$rec245CAR = sprintf('%04d', strlen($submissionTitle) + 29);
 $rec245POS = sprintf('%05d', $rec100eCAR + $rec100ePOS);
 $rec245 = '245' . $rec245CAR . $rec245POS;
+
 
 
 //////PAREI AQUI
