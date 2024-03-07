@@ -293,6 +293,19 @@ $umZeroZeroc .= '5(*)7INT';
 $umZeroZerod .= '8' . (!empty($firstAuthor['afiliation']) ? htmlspecialchars($firstAuthor['afiliation']) : 'AFILIACAO');
 $umZeroZeroe .= '9' . htmlspecialchars($firstAuthor['locale']);
 
+
+
+
+
+////METOdo com separação
+/*
+///////CAMPO 100
+
+$fixa = 136;
+$rec100aPOS = $fixa;
+$rec100aCAR = sprintf('%04d', strlen($umZeroZeroa) + 3);
+$rec100a = '100' . $rec100aCAR . sprintf('%05d', $rec100aPOS);
+
 // Quantidade de caracteres de $umZeroZeroa + 2
 // Sobrenome, nome
 $fixa = 136;
@@ -324,11 +337,58 @@ $rec100ePOS = sprintf('%05d', $rec100dCAR + $rec100dPOS);
 $rec100eCAR = sprintf('%04d', strlen($umZeroZeroe) + 3);
 $rec100e = '100' . $rec100eCAR . $rec100ePOS;
 
+
+///////fim CAMPO 100
+
 // Campo 245 título
 $doisQuatroCinco = '12a ' . htmlspecialchars($submissionTitle) . 'h[recurso eletrônico]  ';
 $rec245CAR = sprintf('%04d', strlen($submissionTitle) + 29);
 $rec245POS = sprintf('%05d', $rec100eCAR + $rec100ePOS);
 $rec245 = '245' . $rec245CAR . $rec245POS;
+
+
+////Fim metodo com separação
+
+
+*/
+
+
+///////////
+/////// metodo sem separação:
+/////
+
+
+
+///////CAMPO 100
+
+$fixa = 136;
+$rec100aPOS = $fixa;
+$teste01 = $umZeroZeroa . $umZeroZerob . $umZeroZeroc . $umZeroZerod . $umZeroZeroe;
+$rec100aCAR = sprintf('%04d', strlen($teste01) + 15);
+$rec100a = '100' . $rec100aCAR . sprintf('%05d', $rec100aPOS);
+
+
+// Campo 245 título
+$doisQuatroCinco = '12a ' . htmlspecialchars($submissionTitle) . 'h[recurso eletrônico]  ';
+$rec245CAR = sprintf('%04d', strlen($submissionTitle) + 29);
+$rec245POS = sprintf('%05d', $rec100aCAR + $rec100aPOS);
+$rec245 = '245' . $rec245CAR . $rec245POS;
+
+
+
+
+///////////
+/////// FIM metodo sem separação
+/////
+
+
+
+
+
+
+
+
+
 
 
 // Formatando para manter 4 dígitos
