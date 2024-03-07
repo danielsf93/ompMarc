@@ -331,20 +331,21 @@ $rec245POS = sprintf('%05d', $rec100eCAR + $rec100ePOS);
 $rec245 = '245' . $rec245CAR . $rec245POS;
 
 
-
-//////PAREI AQUI
-
-
-
-//Campo 260 local e copyright
-
-
-
-// Somando $titleLength com $rec245Value
-$rec260Value = $titleLength + $rec245Value;
-
 // Formatando para manter 4 dígitos
-$rec260 = '260' . '00000' . sprintf('%04d', $rec260Value);
+//Campo 260 local e copyright
+$cidade = $this->obterCidade($copyright);
+if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
+    $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
+}
+$doisMeiaZero = 'a ' . $cidade . 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($copyrightyear) .'  ';
+
+$rec260CAR = sprintf('%04d', strlen($doisMeiaZero));
+$rec260POS = sprintf('%05d', $rec245CAR + $rec245POS);
+$rec260 = '260' . $rec260CAR . $rec260POS;
+
+
+
+
 
 
 
