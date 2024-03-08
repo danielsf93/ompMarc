@@ -1,7 +1,7 @@
 <h1>ompMarc</h1>
 
-Projeto de exportação de arquivos record marc para coleta de produção da ABCD USP. 
-<br> Baseado em https://coletaprod.aguia.usp.br/z3950.php?isbn=&sysno=&title=the+urban+crisis&author=&year=&btn_submit= <br><br>
+Projeto de exportação de arquivos record<b>.mrc</b> para coleta de produção da ABCD USP. <br><br>
+
 
 /plugins/importexport/ompMarc<br><br>
 
