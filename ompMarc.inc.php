@@ -272,8 +272,6 @@ class ompMarc extends ImportExportPlugin2
             }
     ///// ESTRUTURA MRC
 
-///Estrutura numeração MRC
-
     $currentDateTime = date('YmdHis.0');
     $zeroZeroCinco = ''."{$currentDateTime}";
     $zeroZeroOito = ''.'230919s2023    bl            000 0 por d';
@@ -350,6 +348,8 @@ $currentDateTime = date('d.m.Y');
     }
 }
 
+    //harcoding's abcd usp
+
     $oitoCincoMeiaA = '4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI';
     $oitoCincoMeiaB = '41z'.'Clicar sobre o botão para acesso ao texto completou'.
@@ -358,6 +358,8 @@ $currentDateTime = date('d.m.Y');
     $noveQuatroCinco = 'aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 
     
+//Organizando a numeração rec005 = campo 005, rec008 = campo 008, etc.
+
 $fixa = 0;
 $rec005POS = $fixa;
 $rec005CAR = sprintf('%04d', strlen($zeroZeroCinco) + 0);
@@ -404,6 +406,7 @@ $rec500POS = sprintf('%05d', $rec260CAR + $rec260POS);
 $rec500CAR = sprintf('%04d', strlen($cincoZeroZero) + 3);
 $rec500 = '500' . $rec500CAR . $rec500POS;
 
+//rever este trecho, pois pega somente 1 coautor
 // Quantidade de autores adicionais
 $numAutoresAdicionais = count($additionalAuthors);
 // Criação dos campos 700 para autores adicionais
@@ -442,10 +445,8 @@ $rec945POS = sprintf('%05d', $rec856BCAR + $rec856BPOS);
 $rec945CAR = sprintf('%04d', strlen($noveQuatroCinco) + 1);
 $rec945 = '945' . $rec945CAR . $rec945POS;
 
-
-
-
-
+//colocando a informação no arquivo final
+//numeração
 $marcContent .= 
 $rec005 .
 $rec008 .
@@ -463,7 +464,7 @@ $rec856A .
 $rec856B .
 $rec945;
 
-
+//texto
 $marcContent .= 
 $zeroZeroCinco .
 $zeroZeroOito . 
@@ -500,10 +501,7 @@ $noveQuatroCinco;
     *
                             * */
         
-    /**
-     * @copydoc ImportExportPlugin::executeCLI
-     */
-    public function executeCLI($scriptName, &$args)
+       public function executeCLI($scriptName, &$args)
     {
         $opts = $this->parseOpts($args, ['no-embed', 'use-file-urls']);
         $command = array_shift($args);
