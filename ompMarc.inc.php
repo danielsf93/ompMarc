@@ -337,16 +337,16 @@ $currentDateTime = date('d.m.Y');
     ];
 
     if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $seteZeroZero = 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '$5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } elseif (!empty($additionalAuthorInfo['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $seteZeroZero = 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '$5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } elseif (!empty($additionalAuthorInfo['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $seteZeroZero = 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $seteZeroZero = 'a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '$5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
     }
 }
 
@@ -413,7 +413,7 @@ for ($i = 0; $i < $numAutoresAdicionais; $i++) {
     if ($i === 0) {
         // Atualiza as posições e comprimentos para o primeiro coautor
         $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
-        $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 4);
+        $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 0);
         $rec700 .= '700' . $rec700CAR . $rec700POS;
     }
 
@@ -434,10 +434,16 @@ if ($numAutoresAdicionais > 0) {
 
 $rec856A = '856' . $rec856ACAR . $rec856APOS;
 
+$rec856BPOS = sprintf('%05d', $rec856ACAR + $rec856APOS);
+$rec856BCAR = sprintf('%04d', strlen($oitoCincoMeiaB) - 2);
+$rec856B = '856' . $rec856BCAR . $rec856BPOS;
+
+$rec945POS = sprintf('%05d', $rec856BCAR + $rec856BPOS);
+$rec945CAR = sprintf('%04d', strlen($noveQuatroCinco) + 1);
+$rec945 = '945' . $rec945CAR . $rec945POS;
 
 
-$rec856B = '856000000000';
-$rec945 = '945000000000';
+
 
 
 $marcContent .= 
@@ -481,7 +487,8 @@ $noveQuatroCinco;
         $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
         // Formatar o número de caracteres como uma string de 5 dígitos
         $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
-        // Inserir o número de caracteres no início do mrk
+        // Inserir o número de caracteres no início do mrc
+        //fazer regra aqui para que quando tiver 1 coautor, utilizar 'nam22000205a 4500 '
         $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 '. $marcContent;
 
 
@@ -489,7 +496,7 @@ $noveQuatroCinco;
             }
 
    /**
-     * fim ESTRUTURA mrk
+     * fim ESTRUTURA mrc
     *
                             * */
         
