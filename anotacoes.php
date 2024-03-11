@@ -221,19 +221,15 @@ $rec500POS = sprintf('%05d', $rec260CAR + $rec260POS);
 $rec500CAR = sprintf('%04d', strlen($cincoZeroZero) + 3);
 $rec500 = '500' . $rec500CAR . $rec500POS;
 
-//rever este trecho, pois pega somente 1 coautor
 // Quantidade de autores adicionais
 $numAutoresAdicionais = count($additionalAuthors);
 // Criação dos campos 700 para autores adicionais
 $rec700 = '';
 for ($i = 0; $i < $numAutoresAdicionais; $i++) {
-    // Pegue somente o primeiro coautor
-    if ($i === 0) {
-        // Atualiza as posições e comprimentos para o primeiro coautor
-        $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
-        $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 0);
-        $rec700 .= '700' . $rec700CAR . $rec700POS;
-    }
+    // Atualiza as posições e comprimentos para cada coautor
+    $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
+    $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 0);
+    $rec700 .= '700' . $rec700CAR . $rec700POS;
 
     // Atualiza as posições e comprimentos para o próximo coautor (se houver)
     $rec500POS = $rec700POS;
@@ -251,6 +247,7 @@ if ($numAutoresAdicionais > 0) {
 }
 
 $rec856A = '856' . $rec856ACAR . $rec856APOS;
+
 
 $rec856BPOS = sprintf('%05d', $rec856ACAR + $rec856APOS);
 $rec856BCAR = sprintf('%04d', strlen($oitoCincoMeiaB) - 2);
