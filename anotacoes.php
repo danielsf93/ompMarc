@@ -225,6 +225,13 @@ $rec500 = '500' . $rec500CAR . $rec500POS;
 
 
 
+////////////////////
+
+
+
+
+
+
 // Criação dos campos 700 para autores adicionais
 $rec700 = '';
 for ($i = 0; $i < $numAutoresAdicionais; $i++) {
@@ -249,11 +256,67 @@ for ($i = 0; $i < $numAutoresAdicionais; $i++) {
     }
 
     // Atualiza o comprimento para o coautor atual
+    $rec700CAR = sprintf('%04d', strlen($seteZeroZero));
+    $rec700 .= '700' . $rec700CAR . $rec700POS;
+
+    // Atualiza as posições para o próximo coautor (se houver)
+    $rec500POS = sprintf('%05d', $rec700CAR + $rec700POS); // Atualização correta da posição
+    $rec500CAR = $rec700CAR;
+}
+
+
+
+
+
+
+
+/////////////////////
+
+
+
+// Criação dos campos 700 para autores adicionais
+$rec700 = '';
+for ($i = 0; $i < $numAutoresAdicionais; $i++) {
+    // Atualiza as posições para cada coautor
+    $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
+
+    // Pegue o coautor correspondente
+    $additionalAuthorInfo = $additionalAuthors[$i];
+
+    // ... (código de formatação do $seteZeroZero, semelhante ao que você forneceu)
+
+    // Atualiza o comprimento para o coautor atual
     $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 4);
     $rec700 .= '700' . $rec700CAR . $rec700POS;
 
     // Atualiza as posições para o próximo coautor (se houver)
     $rec500POS = sprintf('%05d', $rec700CAR + $rec700POS); // Atualização correta da posição
+    $rec500CAR = $rec700CAR;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// Quantidade de autores adicionais
+$numAutoresAdicionais = count($additionalAuthors);
+// Criação dos campos 700 para autores adicionais
+$rec700 = '';
+for ($i = 0; $i < $numAutoresAdicionais; $i++) {
+    // Atualiza as posições e comprimentos para cada coautor
+    $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
+    $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 0);
+    $rec700 .= '700' . $rec700CAR . $rec700POS;
+
+    // Atualiza as posições e comprimentos para o próximo coautor (se houver)
+    $rec500POS = $rec700POS;
     $rec500CAR = $rec700CAR;
 }
 
