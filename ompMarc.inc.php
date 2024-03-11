@@ -484,13 +484,21 @@ $noveQuatroCinco;
 
 
 }
-        // Calcular o número de caracteres
-        $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
-        // Formatar o número de caracteres como uma string de 5 dígitos
-        $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
-        // Inserir o número de caracteres no início do mrc
-        //fazer regra aqui para que quando tiver 1 coautor, utilizar 'nam22000205a 4500 '
-        $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 '. $marcContent;
+ // Calcular o número de caracteres
+$numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8'); 
+// Formatar o número de caracteres como uma string de 5 dígitos
+$numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
+
+// Verificar a condição de pelo menos 1 coautor
+if ($numAutoresAdicionais > 0) {
+    $marcContent = $numeroDeCaracteresFormatado . 'nam 22000205a 4500 '. $marcContent;
+} else {
+    // Formatar normalmente para outros casos
+    $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 '. $marcContent;
+}
+
+
+
 
 
         return $marcContent;
