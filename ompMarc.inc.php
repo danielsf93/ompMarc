@@ -82,7 +82,7 @@ class ompMarc extends ImportExportPlugin2
                     );
                     import('lib.pkp.classes.file.FileManager');
                     $fileManager = new FileManager();
-                    //nome do arquivo e formato txt - trocar por rec
+                    //nome do arquivo e formato .mrc
                     $exportFileName = $this->getExportPath() . '/omp.mrc';
                     $fileManager->writeFile($exportFileName, $exportXml);
                     $fileManager->downloadByPath($exportFileName);
@@ -194,7 +194,7 @@ class ompMarc extends ImportExportPlugin2
     
     
     /**
-     * FUNÇÃO PRINCIPAL, RESPOSÁVEL PELA ESTRUTURA DO ARQUIVO mrk.
+     * FUNÇÃO PRINCIPAL, RESPONSÁVEL PELA ESTRUTURA DO ARQUIVO mrc.
      */
     public function exportSubmissions($submissionIds, $context, $user, $request)
     {
@@ -305,9 +305,6 @@ if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
                     '5(*)9' . htmlspecialchars($firstAuthor['locale']);
 }
 
-// Adiciona uma quebra de linha no final
-//$marcContent .= PHP_EOL;
-
     //titulo
     $doisQuatroCinco = '12a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
     
@@ -410,7 +407,6 @@ $rec500POS = sprintf('%05d', $rec260CAR + $rec260POS);
 $rec500CAR = sprintf('%04d', strlen($cincoZeroZero) + 3);
 $rec500 = '500' . $rec500CAR . $rec500POS;
 
-//rever este trecho, pois pega somente 1 coautor
 /// Quantidade de autores adicionais
 $numAutoresAdicionais = count($additionalAuthors);
 // Criação dos campos 700 para autores adicionais
@@ -519,11 +515,6 @@ $numAutoresAdicionais = count($additionalAuthors);
 // Calcular o valor 'nam' baseado no número de autores e coautores
 $valorNam = 22000193 + ($numAutoresAdicionais * 12);
 $marcContent = $numeroDeCaracteresFormatado . 'nam ' . $valorNam . 'a 4500 ' . $marcContent;
-
-
-
-
-
 
         return $marcContent;
             }

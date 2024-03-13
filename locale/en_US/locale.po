@@ -15,10 +15,10 @@ msgid "plugins.importexport.ompMarc.displayName"
 msgstr "ompMarc"
 
 msgid "plugins.importexport.ompMarc.description"
-msgstr "Export of books in .mrk format."
+msgstr "Export of books in .mrc format."
 
 msgid "plugins.importexport.ompMarc.exportSubmissions"
 msgstr "Export submissions"
 
 msgid "plugins.importexport.ompMarc.notifyWarning"
-msgstr "This plugin exports books in .mrk format. After exporting the file, it is necessary to convert it in batch using the MarcEdit software. Check the <a href='https://github.com/danielsf93/ompMarc' target='_blank'>online documentation</a>."
+msgstr "This plugin exports book information in MARC (.mrc) format for use in Aleph by Exlibris"
