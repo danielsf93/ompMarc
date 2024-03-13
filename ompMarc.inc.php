@@ -513,13 +513,13 @@ $numeroDeCaracteres = mb_strlen($marcContent, 'UTF-8');
 // Formatar o número de caracteres como uma string de 5 dígitos
 $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
 
-// Verificar a condição de pelo menos 1 coautor
-if ($numAutoresAdicionais > 0) {
-    $marcContent = $numeroDeCaracteresFormatado . 'nam 22000205a 4500 '. $marcContent;
-} else {
-    // Formatar normalmente para outros casos
-    $marcContent = $numeroDeCaracteresFormatado . 'nam 22000193a 4500 '. $marcContent;
-}
+// Verificar o número de autores adicionais
+$numAutoresAdicionais = count($additionalAuthors);
+
+// Calcular o valor 'nam' baseado no número de autores e coautores
+$valorNam = 22000193 + ($numAutoresAdicionais * 12);
+$marcContent = $numeroDeCaracteresFormatado . 'nam ' . $valorNam . 'a 4500 ' . $marcContent;
+
 
 
 
