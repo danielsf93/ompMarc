@@ -323,9 +323,11 @@ $currentDateTime = date('d.m.Y');
     $cincoZeroZero=  'aDisponível em: '.htmlspecialchars($publicationUrl) . '. Acesso em: '.$currentDateTime;
     
     // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
-    $additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
+// Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
+$additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
+$additionalAuthorsExport = ''; // Variável para acumular as informações dos autores adicionais
 
-    foreach ($additionalAuthors as $additionalAuthor) {
+foreach ($additionalAuthors as $additionalAuthor) {
     $additionalAuthorInfo = [
         'givenName' => $additionalAuthor['givenName'],
         'surname' => $additionalAuthor['surname'],
@@ -335,18 +337,20 @@ $currentDateTime = date('d.m.Y');
     ];
 
     if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } elseif (!empty($additionalAuthorInfo['orcid'])) {
         // Adiciona apenas o ORCID se presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } elseif (!empty($additionalAuthorInfo['afiliation'])) {
         // Adiciona apenas a afiliação se presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
     } else {
         // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
     }
 }
+
+
 
     //harcoding's abcd usp
 
@@ -407,18 +411,37 @@ $rec500CAR = sprintf('%04d', strlen($cincoZeroZero) + 3);
 $rec500 = '500' . $rec500CAR . $rec500POS;
 
 //rever este trecho, pois pega somente 1 coautor
-// Quantidade de autores adicionais
+/// Quantidade de autores adicionais
 $numAutoresAdicionais = count($additionalAuthors);
 // Criação dos campos 700 para autores adicionais
 $rec700 = '';
+
 for ($i = 0; $i < $numAutoresAdicionais; $i++) {
-    // Pegue somente o primeiro coautor
-    if ($i === 0) {
-        // Atualiza as posições e comprimentos para o primeiro coautor
-        $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
-        $rec700CAR = sprintf('%04d', strlen($seteZeroZero) + 0);
-        $rec700 .= '700' . $rec700CAR . $rec700POS;
+    // Atualiza as posições e comprimentos para cada coautor
+    $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
+    
+    // Pegue a informação do coautor atual
+    $additionalAuthorInfo = $additionalAuthors[$i];
+    
+    // Código de formatação do $seteZeroZero para o coautor atual
+    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+    } elseif (!empty($additionalAuthorInfo['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
+    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
     }
+    
+    // Atualiza as posições e comprimentos para o coautor atual
+    $rec700CAR = sprintf('%04d', strlen($seteZeroZero));
+    
+    // Adiciona o campo 700 para o coautor atual
+    $rec700 .= '700' . $rec700CAR . $rec700POS;
 
     // Atualiza as posições e comprimentos para o próximo coautor (se houver)
     $rec500POS = $rec700POS;
@@ -477,7 +500,8 @@ $umZeroZero .
 $doisQuatroCinco . 
 $doisMeiaZero . 
 $cincoZeroZero . 
-$seteZeroZero . 
+//$seteZeroZero . 
+$additionalAuthorsExport .
 $oitoCincoMeiaA . 
 $oitoCincoMeiaB . 
 $noveQuatroCinco;
