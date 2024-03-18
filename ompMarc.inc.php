@@ -320,9 +320,12 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
     foreach ($submissions as $submission) {
         // Obtendo o ID da série
         $seriesDao = DAORegistry::getDAO('SeriesDAO'); 
-
+    
         $serieId = $submission->getSeriesId();
     
+        // Obtendo a posição/volume da série
+        $seriePosition = $submission->getCurrentPublication()->getData('seriesPosition');
+        
         // Verificando se o ID da série não está vazio
         if (!empty($serieId)) {
             // Carregar a série pelo ID (supondo que haja um método ou DAO para isso)
@@ -332,21 +335,29 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
             if ($serie) {
                 // Obtendo o título da série
                 $serieTitle = $serie->getLocalizedFullTitle();
-                $seriePosition = $submission->getCurrentPublication()->getData('seriesPosition');
     
-                // Montando a string $quatroNoveZero com o título da série
-                $quatroNoveZero = 'a ' . htmlspecialchars($serieTitle) . 'v '. htmlspecialchars($seriePosition);
+                // Montando a string $quatroNoveZero com o título e a posição/volume da série
+                $quatroNoveZero = 'a ' . htmlspecialchars($serieTitle);
             } else {
                 // Lidar com o caso em que a série não foi encontrada
-                // Por exemplo, atribuir um valor padrão para $quatroNoveZero
-                $quatroNoveZero = 'a Série Desconhecidav VOLUME';
+                
+                $quatroNoveZero = 'a SÉRIE';
             }
         } else {
             // Lidar com o caso em que não há ID de série disponível
-            // Por exemplo, atribuir um valor padrão para $quatroNoveZero
-            $quatroNoveZero = 'a Série Não Especificadav VOLUME';
+            
+            $quatroNoveZero = 'a SÉRIE';
+        }
+    
+        // Adicionando a posição/volume da série, se disponível
+        if (!empty($seriePosition)) {
+            $quatroNoveZero .= 'v ' . htmlspecialchars($seriePosition);
+        } else {
+            // Se não houver posição/volume, adicione "VOLUME NAO ESPECIFICADO"
+            $quatroNoveZero .= 'v VOLUME';
         }
     }
+    
 
 
 
