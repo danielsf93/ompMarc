@@ -246,7 +246,6 @@ class ompMarc extends ImportExportPlugin2
             $publicationYear = date('Y', strtotime($publicationDate));
             $publicationMonth = date('m', strtotime($publicationDate));
             $publicationDay = date('d', strtotime($publicationDate));
-                          
             // Obtendo dados dos autores
             $authorNames = [];
             $authors = $submission->getAuthors();
@@ -315,6 +314,42 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
     $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
 }
     $doisMeiaZero = 'a ' . $cidade . 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($copyrightyear) .'  ';
+
+    //SERIE
+
+    foreach ($submissions as $submission) {
+        // Obtendo o ID da série
+        $seriesDao = DAORegistry::getDAO('SeriesDAO'); 
+
+        $serieId = $submission->getSeriesId();
+    
+        // Verificando se o ID da série não está vazio
+        if (!empty($serieId)) {
+            // Carregar a série pelo ID (supondo que haja um método ou DAO para isso)
+            $serie = $seriesDao->getById($serieId);
+    
+            // Verificar se a série foi encontrada
+            if ($serie) {
+                // Obtendo o título da série
+                $serieTitle = $serie->getLocalizedFullTitle();
+                $seriePosition = $submission->getCurrentPublication()->getData('seriesPosition');
+    
+                // Montando a string $quatroNoveZero com o título da série
+                $quatroNoveZero = 'a ' . htmlspecialchars($serieTitle) . 'v '. htmlspecialchars($seriePosition);
+            } else {
+                // Lidar com o caso em que a série não foi encontrada
+                // Por exemplo, atribuir um valor padrão para $quatroNoveZero
+                $quatroNoveZero = 'a Série Desconhecidav VOLUME';
+            }
+        } else {
+            // Lidar com o caso em que não há ID de série disponível
+            // Por exemplo, atribuir um valor padrão para $quatroNoveZero
+            $quatroNoveZero = 'a Série Não Especificadav VOLUME';
+        }
+    }
+
+
+
 
 $currentDateTime = date('d.m.Y');
     $cincoZeroZero=  'aDisponível em: '.htmlspecialchars($publicationUrl) . '. Acesso em: '.$currentDateTime;
@@ -403,9 +438,14 @@ $rec260POS = sprintf('%05d', $rec245CAR + $rec245POS);
 $rec260CAR = sprintf('%04d', strlen($doisMeiaZero) + 0);
 $rec260 = '260' . $rec260CAR . $rec260POS;
 
-$rec500POS = sprintf('%05d', $rec260CAR + $rec260POS);
+$rec490POS = sprintf('%05d', $rec260CAR + $rec260POS);
+$rec490CAR = sprintf('%04d', strlen($quatroNoveZero) + 3);
+$rec490 = '490' . $rec490CAR . $rec490POS;
+
+
+$rec500POS = sprintf('%05d', $rec490CAR + $rec490POS);
 $rec500CAR = sprintf('%04d', strlen($cincoZeroZero) + 3);
-$rec500 = '500' . $rec500CAR . $rec500POS;
+$rec500 = '500' . $rec500CAR . $rec500POS - 3;
 
 /// Quantidade de autores adicionais
 $numAutoresAdicionais = count($additionalAuthors);
@@ -477,6 +517,7 @@ $rec044 .
 $rec100 .
 $rec245 .
 $rec260 .
+$rec490 .
 $rec500 .
 $rec700 .
 $rec856A .
@@ -495,6 +536,7 @@ $zeroQuatroQuatro .
 $umZeroZero . 
 $doisQuatroCinco . 
 $doisMeiaZero . 
+$quatroNoveZero . 
 $cincoZeroZero . 
 //$seteZeroZero . 
 $additionalAuthorsExport .
@@ -513,7 +555,7 @@ $numeroDeCaracteresFormatado = sprintf("%05d", $numeroDeCaracteres);
 $numAutoresAdicionais = count($additionalAuthors);
 
 // Calcular o valor 'nam' baseado no número de autores e coautores
-$valorNam = 22000193 + ($numAutoresAdicionais * 12);
+$valorNam = 22000205 + ($numAutoresAdicionais * 12);
 $marcContent = $numeroDeCaracteresFormatado . 'nam ' . $valorNam . 'a 4500 ' . $marcContent;
 
         return $marcContent;
