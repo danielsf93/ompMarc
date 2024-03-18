@@ -488,7 +488,7 @@ for ($i = 0; $i < $numAutoresAdicionais; $i++) {
     $rec700CAR = sprintf('%04d', strlen($seteZeroZero));
     
     // Adiciona o campo 700 para o coautor atual
-    $rec700 .= '700' . $rec700CAR . $rec700POS;
+    $rec700 .= '700' . $rec700CAR . $rec700POS - 3;
 
     // Atualiza as posições e comprimentos para o próximo coautor (se houver)
     $rec500POS = $rec700POS;
@@ -505,15 +505,15 @@ if ($numAutoresAdicionais > 0) {
     $rec856ACAR = sprintf('%04d', strlen($oitoCincoMeiaA) - 1);
 }
 
-$rec856A = '856' . $rec856ACAR . $rec856APOS;
+$rec856A = '856' . $rec856ACAR . $rec856APOS - 3;
 
 $rec856BPOS = sprintf('%05d', $rec856ACAR + $rec856APOS);
 $rec856BCAR = sprintf('%04d', strlen($oitoCincoMeiaB) - 2);
-$rec856B = '856' . $rec856BCAR . $rec856BPOS;
+$rec856B = '856' . $rec856BCAR . $rec856BPOS - 3;
 
 $rec945POS = sprintf('%05d', $rec856BCAR + $rec856BPOS);
 $rec945CAR = sprintf('%04d', strlen($noveQuatroCinco) + 1);
-$rec945 = '945' . $rec945CAR . $rec945POS;
+$rec945 = '945' . $rec945CAR . $rec945POS - 3;
 
 //colocando a informação no arquivo final
 //numeração
