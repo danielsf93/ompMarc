@@ -364,9 +364,7 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
 
 $currentDateTime = date('d.m.Y');
     $cincoZeroZero=  'aDisponível em: '.htmlspecialchars($publicationUrl) . '. Acesso em: '.$currentDateTime;
-    
-    // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
-// Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
+ // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
 $additionalAuthors = array_slice($authorsInfo, 1); // Pular o primeiro autor
 $additionalAuthorsExport = ''; // Variável para acumular as informações dos autores adicionais
 
@@ -375,23 +373,25 @@ foreach ($additionalAuthors as $additionalAuthor) {
         'givenName' => $additionalAuthor['givenName'],
         'surname' => $additionalAuthor['surname'],
         'orcid' => $additionalAuthor['orcid'],
-        'afiliation' => $additionalAuthor['afiliation'],
-        'locale' => $additionalAuthor['locale'],
     ];
 
-    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    } elseif (!empty($additionalAuthorInfo['orcid'])) {
-        // Adiciona apenas o ORCID se presente
-        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
-        // Adiciona apenas a afiliação se presente
-        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
+    // Construir a string para exportação
+    $authorExportString = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']);
+
+    // Verificar se há ORCID disponível
+    if (!empty($additionalAuthorInfo['orcid'])) {
+        $authorExportString .= '0' . $additionalAuthorInfo['orcid']; // Adicionar ORCID
     } else {
-        // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $additionalAuthorsExport .= '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
+        $authorExportString .= '0' . 'ORCID'; // Se não houver ORCID, escrever 'ORCID'
     }
+
+    // Adicionar o campo 'org' como especificado
+    $authorExportString .= '4org';
+
+    // Adicionar a string formatada à variável de exportação
+    $additionalAuthorsExport .= $authorExportString;
 }
+
 
 
 
@@ -468,21 +468,21 @@ for ($i = 0; $i < $numAutoresAdicionais; $i++) {
     $rec700POS = sprintf('%05d', $rec500CAR + $rec500POS);
     
     // Pegue a informação do coautor atual
-    $additionalAuthorInfo = $additionalAuthors[$i];
-    
-    // Código de formatação do $seteZeroZero para o coautor atual
-    if (!empty($additionalAuthorInfo['orcid']) && !empty($additionalAuthorInfo['afiliation'])) {
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    } elseif (!empty($additionalAuthorInfo['orcid'])) {
-        // Adiciona apenas o ORCID se presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '0' . $additionalAuthorInfo['orcid'] . '4colab5(*)$7INT9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    } elseif (!empty($additionalAuthorInfo['afiliation'])) {
-        // Adiciona apenas a afiliação se presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)7INT8' . htmlspecialchars($additionalAuthorInfo['afiliation']) . '9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    } else {
-        // Adiciona sem ORCID e afiliação se nenhum estiver presente
-        $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']) . '4colab5(*)9' . htmlspecialchars($additionalAuthorInfo['locale']);
-    }
+$additionalAuthorInfo = $additionalAuthors[$i];
+
+// Construir a string para exportação
+$seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . ', ' . htmlspecialchars($additionalAuthorInfo['givenName']);
+
+// Verificar se há ORCID disponível
+if (!empty($additionalAuthorInfo['orcid'])) {
+    $seteZeroZero .= '0' . $additionalAuthorInfo['orcid']; // Adicionar ORCID
+} else {
+    $seteZeroZero .= '0' . 'ORCID'; // Se não houver ORCID, escrever 'ORCID'
+}
+
+// Adicionar o campo 'org' como especificado
+$seteZeroZero .= '4org';
+
     
     // Atualiza as posições e comprimentos para o coautor atual
     $rec700CAR = sprintf('%04d', strlen($seteZeroZero));
