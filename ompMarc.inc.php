@@ -282,7 +282,6 @@ class ompMarc extends ImportExportPlugin2
     $zeroQuatroUm ='apor  ';
     $zeroQuatroQuatro = 'abl1 ';
 
-//primeiro autor - Sobrenome, Nome - Orcid - Afiliação - País
 //primeiro autor
 $firstAuthor = reset($authorsInfo);
 
@@ -416,9 +415,32 @@ foreach ($additionalAuthors as $additionalAuthor) {
 
     $oitoCincoMeiaA = '4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI';
-    $oitoCincoMeiaB = '41z'.'Clicar sobre o botão para acesso ao texto completou'.
-    htmlspecialchars($publicationUrl).'3E-Livro  ';
+   
+   
+   
 
+
+    $pubFormatFiles = Services::get('submissionFile')->getMany([
+        'submissionIds' => [$submission->getId()],
+        'assocTypes' => [ASSOC_TYPE_PUBLICATION_FORMAT]
+    ]);
+    
+    foreach ($pubFormatFiles as $file) {
+        // Certifique-se de que $file não é nulo
+        if ($file) {
+            $pdfUrl = $request->url($context->getPath(), 'catalog', 'view', [$submission->getId(), $publicationFormat->getId(), $file->getId()]);
+            
+            $oitoCincoMeiaB = '41z'.'Clicar sobre o botão para acesso ao texto completou'.
+                htmlspecialchars($pdfUrl).'3E-Livro  ';
+        }
+    }
+
+
+
+
+
+
+    
     $noveQuatroCinco = 'aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
 
     
