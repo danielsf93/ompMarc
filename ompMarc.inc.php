@@ -283,26 +283,43 @@ class ompMarc extends ImportExportPlugin2
     $zeroQuatroQuatro = 'abl1 ';
 
 //primeiro autor - Sobrenome, Nome - Orcid - Afiliação - País
+//primeiro autor
 $firstAuthor = reset($authorsInfo);
 
-if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
-    $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '0' . $firstAuthor['orcid'] . 
-                    '5(*)7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['orcid'])) {
-    // Adiciona apenas o ORCID se presente
-    $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '0' . $firstAuthor['orcid'] . 
-                    '5(*)7INT9' . htmlspecialchars($firstAuthor['locale']);
-} elseif (!empty($firstAuthor['afiliation'])) {
-    // Adiciona apenas a afiliação se presente
-    $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
+// Verificar se a instituição é da Universidade de São Paulo
+if (strpos($firstAuthor['afiliation'], 'Universidade de São Paulo') === 0) {
+    // Autor interno da USP
+    if (!empty($firstAuthor['orcid'])) {
+        $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '0' . $firstAuthor['orcid'] . 
+                        '4org5(*)';
+    } else {
+        $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '0' . 'ORCID' . 
+                        '4org5(*)';
+    }
 } else {
-    // Adiciona sem ORCID e afiliação se nenhum estiver presente
-    $umZeroZero= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                    '5(*)9' . htmlspecialchars($firstAuthor['locale']);
+    // Autor externo
+    if (!empty($firstAuthor['orcid']) && !empty($firstAuthor['afiliation'])) {
+        $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '0' . $firstAuthor['orcid'] . 
+                        '5(*)7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
+    } elseif (!empty($firstAuthor['orcid'])) {
+        // Adiciona apenas o ORCID se presente
+        $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '0' . $firstAuthor['orcid'] . 
+                        '5(*)$7INT9' . htmlspecialchars($firstAuthor['locale']);
+    } elseif (!empty($firstAuthor['afiliation'])) {
+        // Adiciona apenas a afiliação se presente
+        $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '7INT8' . htmlspecialchars($firstAuthor['afiliation']) . '9' . htmlspecialchars($firstAuthor['locale']);
+    } else {
+        // Adiciona sem ORCID e afiliação se nenhum estiver presente
+        $umZeroZero= 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
+                        '5(*)9' . htmlspecialchars($firstAuthor['locale']);
+    }
 }
+
 
     //titulo
     $doisQuatroCinco = '12a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
