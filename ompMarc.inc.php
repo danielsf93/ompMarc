@@ -374,10 +374,6 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
         }
     }
     
-
-
-
-
 $currentDateTime = date('d.m.Y');
     $cincoZeroZero=  'aDisponível em: '.htmlspecialchars($publicationUrl) . '. Acesso em: '.$currentDateTime;
  // Demais autoras - Sobrenome, Nome - Orcid - Afiliação - País
@@ -408,17 +404,10 @@ foreach ($additionalAuthors as $additionalAuthor) {
     $additionalAuthorsExport .= $authorExportString;
 }
 
-
-
-
     //harcoding's abcd usp
 
     $oitoCincoMeiaA = '4 zClicar sobre o botão para acesso ao texto completo'.
     'u'.'https://doi.org/'.htmlspecialchars($doi).'3DOI';
-   
-   
-   
-
 
     $pubFormatFiles = Services::get('submissionFile')->getMany([
         'submissionIds' => [$submission->getId()],
@@ -435,14 +424,7 @@ foreach ($additionalAuthors as $additionalAuthor) {
         }
     }
 
-
-
-
-
-
-    
     $noveQuatroCinco = 'aPbMONOGRAFIA/LIVROc06j2023lNACIONAL';
-
     
 //Organizando a numeração rec005 = campo 005, rec008 = campo 008, etc.
 
@@ -557,42 +539,15 @@ $rec945 = '945' . $rec945CAR . $rec945POS - 3;
 //colocando a informação no arquivo final
 //numeração
 $marcContent .= 
-$rec005 .
-$rec008 .
-$rec020 .
-$rec024 .
-$rec040 .
-$rec041 .
-$rec044 .
-$rec100 .
-$rec245 .
-$rec260 .
-$rec490 .
-$rec500 .
-$rec700 .
-$rec856A .
-$rec856B .
-$rec945;
+$rec005 . $rec008 . $rec020 . $rec024 . $rec040 . $rec041 . $rec044 . $rec100 . $rec245 .
+$rec260 . $rec490 . $rec500 . $rec700 . $rec856A . $rec856B . $rec945;
 
 //texto
 $marcContent .= 
-$zeroZeroCinco .
-$zeroZeroOito . 
-$zeroDoisZero . 
-$zeroDoisQuatro . 
-$zeroQuatroZero . 
-$zeroQuatroUm . 
-$zeroQuatroQuatro . 
-$umZeroZero . 
-$doisQuatroCinco . 
-$doisMeiaZero . 
-$quatroNoveZero . 
-$cincoZeroZero . 
+$zeroZeroCinco . $zeroZeroOito . $zeroDoisZero . $zeroDoisQuatro . $zeroQuatroZero . $zeroQuatroUm . 
+$zeroQuatroQuatro . $umZeroZero . $doisQuatroCinco . $doisMeiaZero . $quatroNoveZero . $cincoZeroZero . 
 //$seteZeroZero . 
-$additionalAuthorsExport .
-$oitoCincoMeiaA . 
-$oitoCincoMeiaB . 
-$noveQuatroCinco;
+$additionalAuthorsExport . $oitoCincoMeiaA . $oitoCincoMeiaB . $noveQuatroCinco;
 
 
 }
