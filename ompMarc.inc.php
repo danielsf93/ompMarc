@@ -420,7 +420,7 @@ foreach ($additionalAuthors as $additionalAuthor) {
             $pdfUrl = $request->url($context->getPath(), 'catalog', 'view', [$submission->getId(), $publicationFormat->getId(), $file->getId()]);
             
             $oitoCincoMeiaB = '41z'.'Clicar sobre o botão para acesso ao texto completou'.
-                htmlspecialchars($pdfUrl).'3E-Livro  ';
+                htmlspecialchars($pdfUrl).'3Portal de Livros Abertos da USP  ';
         }
     }
 
