@@ -189,7 +189,7 @@ class ompMarc extends ImportExportPlugin2
         }
     
         // Se não houver correspondência, retorna 'LOCAL'
-        return 'LOCAL';
+        return '';
     }
     
     
@@ -273,7 +273,7 @@ class ompMarc extends ImportExportPlugin2
 
     $currentDateTime = date('YmdHis.0');
     $zeroZeroCinco = ''."{$currentDateTime}";
-    $zeroZeroOito = ''.'230919s2023    bl            000 0 por d';
+    $zeroZeroOito = ''.'      s2023    bl            000 0 por d';
    
     $cleanIsbn = preg_replace('/[^0-9]/', '', $isbn);
     $zeroDoisZero = '  a'.htmlspecialchars($cleanIsbn).'7 ';
@@ -321,7 +321,7 @@ if (strpos($firstAuthor['afiliation'], 'Universidade de São Paulo') === 0) {
 
 
     //titulo
-    $doisQuatroCinco = '12a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
+    $doisQuatroCinco = '10a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
     
     
     //Campo 260 local e copyright
@@ -357,12 +357,12 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
             } else {
                 // Lidar com o caso em que a série não foi encontrada
                 
-                $quatroNoveZero = 'a SÉRIE';
+                $quatroNoveZero = 'a ';
             }
         } else {
             // Lidar com o caso em que não há ID de série disponível
             
-            $quatroNoveZero = 'a SÉRIE';
+            $quatroNoveZero = 'a ';
         }
     
         // Adicionando a posição/volume da série, se disponível
@@ -370,7 +370,7 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
             $quatroNoveZero .= 'v ' . htmlspecialchars($seriePosition);
         } else {
             // Se não houver posição/volume, adicione "VOLUME NAO ESPECIFICADO"
-            $quatroNoveZero .= 'v VOLUME';
+            $quatroNoveZero .= 'v ';
         }
     }
     
