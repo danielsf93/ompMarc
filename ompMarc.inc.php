@@ -294,7 +294,7 @@ if (strpos($firstAuthor['afiliation'], 'Universidade de São Paulo') === 0) {
                         '4org5(*)';
     } else {
         $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
-                        '0' . 'ORCID' . 
+                        '0' . ' ' . 
                         '4org5(*)';
     }
 } else {
@@ -394,7 +394,7 @@ foreach ($additionalAuthors as $additionalAuthor) {
     if (!empty($additionalAuthorInfo['orcid'])) {
         $authorExportString .= '0' . $additionalAuthorInfo['orcid']; // Adicionar ORCID
     } else {
-        $authorExportString .= '0' . 'ORCID'; // Se não houver ORCID, escrever 'ORCID'
+        $authorExportString .= '0' . ' '; // Se não houver ORCID, escrever 'ORCID'
     }
 
     // Adicionar o campo 'org' como especificado
@@ -498,7 +498,7 @@ $seteZeroZero = '1 a' . htmlspecialchars($additionalAuthorInfo['surname']) . '
 if (!empty($additionalAuthorInfo['orcid'])) {
     $seteZeroZero .= '0' . $additionalAuthorInfo['orcid']; // Adicionar ORCID
 } else {
-    $seteZeroZero .= '0' . 'ORCID'; // Se não houver ORCID, escrever 'ORCID'
+    $seteZeroZero .= '0' . ' '; // Se não houver ORCID, escrever 'ORCID'
 }
 
 // Adicionar o campo 'org' como especificado
