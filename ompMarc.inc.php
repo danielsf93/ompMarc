@@ -367,10 +367,10 @@ if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
     
         // Adicionando a posição/volume da série, se disponível
         if (!empty($seriePosition)) {
-            $quatroNoveZero .= 'v ' . htmlspecialchars($seriePosition);
+            $quatroNoveZero .= 'v ' . htmlspecialchars($seriePosition) . '  ';
         } else {
             // Se não houver posição/volume, adicione "VOLUME NAO ESPECIFICADO"
-            $quatroNoveZero .= 'v ';
+            $quatroNoveZero .= 'v ' . '  ';
         }
     }
     
