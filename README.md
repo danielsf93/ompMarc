@@ -22,11 +22,9 @@ Este plugin exporta informações de livros OMP em formato <b>.mrc</b> para sere
 500<br>
 700(se houver)<br>
 856<br>
+856<br>
 945<br><br>
 
-****************<br>
-A fazer:
--Verificar com equipe técnica se a formatação obtida em .mrc está correta.<br><br>
 
 
 ///////////////////
@@ -54,6 +52,7 @@ This plugin exports information from OMP books in <b>.mrc</b> format to be impor
 260<br>
 500<br>
 700 (if any)<br>
+856<br>
 856<br>
 945<br><br>
 
