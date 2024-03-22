@@ -307,7 +307,7 @@ if (strpos($firstAuthor['afiliation'], 'Universidade de São Paulo') === 0) {
         // Adiciona apenas o ORCID se presente
         $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
                         '0' . $firstAuthor['orcid'] . 
-                        '5(*)$7INT9' . htmlspecialchars($firstAuthor['locale']);
+                        '5(*)7INT9' . htmlspecialchars($firstAuthor['locale']);
     } elseif (!empty($firstAuthor['afiliation'])) {
         // Adiciona apenas a afiliação se presente
         $umZeroZero = 'a' . htmlspecialchars($firstAuthor['surname']) . ', ' . htmlspecialchars($firstAuthor['givenName']) . 
