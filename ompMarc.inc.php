@@ -339,7 +339,7 @@ $cidade = $this->obterCidade($copyright);
 if (strpos($copyright, 'Universidade de São Paulo. ') === 0) {
     $copyright = substr($copyright, strlen('Universidade de São Paulo. '));
 }
-    $doisMeiaZero = 'a ' . $cidade . 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($copyrightyear) .'  ';
+    $doisMeiaZero = 'a ' . $cidade . 'b' . htmlspecialchars($copyright) . 'c' . htmlspecialchars($copyrightyear) .'0 ';
 
     //SERIE
 
