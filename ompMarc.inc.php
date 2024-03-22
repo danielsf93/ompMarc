@@ -320,8 +320,18 @@ if (strpos($firstAuthor['afiliation'], 'Universidade de São Paulo') === 0) {
 }
 
 
-    //titulo
-    $doisQuatroCinco = '10a'.htmlspecialchars($submissionTitle).'h[recurso eletrônico]  ';
+   // Obtendo o título da submissão e escapando os caracteres especiais
+$submissionTitle = htmlspecialchars($submission->getLocalizedFullTitle(), ENT_QUOTES, 'UTF-8');
+
+// Decodificando entidades HTML para garantir que as aspas sejam exibidas corretamente
+$submissionTitle = htmlspecialchars_decode($submissionTitle, ENT_QUOTES);
+
+// Construindo a string com o título da submissão
+$doisQuatroCinco = '10a' . $submissionTitle . 'h[recurso eletrônico]  ';
+
+
+
+
     
     
     //Campo 260 local e copyright
